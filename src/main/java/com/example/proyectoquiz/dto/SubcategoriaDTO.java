@@ -14,4 +14,6 @@ public class SubcategoriaDTO {
     private String logo;
 
     private String descripcion;
+
+    private Long categoriaId;
 }

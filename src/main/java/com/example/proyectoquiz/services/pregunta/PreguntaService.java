@@ -1,5 +1,18 @@
 package com.example.proyectoquiz.services.pregunta;
 
-public interface PreguntaService {
+import java.util.List;
 
+import com.example.proyectoquiz.domain.Pregunta;
+import com.example.proyectoquiz.dto.PreguntaDTO;
+
+public interface PreguntaService {
+    public List<Pregunta> getPreguntasByQuizId(Long quizId);
+
+    public Pregunta savePregunta(Long quizId, PreguntaDTO preguntaDTO) throws RuntimeException;
+
+    public Pregunta getPreguntaById(Long id) throws RuntimeException;
+
+    public Pregunta getPreguntaByPosicion(Long quizId, Integer posicion) throws RuntimeException;
+
+    public void deletePregunta(Long id);
 }

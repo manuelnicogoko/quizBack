@@ -6,4 +6,11 @@ import com.example.proyectoquiz.domain.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+    Usuario findByNombre(String nombre);
+
+    Usuario findByEmail(String email);
+
+    boolean existsByNombre(String nombre);
+
+    boolean existsByEmail(String email);
 }

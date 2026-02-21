@@ -2,6 +2,9 @@ package com.example.proyectoquiz.domain;
 
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,5 +35,6 @@ public class Pregunta {
     private List<String> respuestas;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Quiz quiz;
 }

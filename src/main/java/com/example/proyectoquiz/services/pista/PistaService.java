@@ -1,0 +1,16 @@
+package com.example.proyectoquiz.services.pista;
+
+import java.util.List;
+
+import com.example.proyectoquiz.domain.Pista;
+
+public interface PistaService {
+
+    public List<Pista> getPistasByPreguntaId(Long preguntaId);
+
+    public Pista getPistaById(Long id) throws RuntimeException;
+
+    public Pista savePista(Pista pista);
+
+    public void deletePista(Long id) throws RuntimeException;
+}

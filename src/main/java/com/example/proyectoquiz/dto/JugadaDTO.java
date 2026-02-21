@@ -12,4 +12,5 @@ public class JugadaDTO {
     private String respuesta;
 
     private Double tiempoRespuesta;
+
 }

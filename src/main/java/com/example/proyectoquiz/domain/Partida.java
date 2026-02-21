@@ -1,6 +1,9 @@
 package com.example.proyectoquiz.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,19 +28,22 @@ public class Partida {
 
     private Integer maxJugadores;
 
-    private boolean publica;
+    private Boolean publica;
 
     private Integer vidas;
 
     private Double tiempoRonda;
 
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
 
     private Estado estado;
+
+    private String codigo;
 
     @ManyToOne
     private Quiz quiz;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
 }

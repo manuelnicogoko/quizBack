@@ -15,8 +15,6 @@ public class UsuarioDTO {
 
     private String password;
 
-    private String passwordConfirm;
-
     private String avatar;
 
     private String rol;

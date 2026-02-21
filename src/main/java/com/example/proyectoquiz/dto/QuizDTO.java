@@ -12,4 +12,8 @@ public class QuizDTO {
     private String nombre;
 
     private String descripcion;
+
+    private Long categoriaId;
+
+    private Long subcategoriaId;
 }

@@ -13,9 +13,13 @@ public class PartidaDTO {
 
     private Integer maxJugadores;
 
-    private boolean publica;
+    private Boolean publica;
 
     private Integer vidas;
 
     private Double tiempoRonda;
+
+    private String codigo;
+
+    private Long quiz;
 }
