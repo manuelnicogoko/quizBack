@@ -6,10 +6,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Respuesta;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
+import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.RespuestaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
@@ -38,18 +38,17 @@ public class RespuestaServiceImpl implements RespuestaService {
         return respuestaRepository.save(respuesta);
     }
 
-    public void deleteRespuesta(Long id) throws RuntimeException {
+    public void deleteRespuesta(Long id) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
 
-        Respuesta respuesta = respuestaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Respuesta no encontrada"));
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
-        Quiz quiz = preguntaRepository.findQuizByPreguntaId(respuesta.getPregunta().getId());
-
-        if (usuario.getRol() != Rol.ADMIN && quiz.getCreador().getId() != usuario.getId()) {
+        if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para eliminar esta respuesta");
         }
 

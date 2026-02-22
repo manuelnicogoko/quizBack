@@ -20,5 +20,5 @@ public interface QuizService {
 
     public Quiz saveQuiz(QuizDTO quizDTO) throws RuntimeException, UserNotFoundException;
 
-    public void deleteQuiz(Long id) throws RuntimeException;
+    public void deleteQuiz(Long id) throws RuntimeException, UserNotFoundException;
 }

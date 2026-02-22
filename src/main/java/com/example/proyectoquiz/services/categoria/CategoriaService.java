@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.dto.CategoriaDTO;
+import com.example.proyectoquiz.exceptions.UserNotFoundException;
 
 public interface CategoriaService {
 
@@ -13,7 +14,7 @@ public interface CategoriaService {
 
     public Categoria updateCategoria(Long id, CategoriaDTO categoriaDTO) throws RuntimeException;
 
-    public Categoria saveCategoria(CategoriaDTO categoriaDTO) throws RuntimeException;
+    public Categoria saveCategoria(CategoriaDTO categoriaDTO) throws RuntimeException, UserNotFoundException;
 
     public void deleteCategoria(Long id) throws RuntimeException;
 }

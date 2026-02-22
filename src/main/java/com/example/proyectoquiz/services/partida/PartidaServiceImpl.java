@@ -49,14 +49,14 @@ public class PartidaServiceImpl implements PartidaService {
         return partida;
     }
 
-    public Partida savePartida(PartidaDTO partidaDTO) throws RuntimeException {
+    public Partida savePartida(PartidaDTO partidaDTO) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
 
         if (usuario == null) {
-            throw new UserNotFoundException(username);
+            throw new UserNotFoundException(email);
         }
 
         Quiz quiz = quizRepository.findById(partidaDTO.getQuiz())

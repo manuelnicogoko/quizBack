@@ -10,6 +10,7 @@ import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.CategoriaDTO;
+import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 
@@ -31,11 +32,15 @@ public class CategoriaServiceImpl implements CategoriaService {
         return categoriaRepository.findById(id).orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
     }
 
-    public Categoria saveCategoria(CategoriaDTO categoriaDTO) {
+    public Categoria saveCategoria(CategoriaDTO categoriaDTO) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
         if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para crear una categoria");

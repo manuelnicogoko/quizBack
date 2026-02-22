@@ -14,6 +14,7 @@ import com.example.proyectoquiz.domain.Ronda;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.JugadaDTO;
 import com.example.proyectoquiz.exceptions.PartidaNotFoundException;
+import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.JugadaRepository;
 import com.example.proyectoquiz.repository.PartidaRepository;
 import com.example.proyectoquiz.repository.PreguntaRepository;
@@ -42,16 +43,19 @@ public class JugadaServiceImpl implements JugadaService {
         return jugadaRepository.findByPartidaCodigoAndRondaNumeroRonda(codPartida, numeroRonda);
     }
 
-    public Jugada saveJugada(String codPartida, Integer numeroRonda, JugadaDTO jugadaDTO) throws RuntimeException {
+    public Jugada saveJugada(String codPartida, Integer numeroRonda, JugadaDTO jugadaDTO)
+            throws RuntimeException, UserNotFoundException, PartidaNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
         if (usuario == null) {
-            throw new RuntimeException("Usuario no encontrado");
+            throw new UserNotFoundException(email);
         }
 
         Partida partida = partidaRepository.findByCodigo(codPartida);
+
         if (partida == null) {
             throw new PartidaNotFoundException(codPartida);
         }

@@ -58,7 +58,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.PUT, "/categoria/**", "/subcategoria/**").hasAnyRole("ADMIN")
             .requestMatchers(HttpMethod.DELETE, "/categoria/**", "/subcategoria/**").hasAnyRole("ADMIN")
             .requestMatchers(HttpMethod.GET, "/categoria/**", "/subcategoria/**").permitAll()
-            .requestMatchers("/usuario/login", "/usuario/register").permitAll());
+            .anyRequest().permitAll());
     http.authenticationProvider(authenticationProvider());
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     http.cors(Customizer.withDefaults());

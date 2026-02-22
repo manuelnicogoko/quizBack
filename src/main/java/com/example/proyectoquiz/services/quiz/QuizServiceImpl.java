@@ -54,12 +54,12 @@ public class QuizServiceImpl implements QuizService {
 
     public Quiz saveQuiz(QuizDTO quizDTO) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
 
         if (usuario == null) {
-            throw new UserNotFoundException(username);
+            throw new UserNotFoundException(email);
         }
 
         Quiz quiz = new Quiz();
@@ -76,16 +76,17 @@ public class QuizServiceImpl implements QuizService {
         return quizRepository.save(quiz);
     }
 
-    public void deleteQuiz(Long id) throws RuntimeException {
+    public void deleteQuiz(Long id) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
 
-        Quiz quiz = quizRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Quiz no encontrado"));
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
-        if (usuario.getRol() != Rol.ADMIN && !usuario.getId().equals(quiz.getCreador().getId())) {
+        if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para eliminar un quiz");
         }
 

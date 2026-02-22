@@ -7,9 +7,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Pista;
-import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
+import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.PistaRepository;
 import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
@@ -38,17 +38,17 @@ public class PistaServiceImpl implements PistaService {
         return pistaRepository.save(pista);
     }
 
-    public void deletePista(Long id) throws RuntimeException {
+    public void deletePista(Long id) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
 
-        Pista pista = pistaRepository.findById(id).orElseThrow(() -> new RuntimeException("Pista no encontrada"));
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
-        Quiz quiz = preguntaRepository.findQuizByPreguntaId(pista.getPregunta().getId());
-
-        if (usuario.getRol() != Rol.ADMIN && quiz.getCreador().getId() != usuario.getId()) {
+        if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para eliminar esta pista");
         }
 

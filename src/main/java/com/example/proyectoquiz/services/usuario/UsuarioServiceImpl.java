@@ -11,6 +11,7 @@ import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.RegisterDTO;
 import com.example.proyectoquiz.dto.UsuarioDTO;
+import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -32,11 +33,15 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
-    public Usuario updateUsuario(Long id, UsuarioDTO usuarioDTO) throws RuntimeException {
+    public Usuario updateUsuario(Long id, UsuarioDTO usuarioDTO) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
         if (usuario.getRol() != Rol.ADMIN && !usuario.getId().equals(id)) {
             throw new RuntimeException("No tienes permisos para actualizar este usuario");
@@ -64,11 +69,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public void deleteUsuario(Long id) throws RuntimeException {
+    public void deleteUsuario(Long id) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
         if (usuario.getRol() != Rol.ADMIN && !usuario.getId().equals(id)) {
             throw new RuntimeException("No tienes permisos para actualizar este usuario");

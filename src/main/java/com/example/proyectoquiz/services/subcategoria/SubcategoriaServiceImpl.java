@@ -11,6 +11,7 @@ import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Subcategoria;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.SubcategoriaDTO;
+import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
 import com.example.proyectoquiz.repository.SubcategoriaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
@@ -51,11 +52,16 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         return subcategoriaRepository.save(subcategoria);
     }
 
-    public Subcategoria updateSubcategoria(Long id, SubcategoriaDTO subcategoriaDTO) throws RuntimeException {
+    public Subcategoria updateSubcategoria(Long id, SubcategoriaDTO subcategoriaDTO)
+            throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
         if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para actualizar esta subcategoria");
@@ -76,11 +82,15 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         return subcategoriaRepository.save(subcategoria);
     }
 
-    public void deleteSubcategoria(Long id) {
+    public void deleteSubcategoria(Long id) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
         if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para eliminar esta subcategoria");

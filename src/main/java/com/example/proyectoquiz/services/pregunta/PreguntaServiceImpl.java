@@ -11,6 +11,7 @@ import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.PreguntaDTO;
+import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
@@ -56,15 +57,17 @@ public class PreguntaServiceImpl implements PreguntaService {
         return preguntaRepository.save(pregunta);
     }
 
-    public void deletePregunta(Long id) {
+    public void deletePregunta(Long id) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
 
-        Quiz quiz = preguntaRepository.findQuizByPreguntaId(id);
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
-        if (usuario.getRol() != Rol.ADMIN && quiz.getCreador().getId() != usuario.getId()) {
+        if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para eliminar esta pregunta");
         }
 

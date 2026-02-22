@@ -60,17 +60,4 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         return null;
     }
-
-    // @Override
-    // protected boolean shouldNotFilter(HttpServletRequest request) throws
-    // ServletException {
-    // String path = request.getServletPath();
-    // String method = request.getMethod();
-    // // Parche cutre para permitir conexiones sin token a estos path
-    // return (HttpMethod.GET.matches(method) &&
-    // (path.startsWith("/categoria/")
-    // || path.startsWith("/subcategoria")
-    // || path.startsWith("/usuario/login")
-    // || path.startsWith("/usuario/register")));
-    // }
 }
