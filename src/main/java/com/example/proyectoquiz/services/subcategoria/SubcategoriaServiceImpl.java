@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.domain.Estado;
+import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Subcategoria;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.SubcategoriaDTO;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
+import com.example.proyectoquiz.repository.QuizRepository;
 import com.example.proyectoquiz.repository.SubcategoriaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 
@@ -29,8 +31,10 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 
     private final UsuarioRepository usuarioRepository;
 
+    private final QuizRepository quizRepository;
+
     public List<Subcategoria> getAllSubcategorias() {
-        return subcategoriaRepository.findAll();
+        return subcategoriaRepository.findByEstado(Estado.ACEPTADO);
     }
 
     public Subcategoria getSubcategoriaById(Long id) throws RuntimeException {
@@ -97,6 +101,17 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 
         if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para eliminar esta subcategoria");
+        }
+
+        List<Quiz> quizzes = quizRepository.findBySubcategoriaId(id);
+
+        if (!quizzes.isEmpty()) {
+            Subcategoria subcategoriaOtros = subcategoriaRepository.findByNombre("Otros");
+
+            for (Quiz quiz : quizzes) {
+                quiz.setSubcategoria(subcategoriaOtros);
+                quizRepository.save(quiz);
+            }
         }
 
         subcategoriaRepository.deleteById(id);

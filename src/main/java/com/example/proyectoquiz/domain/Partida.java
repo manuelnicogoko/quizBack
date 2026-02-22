@@ -41,6 +41,7 @@ public class Partida {
     private String codigo;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Quiz quiz;
 
     @ManyToOne

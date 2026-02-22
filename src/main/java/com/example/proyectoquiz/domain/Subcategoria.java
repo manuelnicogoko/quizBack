@@ -29,8 +29,6 @@ public class Subcategoria {
 
     private String descripcion;
 
-    private String valor;
-
     private Estado estado;
 
     @ManyToOne

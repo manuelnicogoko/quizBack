@@ -60,6 +60,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario saveUsuario(RegisterDTO usuarioDTO) throws RuntimeException {
         Usuario usuario = new Usuario();
 
+        if (usuarioRepository.findByEmail(usuarioDTO.getEmail()) != null) {
+            throw new RuntimeException("El email ya está registrado");
+        }
+
+        if (usuarioRepository.findByNombre(usuarioDTO.getNombre()) != null) {
+            throw new RuntimeException("El nombre ya está registrado");
+        }
+
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setEmail(usuarioDTO.getEmail());
         usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));

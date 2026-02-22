@@ -12,9 +12,10 @@ public interface CategoriaService {
 
     public Categoria getCategoriaById(Long id) throws RuntimeException;
 
-    public Categoria updateCategoria(Long id, CategoriaDTO categoriaDTO) throws RuntimeException;
-
     public Categoria saveCategoria(CategoriaDTO categoriaDTO) throws RuntimeException, UserNotFoundException;
 
-    public void deleteCategoria(Long id) throws RuntimeException;
+    public Categoria updateCategoria(Long id, CategoriaDTO categoriaDTO)
+            throws RuntimeException, UserNotFoundException;
+
+    public void deleteCategoria(Long id) throws RuntimeException, UserNotFoundException;
 }

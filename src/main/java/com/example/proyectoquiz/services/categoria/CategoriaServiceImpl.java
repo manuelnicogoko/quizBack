@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.domain.Estado;
+import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.CategoriaDTO;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
+import com.example.proyectoquiz.repository.QuizRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,8 +27,10 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     private final UsuarioRepository usuarioRepository;
 
+    private final QuizRepository quizRepository;
+
     public List<Categoria> getAllCategorias() {
-        return categoriaRepository.findAll();
+        return categoriaRepository.findByEstado(Estado.ACEPTADO);
     }
 
     public Categoria getCategoriaById(Long id) throws RuntimeException {
@@ -55,11 +59,16 @@ public class CategoriaServiceImpl implements CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public Categoria updateCategoria(Long id, CategoriaDTO categoriaDTO) throws RuntimeException {
+    public Categoria updateCategoria(Long id, CategoriaDTO categoriaDTO)
+            throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
         if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para actualizar esta categoria");
@@ -74,14 +83,29 @@ public class CategoriaServiceImpl implements CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public void deleteCategoria(Long id) {
+    public void deleteCategoria(Long id) throws RuntimeException, UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByNombre(username);
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
 
         if (usuario.getRol() != Rol.ADMIN) {
             throw new RuntimeException("No tienes permisos para eliminar esta categoria");
+        }
+
+        List<Quiz> quizzes = quizRepository.findByCategoriaId(id);
+
+        if (!quizzes.isEmpty()) {
+            Categoria categoriaOtros = categoriaRepository.findByNombre("Otros");
+
+            for (Quiz quiz : quizzes) {
+                quiz.setCategoria(categoriaOtros);
+                quizRepository.save(quiz);
+            }
         }
 
         categoriaRepository.deleteById(id);

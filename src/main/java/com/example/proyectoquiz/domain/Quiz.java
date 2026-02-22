@@ -2,6 +2,9 @@ package com.example.proyectoquiz.domain;
 
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,14 +33,14 @@ public class Quiz {
     private Estado estado;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Usuario creador;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Categoria categoria;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Subcategoria subcategoria;
-
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pregunta> preguntas;
 }

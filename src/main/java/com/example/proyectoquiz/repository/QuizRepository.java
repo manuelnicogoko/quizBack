@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Quiz;
 
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
@@ -13,4 +14,6 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
     List<Quiz> findBySubcategoriaId(Long subcategoriaId);
 
     List<Quiz> findByNombreContainingIgnoreCase(String nombre);
+
+    List<Quiz> findByEstado(Estado estado);
 }

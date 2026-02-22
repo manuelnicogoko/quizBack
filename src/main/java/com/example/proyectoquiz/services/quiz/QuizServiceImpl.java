@@ -34,7 +34,7 @@ public class QuizServiceImpl implements QuizService {
     private final UsuarioRepository usuarioRepository;
 
     public List<Quiz> getAllQuizzes() {
-        return quizRepository.findAll();
+        return quizRepository.findByEstado(Estado.ACEPTADO);
     }
 
     public List<Quiz> getQuizzesByCategoriaId(Long categoriaId) {

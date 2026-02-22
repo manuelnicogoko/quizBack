@@ -6,14 +6,16 @@ INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VAL
 -- CATEGORIAS
 INSERT INTO categoria (nombre, logo, descripcion) VALUES
   ('Videojuegos', 'logo_videojuegos.png', 'Todo sobre videojuegos'),
-  ('Arte', 'logo_arte.png', 'Todo sobre arte');
+  ('Arte', 'logo_arte.png', 'Todo sobre arte'),
+  ('Otros', 'logo_otros.png', 'Categoría para otros temas');
 
 -- SUBCATEGORIAS
-INSERT INTO subcategoria (nombre, logo, descripcion, valor, categoria_id) VALUES
-  ('RPG', 'logo_rpg.png', 'Juegos de rol', 'rpg', 1),
-  ('Survival', 'logo_survival.png', 'Juegos de supervivencia', 'survival', 1),
-  ('Contemporaneo', 'logo_contemporaneo.png', 'Arte contemporáneo', 'contemporaneo', 2),
-  ('Abstracto', 'logo_abstracto.png', 'Arte abstracto', 'abstracto', 2);
+INSERT INTO subcategoria (nombre, logo, descripcion, categoria_id) VALUES
+  ('RPG', 'logo_rpg.png', 'Juegos de rol', 1),
+  ('Survival', 'logo_survival.png', 'Juegos de supervivencia', 1),
+  ('Contemporaneo', 'logo_contemporaneo.png', 'Arte contemporáneo', 2),
+  ('Abstracto', 'logo_abstracto.png', 'Arte abstracto', 2),
+  ('Otros', 'logo_otros.png', 'Categoría para otros temas', 3);
 
 -- QUIZZES
 INSERT INTO quiz (nombre, descripcion, creador_id, categoria_id, subcategoria_id) VALUES

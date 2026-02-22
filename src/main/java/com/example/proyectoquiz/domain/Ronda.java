@@ -1,5 +1,8 @@
 package com.example.proyectoquiz.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,8 +27,10 @@ public class Ronda {
     private Estado estado;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Partida partida;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Pregunta pregunta;
 }
