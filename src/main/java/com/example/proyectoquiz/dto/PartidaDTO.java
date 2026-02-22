@@ -19,7 +19,5 @@ public class PartidaDTO {
 
     private Double tiempoRonda;
 
-    private String codigo;
-
     private Long quiz;
 }

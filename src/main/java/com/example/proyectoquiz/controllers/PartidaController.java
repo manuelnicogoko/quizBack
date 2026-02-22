@@ -45,6 +45,11 @@ public class PartidaController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PutMapping("/soft/{id}")
+    public ResponseEntity<?> softDeletePartida(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(partidaService.softDeletePartida(id));
+    }
+
     @PutMapping("/finalizar/{codigo}")
     public ResponseEntity<?> finalizarPartida(@PathVariable String codigo) {
         return ResponseEntity.status(HttpStatus.OK).body(partidaService.finalizarPartida(codigo));

@@ -108,6 +108,31 @@ public class PartidaServiceImpl implements PartidaService {
         partidaRepository.deleteById(id);
     }
 
+    public Partida softDeletePartida(Long id) throws RuntimeException, UserNotFoundException, AuthException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
+        String email = authentication.getName();
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
+
+        Partida partida = partidaRepository.findById(id).orElseThrow(() -> new PartidaNotFoundException(id.toString()));
+
+        if (partida.getUsuario().getId() != usuario.getId()) {
+            throw new RuntimeException("No tienes permisos para eliminar esta partida");
+        }
+
+        partida.setEstado(Estado.CANCELADA);
+        return partidaRepository.save(partida);
+    }
+
     public Partida finalizarPartida(String codigo) throws RuntimeException {
         Partida partida = partidaRepository.findByCodigo(codigo);
         if (partida == null) {

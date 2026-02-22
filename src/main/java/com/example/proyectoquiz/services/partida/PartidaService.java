@@ -19,6 +19,8 @@ public interface PartidaService {
 
     public void deletePartida(Long id) throws RuntimeException, UserNotFoundException, AuthException;
 
+    public Partida softDeletePartida(Long id) throws RuntimeException, UserNotFoundException, AuthException;
+
     public Partida finalizarPartida(String codigo) throws RuntimeException;
 
 }
