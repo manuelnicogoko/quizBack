@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Categoria;
+import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.CategoriaDTO;
@@ -50,6 +51,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         categoria.setNombre(categoriaDTO.getNombre());
         categoria.setLogo(categoriaDTO.getLogo());
         categoria.setDescripcion(categoriaDTO.getDescripcion());
+        categoria.setEstado(Estado.PENDIENTE);
         return categoriaRepository.save(categoria);
     }
 
@@ -68,6 +70,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         categoria.setNombre(categoriaDTO.getNombre());
         categoria.setLogo(categoriaDTO.getLogo());
         categoria.setDescripcion(categoriaDTO.getDescripcion());
+        categoria.setEstado(Estado.ACEPTADO);
         return categoriaRepository.save(categoria);
     }
 

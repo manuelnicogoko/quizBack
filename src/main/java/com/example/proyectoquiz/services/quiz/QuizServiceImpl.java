@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Categoria;
+import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Subcategoria;
@@ -66,6 +67,7 @@ public class QuizServiceImpl implements QuizService {
         quiz.setCreador(usuario);
         quiz.setNombre(quizDTO.getNombre());
         quiz.setDescripcion(quizDTO.getDescripcion());
+        quiz.setEstado(Estado.PENDIENTE);
 
         Categoria categoria = categoriaService.getCategoriaById(quizDTO.getCategoriaId());
         quiz.setCategoria(categoria);
@@ -91,6 +93,34 @@ public class QuizServiceImpl implements QuizService {
         }
 
         quizRepository.deleteById(id);
+    }
+
+    public Quiz updateQuiz(Long id, QuizDTO quizDTO) throws RuntimeException, UserNotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
+
+        if (usuario.getRol() != Rol.ADMIN) {
+            throw new RuntimeException("No tienes permisos para actualizar un quiz");
+        }
+
+        Quiz quiz = quizRepository.findById(id).orElseThrow(() -> new RuntimeException("Quiz no encontrado"));
+        quiz.setNombre(quizDTO.getNombre());
+        quiz.setDescripcion(quizDTO.getDescripcion());
+        quiz.setEstado(Estado.ACEPTADO);
+
+        Categoria categoria = categoriaService.getCategoriaById(quizDTO.getCategoriaId());
+        quiz.setCategoria(categoria);
+
+        Subcategoria subcategoria = subcategoriaService.getSubcategoriaById(quizDTO.getSubcategoriaId());
+        quiz.setSubcategoria(subcategoria);
+
+        return quizRepository.save(quiz);
     }
 
 }

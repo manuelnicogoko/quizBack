@@ -31,6 +31,8 @@ public class Subcategoria {
 
     private String valor;
 
+    private Estado estado;
+
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Categoria categoria;

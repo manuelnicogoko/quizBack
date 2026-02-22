@@ -26,4 +26,6 @@ public class Categoria {
 
     private String descripcion;
 
+    private Estado estado;
+
 }

@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Categoria;
+import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Subcategoria;
 import com.example.proyectoquiz.domain.Usuario;
@@ -43,6 +44,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         subcategoria.setNombre(subcategoriaDTO.getNombre());
         subcategoria.setLogo(subcategoriaDTO.getLogo());
         subcategoria.setDescripcion(subcategoriaDTO.getDescripcion());
+        subcategoria.setEstado(Estado.PENDIENTE);
 
         Categoria categoria = categoriaRepository.findById(subcategoriaDTO.getCategoriaId())
                 .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
@@ -73,6 +75,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         subcategoria.setNombre(subcategoriaDTO.getNombre());
         subcategoria.setLogo(subcategoriaDTO.getLogo());
         subcategoria.setDescripcion(subcategoriaDTO.getDescripcion());
+        subcategoria.setEstado(Estado.ACEPTADO);
 
         Categoria categoria = categoriaRepository.findById(subcategoriaDTO.getCategoriaId())
                 .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));

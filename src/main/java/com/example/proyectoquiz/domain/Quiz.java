@@ -27,6 +27,8 @@ public class Quiz {
 
     private String descripcion;
 
+    private Estado estado;
+
     @ManyToOne
     private Usuario creador;
 
