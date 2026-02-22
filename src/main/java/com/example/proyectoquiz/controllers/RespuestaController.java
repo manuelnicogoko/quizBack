@@ -2,7 +2,7 @@ package com.example.proyectoquiz.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.proyectoquiz.domain.Respuesta;
+import com.example.proyectoquiz.dto.RespuestaDTO;
 import com.example.proyectoquiz.services.respuesta.RespuestaService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,8 +34,8 @@ public class RespuestaController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> saveRespuesta(@RequestBody Respuesta respuesta) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(respuestaService.saveRespuesta(respuesta));
+    public ResponseEntity<?> saveRespuesta(@RequestBody RespuestaDTO respuestaDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(respuestaService.saveRespuesta(respuestaDTO));
     }
 
     @DeleteMapping("/{id}")

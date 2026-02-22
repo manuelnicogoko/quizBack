@@ -6,11 +6,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.proyectoquiz.domain.Pregunta;
 import com.example.proyectoquiz.domain.Respuesta;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
+import com.example.proyectoquiz.dto.RespuestaDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
+import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.RespuestaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 
@@ -22,6 +25,8 @@ public class RespuestaServiceImpl implements RespuestaService {
 
     private final RespuestaRepository respuestaRepository;
 
+    private final PreguntaRepository preguntaRepository;
+
     private final UsuarioRepository usuarioRepository;
 
     public List<Respuesta> getRespuestasByPreguntaId(Long preguntaId) {
@@ -32,7 +37,14 @@ public class RespuestaServiceImpl implements RespuestaService {
         return respuestaRepository.findById(id).orElseThrow(() -> new RuntimeException("Respuesta no encontrada"));
     }
 
-    public Respuesta saveRespuesta(Respuesta respuesta) {
+    public Respuesta saveRespuesta(RespuestaDTO respuestaDTO) throws RuntimeException {
+        Pregunta pregunta = preguntaRepository.findById(respuestaDTO.getPreguntaId())
+                .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
+
+        Respuesta respuesta = new Respuesta();
+        respuesta.setTexto(respuestaDTO.getTexto());
+        respuesta.setPregunta(pregunta);
+
         return respuestaRepository.save(respuesta);
     }
 

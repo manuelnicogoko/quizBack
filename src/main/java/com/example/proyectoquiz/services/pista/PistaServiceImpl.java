@@ -7,11 +7,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Pista;
+import com.example.proyectoquiz.domain.Pregunta;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
+import com.example.proyectoquiz.dto.PistaDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.PistaRepository;
+import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class PistaServiceImpl implements PistaService {
 
     private final PistaRepository pistaRepository;
+
+    private final PreguntaRepository preguntaRepository;
 
     private final UsuarioRepository usuarioRepository;
 
@@ -32,7 +37,14 @@ public class PistaServiceImpl implements PistaService {
         return pistaRepository.findById(id).orElseThrow(() -> new RuntimeException("Pista no encontrada"));
     }
 
-    public Pista savePista(Pista pista) {
+    public Pista savePista(PistaDTO pistaDTO) throws RuntimeException {
+        Pregunta pregunta = preguntaRepository.findById(pistaDTO.getPreguntaId())
+                .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
+
+        Pista pista = new Pista();
+        pista.setTexto(pistaDTO.getTexto());
+        pista.setPregunta(pregunta);
+
         return pistaRepository.save(pista);
     }
 

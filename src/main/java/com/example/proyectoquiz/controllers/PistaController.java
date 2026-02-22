@@ -2,7 +2,7 @@ package com.example.proyectoquiz.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.proyectoquiz.domain.Pista;
+import com.example.proyectoquiz.dto.PistaDTO;
 import com.example.proyectoquiz.services.pista.PistaService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,8 +34,8 @@ public class PistaController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> savePista(@RequestBody Pista pista) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(pistaService.savePista(pista));
+    public ResponseEntity<?> savePista(@RequestBody PistaDTO pistaDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(pistaService.savePista(pistaDTO));
     }
 
     @DeleteMapping("/{id}")

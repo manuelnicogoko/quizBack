@@ -51,8 +51,6 @@ public class PreguntaServiceImpl implements PreguntaService {
         pregunta.setEnunciado(preguntaDTO.getEnunciado());
         pregunta.setImagen(preguntaDTO.getImagen());
         pregunta.setPosicion(preguntaDTO.getPosicion());
-        pregunta.setPistas(preguntaDTO.getPistas());
-        pregunta.setRespuestas(preguntaDTO.getRespuestas());
         pregunta.setQuiz(quiz);
 
         return preguntaRepository.save(pregunta);

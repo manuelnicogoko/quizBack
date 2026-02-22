@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PreguntaDTO {
+public class PistaDTO {
 
-    private String enunciado;
+    private String texto;
 
-    private String imagen;
-
-    private Integer posicion;
+    private Long preguntaId;
 
 }
