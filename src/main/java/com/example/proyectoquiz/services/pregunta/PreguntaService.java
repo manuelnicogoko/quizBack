@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.proyectoquiz.domain.Pregunta;
 import com.example.proyectoquiz.dto.PreguntaDTO;
+import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 
 public interface PreguntaService {
@@ -15,5 +16,5 @@ public interface PreguntaService {
 
     public Pregunta getPreguntaByPosicion(Long quizId, Integer posicion) throws RuntimeException;
 
-    public void deletePregunta(Long id) throws RuntimeException, UserNotFoundException;
+    public void deletePregunta(Long id) throws RuntimeException, UserNotFoundException, AuthException;
 }

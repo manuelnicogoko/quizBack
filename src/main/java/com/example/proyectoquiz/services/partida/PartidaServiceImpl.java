@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Partida;
 import com.example.proyectoquiz.domain.Quiz;
+import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.PartidaDTO;
+import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.PartidaNotFoundException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.PartidaRepository;
@@ -49,8 +51,13 @@ public class PartidaServiceImpl implements PartidaService {
         return partida;
     }
 
-    public Partida savePartida(PartidaDTO partidaDTO) throws RuntimeException, UserNotFoundException {
+    public Partida savePartida(PartidaDTO partidaDTO) throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);
@@ -79,7 +86,25 @@ public class PartidaServiceImpl implements PartidaService {
         return partidaRepository.save(partida);
     }
 
-    public void deletePartida(Long id) throws RuntimeException {
+    public void deletePartida(Long id) throws RuntimeException, UserNotFoundException, AuthException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
+        String email = authentication.getName();
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
+
+        if (usuario.getRol() != Rol.ADMIN) {
+            throw new RuntimeException("No tienes permisos para eliminar esta partida");
+        }
+
         partidaRepository.deleteById(id);
     }
 

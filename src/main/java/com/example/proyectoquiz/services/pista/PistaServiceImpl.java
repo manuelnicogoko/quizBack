@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.example.proyectoquiz.domain.Pista;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
+import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.PistaRepository;
-import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class PistaServiceImpl implements PistaService {
 
     private final PistaRepository pistaRepository;
-
-    private final PreguntaRepository preguntaRepository;
 
     private final UsuarioRepository usuarioRepository;
 
@@ -38,8 +36,13 @@ public class PistaServiceImpl implements PistaService {
         return pistaRepository.save(pista);
     }
 
-    public void deletePista(Long id) throws RuntimeException, UserNotFoundException {
+    public void deletePista(Long id) throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);

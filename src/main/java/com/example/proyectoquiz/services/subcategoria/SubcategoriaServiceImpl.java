@@ -13,6 +13,7 @@ import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Subcategoria;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.SubcategoriaDTO;
+import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
@@ -59,8 +60,13 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
     }
 
     public Subcategoria updateSubcategoria(Long id, SubcategoriaDTO subcategoriaDTO)
-            throws RuntimeException, UserNotFoundException {
+            throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);
@@ -89,8 +95,13 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         return subcategoriaRepository.save(subcategoria);
     }
 
-    public void deleteSubcategoria(Long id) throws RuntimeException, UserNotFoundException {
+    public void deleteSubcategoria(Long id) throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);

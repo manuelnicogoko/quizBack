@@ -3,6 +3,7 @@ package com.example.proyectoquiz.services.pista;
 import java.util.List;
 
 import com.example.proyectoquiz.domain.Pista;
+import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 
 public interface PistaService {
@@ -13,5 +14,5 @@ public interface PistaService {
 
     public Pista savePista(Pista pista);
 
-    public void deletePista(Long id) throws RuntimeException, UserNotFoundException;
+    public void deletePista(Long id) throws RuntimeException, UserNotFoundException, AuthException;
 }

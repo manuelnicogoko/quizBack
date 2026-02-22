@@ -11,6 +11,7 @@ import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.RegisterDTO;
 import com.example.proyectoquiz.dto.UsuarioDTO;
+import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 
@@ -33,8 +34,14 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
-    public Usuario updateUsuario(Long id, UsuarioDTO usuarioDTO) throws RuntimeException, UserNotFoundException {
+    public Usuario updateUsuario(Long id, UsuarioDTO usuarioDTO)
+            throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);
@@ -77,8 +84,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public void deleteUsuario(Long id) throws RuntimeException, UserNotFoundException {
+    public void deleteUsuario(Long id) throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);

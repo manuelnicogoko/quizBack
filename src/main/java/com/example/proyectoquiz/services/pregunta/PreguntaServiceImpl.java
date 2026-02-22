@@ -11,6 +11,7 @@ import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.PreguntaDTO;
+import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
@@ -57,8 +58,13 @@ public class PreguntaServiceImpl implements PreguntaService {
         return preguntaRepository.save(pregunta);
     }
 
-    public void deletePregunta(Long id) throws RuntimeException, UserNotFoundException {
+    public void deletePregunta(Long id) throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);

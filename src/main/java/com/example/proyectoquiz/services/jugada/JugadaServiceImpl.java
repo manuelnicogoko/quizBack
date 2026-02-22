@@ -13,6 +13,7 @@ import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Ronda;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.JugadaDTO;
+import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.PartidaNotFoundException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.JugadaRepository;
@@ -44,8 +45,13 @@ public class JugadaServiceImpl implements JugadaService {
     }
 
     public Jugada saveJugada(String codPartida, Integer numeroRonda, JugadaDTO jugadaDTO)
-            throws RuntimeException, UserNotFoundException, PartidaNotFoundException {
+            throws RuntimeException, UserNotFoundException, PartidaNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);

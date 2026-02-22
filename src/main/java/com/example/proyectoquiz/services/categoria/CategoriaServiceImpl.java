@@ -12,6 +12,7 @@ import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.CategoriaDTO;
+import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
@@ -37,8 +38,14 @@ public class CategoriaServiceImpl implements CategoriaService {
         return categoriaRepository.findById(id).orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
     }
 
-    public Categoria saveCategoria(CategoriaDTO categoriaDTO) throws RuntimeException, UserNotFoundException {
+    public Categoria saveCategoria(CategoriaDTO categoriaDTO)
+            throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);
@@ -60,8 +67,13 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     public Categoria updateCategoria(Long id, CategoriaDTO categoriaDTO)
-            throws RuntimeException, UserNotFoundException {
+            throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);
@@ -83,8 +95,13 @@ public class CategoriaServiceImpl implements CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public void deleteCategoria(Long id) throws RuntimeException, UserNotFoundException {
+    public void deleteCategoria(Long id) throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
         String email = authentication.getName();
 
         Usuario usuario = usuarioRepository.findByEmail(email);
