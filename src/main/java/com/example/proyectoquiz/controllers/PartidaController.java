@@ -2,6 +2,7 @@ package com.example.proyectoquiz.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.proyectoquiz.domain.Partida;
 import com.example.proyectoquiz.dto.PartidaDTO;
 import com.example.proyectoquiz.services.partida.PartidaService;
 
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

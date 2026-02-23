@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Estado;
+import com.example.proyectoquiz.domain.Inscripcion;
 import com.example.proyectoquiz.domain.Partida;
 import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
@@ -16,11 +17,13 @@ import com.example.proyectoquiz.dto.PartidaDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.PartidaNotFoundException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
+import com.example.proyectoquiz.repository.InscripcionRepository;
 import com.example.proyectoquiz.repository.PartidaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 import com.example.proyectoquiz.utils.GenerarCodigoPartida;
 
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -34,6 +37,8 @@ public class PartidaServiceImpl implements PartidaService {
     private final QuizRepository quizRepository;
 
     private final GenerarCodigoPartida generarCodigoPartida;
+
+    private final InscripcionRepository inscripcionRepository;
 
     public List<Partida> getAllPartidas() {
         return partidaRepository.findAll();
@@ -133,11 +138,34 @@ public class PartidaServiceImpl implements PartidaService {
         return partidaRepository.save(partida);
     }
 
-    public Partida finalizarPartida(String codigo) throws RuntimeException {
+    public Partida finalizarPartida(String codigo) throws RuntimeException, UserNotFoundException, AuthException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AuthException();
+        }
+
+        String email = authentication.getName();
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UserNotFoundException(email);
+        }
+
         Partida partida = partidaRepository.findByCodigo(codigo);
+
         if (partida == null) {
             throw new PartidaNotFoundException(codigo);
         }
+
+        Inscripcion inscripcion = inscripcionRepository.findByUsuarioIdAndPartidaId(usuario.getId(), partida.getId());
+
+        if (inscripcion == null) {
+            throw new RuntimeException("Inscripcion no encontrada");
+        }
+
+        usuario.setPuntuacionTotal(usuario.getPuntuacionTotal() + inscripcion.getPuntuacionTotalPartida());
         partida.setEstado(Estado.FINALIZADA);
         return partidaRepository.save(partida);
     }

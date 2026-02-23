@@ -1,7 +1,5 @@
 package com.example.proyectoquiz.domain;
 
-import java.time.LocalDate;
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -18,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Partida {
+public class Inscripcion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,27 +24,15 @@ public class Partida {
 
     private String nombre;
 
-    private Integer maxJugadores;
+    private Boolean anonimo;
 
-    private Boolean publica;
-
-    private Integer vidas;
-
-    private Double tiempoRonda;
-
-    private LocalDate fechaCreacion;
-
-    private Estado estado;
-
-    private String codigo;
-
-    private Integer numeroJugadores;
-
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    private Quiz quiz;
+    private Double puntuacionTotalPartida;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
+
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Partida partida;
 }

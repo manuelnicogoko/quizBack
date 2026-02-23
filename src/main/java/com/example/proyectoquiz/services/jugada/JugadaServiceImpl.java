@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.proyectoquiz.domain.Inscripcion;
 import com.example.proyectoquiz.domain.Jugada;
 import com.example.proyectoquiz.domain.Partida;
 import com.example.proyectoquiz.domain.Pregunta;
@@ -18,11 +19,13 @@ import com.example.proyectoquiz.dto.JugadaDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.PartidaNotFoundException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
+import com.example.proyectoquiz.repository.InscripcionRepository;
 import com.example.proyectoquiz.repository.JugadaRepository;
 import com.example.proyectoquiz.repository.PartidaRepository;
 import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.RondaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
+
 import com.example.proyectoquiz.repository.RespuestaRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +47,8 @@ public class JugadaServiceImpl implements JugadaService {
     private final PreguntaRepository preguntaRepository;
 
     private final RespuestaRepository respuestaRepository;
+
+    private final InscripcionRepository inscripcionRepository;
 
     public List<Jugada> getJugadasPartidaRonda(String codPartida, Integer numeroRonda) {
         return jugadaRepository.findByPartidaCodigoAndRondaNumeroRonda(codPartida, numeroRonda);
@@ -93,26 +98,33 @@ public class JugadaServiceImpl implements JugadaService {
             opcionesCorrectas.add(respuesta.getTexto());
         }
 
+        Inscripcion inscripcion = inscripcionRepository.findByUsuarioIdAndPartidaId(usuario.getId(), partida.getId());
+
+        if (inscripcion == null) {
+            throw new RuntimeException("Inscripcion no encontrada");
+        }
+
         String respuesta = jugadaDTO.getRespuesta();
         if (opcionesCorrectas.contains(respuesta)) {
             jugada.setRespuesta(respuesta);
             jugada.setCorrecta(true);
             jugada.setPuntuacion(PUNTUACION_CORRECTA);
+            inscripcion.setPuntuacionTotalPartida(inscripcion.getPuntuacionTotalPartida() + PUNTUACION_CORRECTA);
             jugada.setTiempoRespuesta(jugadaDTO.getTiempoRespuesta());
             jugada.setPartida(partida);
             jugada.setRonda(ronda);
             jugada.setUsuario(usuario);
-            usuario.setPuntuacionTotal(usuario.getPuntuacionTotal() + PUNTUACION_CORRECTA);
-            usuarioRepository.save(usuario);
+            inscripcionRepository.save(inscripcion);
         } else {
             jugada.setRespuesta(respuesta);
             jugada.setCorrecta(false);
             jugada.setPuntuacion(0.00);
+            inscripcion.setPuntuacionTotalPartida(inscripcion.getPuntuacionTotalPartida());
             jugada.setTiempoRespuesta(jugadaDTO.getTiempoRespuesta());
             jugada.setPartida(partida);
             jugada.setRonda(ronda);
             jugada.setUsuario(usuario);
-            usuarioRepository.save(usuario);
+            inscripcionRepository.save(inscripcion);
         }
 
         return jugadaRepository.save(jugada);

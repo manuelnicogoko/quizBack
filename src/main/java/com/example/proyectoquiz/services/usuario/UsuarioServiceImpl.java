@@ -71,7 +71,8 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new RuntimeException("El email ya está registrado");
         }
 
-        if (usuarioRepository.findByNombre(usuarioDTO.getNombre()) != null) {
+        if (usuarioRepository.findByNombreContainingIgnoreCase(usuarioDTO.getNombre()) != null
+                && !usuarioRepository.findByNombreContainingIgnoreCase(usuarioDTO.getNombre()).isEmpty()) {
             throw new RuntimeException("El nombre ya está registrado");
         }
 
