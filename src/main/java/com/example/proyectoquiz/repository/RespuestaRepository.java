@@ -8,4 +8,5 @@ import com.example.proyectoquiz.domain.Respuesta;
 
 public interface RespuestaRepository extends JpaRepository<Respuesta, Long> {
     List<Respuesta> findByPreguntaId(Long preguntaId);
+
 }

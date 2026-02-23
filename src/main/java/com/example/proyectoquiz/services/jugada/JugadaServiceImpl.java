@@ -1,5 +1,6 @@
 package com.example.proyectoquiz.services.jugada;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.proyectoquiz.domain.Jugada;
 import com.example.proyectoquiz.domain.Partida;
 import com.example.proyectoquiz.domain.Pregunta;
+import com.example.proyectoquiz.domain.Respuesta;
 import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Ronda;
 import com.example.proyectoquiz.domain.Usuario;
@@ -21,6 +23,7 @@ import com.example.proyectoquiz.repository.PartidaRepository;
 import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.RondaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
+import com.example.proyectoquiz.repository.RespuestaRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,6 +42,8 @@ public class JugadaServiceImpl implements JugadaService {
     private final RondaRepository rondaRepository;
 
     private final PreguntaRepository preguntaRepository;
+
+    private final RespuestaRepository respuestaRepository;
 
     public List<Jugada> getJugadasPartidaRonda(String codPartida, Integer numeroRonda) {
         return jugadaRepository.findByPartidaCodigoAndRondaNumeroRonda(codPartida, numeroRonda);
@@ -80,8 +85,16 @@ public class JugadaServiceImpl implements JugadaService {
 
         Jugada jugada = new Jugada();
 
+        List<Respuesta> respuestas = respuestaRepository.findByPreguntaId(pregunta.getId());
+
+        List<String> opcionesCorrectas = new ArrayList<>();
+
+        for (Respuesta respuesta : respuestas) {
+            opcionesCorrectas.add(respuesta.getTexto());
+        }
+
         String respuesta = jugadaDTO.getRespuesta();
-        if (pregunta.getRespuestas().contains(respuesta)) {
+        if (opcionesCorrectas.contains(respuesta)) {
             jugada.setRespuesta(respuesta);
             jugada.setCorrecta(true);
             jugada.setPuntuacion(PUNTUACION_CORRECTA);
@@ -90,6 +103,7 @@ public class JugadaServiceImpl implements JugadaService {
             jugada.setRonda(ronda);
             jugada.setUsuario(usuario);
             usuario.setPuntuacionTotal(usuario.getPuntuacionTotal() + PUNTUACION_CORRECTA);
+            usuarioRepository.save(usuario);
         } else {
             jugada.setRespuesta(respuesta);
             jugada.setCorrecta(false);
@@ -98,6 +112,7 @@ public class JugadaServiceImpl implements JugadaService {
             jugada.setPartida(partida);
             jugada.setRonda(ronda);
             jugada.setUsuario(usuario);
+            usuarioRepository.save(usuario);
         }
 
         return jugadaRepository.save(jugada);

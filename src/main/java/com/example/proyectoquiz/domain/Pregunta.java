@@ -30,10 +30,6 @@ public class Pregunta {
 
     private Integer posicion;
 
-    private List<String> pistas;
-
-    private List<String> respuestas;
-
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Quiz quiz;
