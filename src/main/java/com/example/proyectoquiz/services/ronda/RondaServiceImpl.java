@@ -57,9 +57,9 @@ public class RondaServiceImpl implements RondaService {
         rondaRepository.deleteById(id);
     }
 
-    public Ronda finalizarRonda(Long id) throws RuntimeException {
-        Ronda ronda = rondaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ronda no encontrada"));
+    public Ronda finalizarRonda(String codPartida, Integer numeroRonda) throws RuntimeException {
+        Partida partida = partidaRepository.findByCodigo(codPartida);
+        Ronda ronda = rondaRepository.findByPartidaIdAndNumeroRonda(partida.getId(), numeroRonda);
 
         ronda.setEstado(Estado.FINALIZADA);
 

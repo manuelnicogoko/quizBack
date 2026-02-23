@@ -5,18 +5,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.proyectoquiz.domain.Partida;
 import com.example.proyectoquiz.dto.PartidaDTO;
 import com.example.proyectoquiz.services.partida.PartidaService;
+import com.example.proyectoquiz.services.websocket.WebSocketService;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PartidaController {
 
     private final PartidaService partidaService;
+
+    private final WebSocketService webSocketService;
 
     @GetMapping("/all")
     public ResponseEntity<?> getPartidasPublicas() {
@@ -38,7 +41,9 @@ public class PartidaController {
 
     @PostMapping("/")
     public ResponseEntity<?> createPartida(@RequestBody PartidaDTO partidaDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(partidaService.savePartida(partidaDTO));
+        Partida partida = partidaService.savePartida(partidaDTO);
+        webSocketService.actualizarListado();
+        return ResponseEntity.status(HttpStatus.CREATED).body(partida);
     }
 
     @DeleteMapping("/{id}")
@@ -48,12 +53,14 @@ public class PartidaController {
     }
 
     @PutMapping("/soft/{id}")
-    public ResponseEntity<?> softDeletePartida(@PathVariable Long id) {
+    public ResponseEntity<?> softDeletePartida(@PathVariable Long id, @RequestHeader String codSocket) {
+        webSocketService.borrarPartida(codSocket, id);
         return ResponseEntity.status(HttpStatus.OK).body(partidaService.softDeletePartida(id));
     }
 
     @PutMapping("/finalizar/{codigo}")
-    public ResponseEntity<?> finalizarPartida(@PathVariable String codigo) {
+    public ResponseEntity<?> finalizarPartida(@PathVariable String codigo, @RequestHeader String codSocket) {
+        webSocketService.terminarPartida(codSocket, codigo);
         return ResponseEntity.status(HttpStatus.OK).body(partidaService.finalizarPartida(codigo));
     }
 }

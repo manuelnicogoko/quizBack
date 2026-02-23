@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.proyectoquiz.dto.RondaDTO;
 import com.example.proyectoquiz.services.ronda.RondaService;
+import com.example.proyectoquiz.services.websocket.WebSocketService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,14 +25,18 @@ public class RondaController {
 
     private final RondaService rondaService;
 
+    private final WebSocketService webSocketService;
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getRondaById(@PathVariable Long id) throws RuntimeException {
         return ResponseEntity.status(HttpStatus.OK).body(rondaService.getRondaById(id));
     }
 
     @PostMapping("/{codPartida}")
-    public ResponseEntity<?> saveRonda(@PathVariable String codPartida, @RequestBody RondaDTO rondaDTO)
+    public ResponseEntity<?> saveRonda(@PathVariable String codPartida, @RequestBody RondaDTO rondaDTO,
+            @RequestHeader String codSocket)
             throws RuntimeException {
+        webSocketService.nuevaRonda(codSocket, rondaDTO.getNumeroRonda());
         return ResponseEntity.status(HttpStatus.CREATED).body(rondaService.saveRonda(codPartida, rondaDTO));
     }
 
@@ -40,9 +46,11 @@ public class RondaController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/finalizar/{id}")
-    public ResponseEntity<?> finalizarRonda(@PathVariable Long id) throws RuntimeException {
-        return ResponseEntity.status(HttpStatus.OK).body(rondaService.finalizarRonda(id));
+    @PutMapping("/{codPartida}/{numeroRonda}")
+    public ResponseEntity<?> finalizarRonda(@PathVariable String codPartida, @PathVariable Integer numeroRonda,
+            @RequestHeader String codSocket) throws RuntimeException {
+        webSocketService.terminarRonda(codSocket, numeroRonda);
+        return ResponseEntity.status(HttpStatus.OK).body(rondaService.finalizarRonda(codPartida, numeroRonda));
     }
 
 }

@@ -40,6 +40,8 @@ public class Partida {
 
     private String codigo;
 
+    private String codigoSocket;
+
     private Integer numeroJugadores;
 
     @ManyToOne

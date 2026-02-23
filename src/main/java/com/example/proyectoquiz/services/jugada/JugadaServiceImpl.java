@@ -83,7 +83,7 @@ public class JugadaServiceImpl implements JugadaService {
             throw new RuntimeException("Pregunta no encontrada");
         }
 
-        Ronda ronda = rondaRepository.findByPartidaAndNumeroRonda(partida.getId(), numeroRonda);
+        Ronda ronda = rondaRepository.findByPartidaIdAndNumeroRonda(partida.getId(), numeroRonda);
         if (ronda == null) {
             throw new RuntimeException("Ronda no encontrada");
         }

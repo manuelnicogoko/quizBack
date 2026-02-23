@@ -12,14 +12,14 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     // Producción
-    // @Value("${app.websocket.allowed-origin}")
-    // private String allowedOrigin;
+    @Value("${app.websocket.allowed-origin}")
+    private String allowedOrigin;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         // Habilita un broker de mensajes sencillo para enviar datos al cliente
         // Los clientes se suscribirán a rutas que empiecen con /topic
-        config.enableSimpleBroker("/quizz");
+        config.enableSimpleBroker("/topic");
 
         // Prefijo para los mensajes que van del cliente al servidor
         config.setApplicationDestinationPrefixes("/app");
@@ -28,9 +28,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // El punto de entrada para la conexión inicial del WebSocket
-        registry.addEndpoint("/ws-argaquest")
+        registry.addEndpoint("/ws-cryptum")
                 // allowed origin is read from application-*.properties
-                .setAllowedOrigins("http://localhost:3000") // Cambia esto por tu frontend en producción
+                .setAllowedOrigins(allowedOrigin)
                 .withSockJS();
     }
 }

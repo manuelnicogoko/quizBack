@@ -23,7 +23,6 @@ import com.example.proyectoquiz.repository.QuizRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 import com.example.proyectoquiz.utils.GenerarCodigoPartida;
 
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -75,6 +74,7 @@ public class PartidaServiceImpl implements PartidaService {
                 .orElseThrow(() -> new RuntimeException("Quiz no encontrado"));
 
         String codigo = generarCodigoPartida.generarCodigoAleatorio();
+        String codigoSocket = generarCodigoPartida.generarCodigoAleatorio();
 
         Partida partida = new Partida();
         partida.setNombre(partidaDTO.getNombre());
@@ -86,6 +86,7 @@ public class PartidaServiceImpl implements PartidaService {
         partida.setEstado(Estado.EN_CURSO);
         partida.setUsuario(usuario);
         partida.setCodigo(codigo);
+        partida.setCodigoSocket(codigoSocket);
         partida.setQuiz(quiz);
 
         return partidaRepository.save(partida);

@@ -11,5 +11,5 @@ public interface RondaService {
 
     public void deleteRonda(Long id);
 
-    public Ronda finalizarRonda(Long id) throws RuntimeException;
+    public Ronda finalizarRonda(String codPartida, Integer numeroRonda) throws RuntimeException;
 }
