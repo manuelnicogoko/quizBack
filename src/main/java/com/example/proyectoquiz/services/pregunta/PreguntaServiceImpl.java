@@ -16,6 +16,7 @@ import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
+import com.example.proyectoquiz.services.files.FileStorageService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +29,8 @@ public class PreguntaServiceImpl implements PreguntaService {
     private final QuizRepository quizRepository;
 
     private final UsuarioRepository usuarioRepository;
+
+    private final FileStorageService fileStorageService;
 
     public List<Pregunta> getPreguntasByQuizId(Long quizId) {
         return preguntaRepository.findByQuizId(quizId);
@@ -49,6 +52,7 @@ public class PreguntaServiceImpl implements PreguntaService {
         Pregunta pregunta = new Pregunta();
 
         pregunta.setEnunciado(preguntaDTO.getEnunciado());
+
         pregunta.setImagen(preguntaDTO.getImagen());
         pregunta.setPosicion(preguntaDTO.getPosicion());
         pregunta.setQuiz(quiz);
