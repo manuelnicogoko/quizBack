@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.proyectoquiz.exceptions.FileNotFoundException;
+
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
     private final Path rootLocation = Paths.get("uploadFiles");
@@ -60,15 +62,14 @@ public class FileStorageServiceImpl implements FileStorageService {
         try {
             Path file = rootLocation.resolve(filename);
             Resource resource = new UrlResource(file.toUri());
-            if (resource.exists() || resource.isReadable()) {
+            if (resource.exists() && resource.isReadable()) {
                 return resource;
             } else {
-                throw new Exception();
+                throw new FileNotFoundException(file.toString());
             }
         } catch (Exception e) {
-            System.err.println("Error IO");
+            throw new FileNotFoundException(filename);
         }
-        return null;
     }
 
     // Getter

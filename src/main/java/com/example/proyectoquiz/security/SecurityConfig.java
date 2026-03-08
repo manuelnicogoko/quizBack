@@ -54,6 +54,7 @@ public class SecurityConfig {
         .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPointJwt))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/h2-console/**").permitAll() // Permitir acceso a H2-console
             /* Categorias y Subcategorias */
             .requestMatchers(HttpMethod.POST, "/categoria/**", "/subcategoria/**").hasAnyRole("ADMIN", "USER")
             .requestMatchers(HttpMethod.PUT, "/categoria/**", "/subcategoria/**").hasAnyRole("ADMIN")
@@ -84,6 +85,8 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/respuesta/**").hasAnyRole("ADMIN", "USER")
             .requestMatchers(HttpMethod.DELETE, "/respuesta/**").hasAnyRole("ADMIN")
             .anyRequest().permitAll());
+    http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())); // Permitir iframes para
+                                                                                           // H2-console
     http.authenticationProvider(authenticationProvider());
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     http.cors(Customizer.withDefaults());

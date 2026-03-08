@@ -25,17 +25,17 @@ public class FilesController {
 
     private final FileStorageService fileStorageService;
 
-    @PostMapping("/categoria/{filename:.+}")
-    public ResponseEntity<?> postLogoCategoriaLogo(@PathVariable String filename,
+    @PostMapping("/categoria/{categoriaId}/{filename:.+}")
+    public ResponseEntity<?> postLogoCategoriaLogo(@PathVariable Long categoriaId, @PathVariable String filename,
             @RequestParam("file") MultipartFile file) throws IOException {
-        Path destino = Path.of("categoriaLogo/");
+        Path destino = Path.of("categoriaLogo/" + categoriaId + "/");
         return ResponseEntity.status(HttpStatus.CREATED).body(fileStorageService.store(filename, file, destino));
     }
 
-    @PostMapping("/subcategoria/{filename:.+}")
-    public ResponseEntity<?> postLogoSubategoriaLogo(@PathVariable String filename,
+    @PostMapping("/subcategoria/{subcategoriaId}/{filename:.+}")
+    public ResponseEntity<?> postLogoSubategoriaLogo(@PathVariable Long subcategoriaId, @PathVariable String filename,
             @RequestParam("file") MultipartFile file) throws IOException {
-        Path destino = Path.of("subcategoriaLogo/");
+        Path destino = Path.of("subcategoriaLogo/" + subcategoriaId + "/");
         return ResponseEntity.status(HttpStatus.CREATED).body(fileStorageService.store(filename, file, destino));
     }
 
@@ -47,21 +47,21 @@ public class FilesController {
     }
 
     @PostMapping("/avatar/{userId}/{filename:.+}")
-    public String postAvatar(@PathVariable Long userId, @PathVariable String filename,
+    public ResponseEntity<?> postAvatar(@PathVariable Long userId, @PathVariable String filename,
             @RequestParam("file") MultipartFile file) throws IOException {
         Path destino = Path.of("userAvatar/" + userId + "/");
-        return fileStorageService.store(filename, file, destino);
+        return ResponseEntity.status(HttpStatus.CREATED).body(fileStorageService.store(filename, file, destino));
     }
 
-    @GetMapping("/categoria/{filename:.+}")
-    public ResponseEntity<?> getLogoCategoriaLogo(@PathVariable String filename) {
-        Resource file = fileStorageService.loadAsResource("categoriaLogo/" + filename);
+    @GetMapping("/categoria/{categoriaId}/{filename:.+}")
+    public ResponseEntity<?> getLogoCategoriaLogo(@PathVariable Long categoriaId, @PathVariable String filename) {
+        Resource file = fileStorageService.loadAsResource("categoriaLogo/" + categoriaId + "/" + filename);
         return ResponseEntity.ok().body(file);
     }
 
-    @GetMapping("/subcategoria/{filename:.+}")
-    public ResponseEntity<?> getSubcategoriaLogo(@PathVariable String filename) {
-        Resource file = fileStorageService.loadAsResource("subcategoriaLogo/" + filename);
+    @GetMapping("/subcategoria/{subcategoriaId}/{filename:.+}")
+    public ResponseEntity<?> getSubcategoriaLogo(@PathVariable Long subcategoriaId, @PathVariable String filename) {
+        Resource file = fileStorageService.loadAsResource("subcategoriaLogo/" + subcategoriaId + "/" + filename);
         return ResponseEntity.ok().body(file);
     }
 
