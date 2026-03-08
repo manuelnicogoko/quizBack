@@ -16,4 +16,6 @@ public class QuizDTO {
     private Long categoriaId;
 
     private Long subcategoriaId;
+
+    private String portada;
 }

@@ -83,6 +83,7 @@ public class QuizServiceImpl implements QuizService {
         quiz.setNombre(quizDTO.getNombre());
         quiz.setDescripcion(quizDTO.getDescripcion());
         quiz.setEstado(Estado.PENDIENTE);
+        quiz.setPortada(quizDTO.getPortada());
 
         Categoria categoria = categoriaRepository.findById(quizDTO.getCategoriaId())
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
