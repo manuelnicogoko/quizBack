@@ -17,6 +17,7 @@ import com.example.proyectoquiz.dto.JwtResponseDTO;
 import com.example.proyectoquiz.dto.LoginDTO;
 import com.example.proyectoquiz.dto.MessageResponse;
 import com.example.proyectoquiz.dto.RegisterDTO;
+import com.example.proyectoquiz.exceptions.CredencialesIncorrectasException;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 import com.example.proyectoquiz.security.JwtUtils;
 import com.example.proyectoquiz.security.UserDetailsImpl;
@@ -25,7 +26,7 @@ import com.example.proyectoquiz.services.usuario.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:5173/", maxAge = 3600)
 @RestController
 @RequestMapping("/usuario")
 @RequiredArgsConstructor
@@ -46,21 +47,24 @@ public class AuthController {
 
   @PostMapping("/login")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDTO loginDto) {
+    try {
+      Authentication authentication = authenticationManager.authenticate(
+          new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 
-    Authentication authentication = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+      SecurityContextHolder.getContext().setAuthentication(authentication);
+      String jwt = jwtUtils.generateJwtToken(authentication);
 
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    String jwt = jwtUtils.generateJwtToken(authentication);
+      UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+      String rol = userDetails.getAuthorities().stream().findFirst().map(a -> a.getAuthority()).orElse("ERROR");
 
-    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-    String rol = userDetails.getAuthorities().stream().findFirst().map(a -> a.getAuthority()).orElse("ERROR");
-
-    return ResponseEntity.ok(new JwtResponseDTO(jwt, "Bearer",
-        userDetails.getId(),
-        userDetails.getUsername(),
-        userDetails.getEmail(),
-        rol));
+      return ResponseEntity.ok(new JwtResponseDTO(jwt, "Bearer",
+          userDetails.getId(),
+          userDetails.getUsername(),
+          userDetails.getEmail(),
+          rol));
+    } catch (Exception e) {
+      throw new CredencialesIncorrectasException();
+    }
   }
 
   @PostMapping("/register")
@@ -71,7 +75,6 @@ public class AuthController {
           .body(new MessageResponse("Error: Ya existe un usuario con ese email"));
     }
 
-    usuarioService.saveUsuario(signUpRequest);
-    return ResponseEntity.ok(new MessageResponse("Usuario registrado correctamente"));
+    return ResponseEntity.ok(usuarioService.saveUsuario(signUpRequest));
   }
 }

@@ -1,11 +1,15 @@
 package com.example.proyectoquiz.services.files;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+
+import javax.imageio.ImageIO;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -29,18 +33,52 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new RuntimeException("nombre de archivo incorrecto");
         }
 
-        String extension = StringUtils.getFilenameExtension(originalFilename);
-        String storedFilename = nombre + "." + extension;
+        int width = 512;
+        int height = 512;
+        String destStr = destino.toString().toLowerCase();
+        String format = "jpg";
+        if (destStr.contains("portada") || destStr.contains("avatar")) {
+            width = 512;
+            height = 512;
+            format = "jpg";
+        } else if (destStr.contains("imagenpreg") || destStr.contains("pregunta")) {
+            width = 1920;
+            height = 1080;
+            format = "jpg";
+        } else if (destStr.contains("categorialogo") || destStr.contains("subcategorialogo")) {
+            width = 128;
+            height = 128;
+            format = "png";
+        }
 
+        // Elimina la extensión si ya existe
+        String baseName = nombre;
+        int dotIndex = nombre.lastIndexOf('.');
+        if (dotIndex > 0) {
+            baseName = nombre.substring(0, dotIndex);
+        }
+        String storedFilename = baseName + "." + format;
         Path fullPath = rootLocation.resolve(destino).normalize();
-
         if (!Files.exists(fullPath)) {
             Files.createDirectories(fullPath);
         }
 
         try (InputStream inputStream = file.getInputStream()) {
-            Files.copy(inputStream, fullPath.resolve(storedFilename),
-                    StandardCopyOption.REPLACE_EXISTING);
+            BufferedImage originalImage = ImageIO.read(inputStream);
+            if (originalImage == null) {
+                throw new RuntimeException("El archivo subido no es una imagen válida o está corrupto");
+            }
+            Thumbnails.Builder<BufferedImage> builder = Thumbnails.of(originalImage)
+                    .size(width, height)
+                    .outputFormat(format);
+
+            if ("jpg".equals(format)) {
+                builder.outputQuality(0.7);
+            }
+
+            BufferedImage resizedImage = builder.asBufferedImage();
+            Path targetFile = fullPath.resolve(storedFilename);
+            ImageIO.write(resizedImage, format, targetFile.toFile());
             return storedFilename;
         } catch (IOException ioe) {
             throw new RuntimeException("Error al almacenar el archivo: " + ioe.getMessage());

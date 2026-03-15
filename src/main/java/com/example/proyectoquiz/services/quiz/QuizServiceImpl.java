@@ -49,15 +49,15 @@ public class QuizServiceImpl implements QuizService {
     }
 
     public List<Quiz> getQuizzesByCategoriaId(Long categoriaId) {
-        return quizRepository.findByCategoriaId(categoriaId);
+        return quizRepository.findByCategoriaIdAndEstado(categoriaId, Estado.ACEPTADO);
     }
 
     public List<Quiz> getQuizzesBySubcategoriaId(Long subcategoriaId) {
-        return quizRepository.findBySubcategoriaId(subcategoriaId);
+        return quizRepository.findBySubcategoriaIdAndEstado(subcategoriaId, Estado.ACEPTADO);
     }
 
     public List<Quiz> getQuizzesByNombre(String nombre) throws RuntimeException {
-        return quizRepository.findByNombreContainingIgnoreCase(nombre);
+        return quizRepository.findByNombreContainingIgnoreCaseAndEstado(nombre, Estado.ACEPTADO);
     }
 
     public Quiz getQuizById(Long id) throws RuntimeException {

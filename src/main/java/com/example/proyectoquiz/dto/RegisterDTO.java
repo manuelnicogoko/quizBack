@@ -17,7 +17,5 @@ public class RegisterDTO {
 
     private String passwordConfirm;
 
-    private String avatar;
-
     private String rol;
 }

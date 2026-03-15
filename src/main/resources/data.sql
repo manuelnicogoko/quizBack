@@ -1,7 +1,7 @@
 -- USUARIOS
 INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VALUES
-  ('admin', 'admin@email.com', 'adminpass', 'avatar1.png', 0, 0.0),
-  ('usuario', 'usuario@email.com', 'usuariopass', 'avatar2.png', 1, 0.0);
+  ('admin', 'admin@email.com', 'adminpass', 'avatar1.jpg', 0, 0.0),
+  ('usuario', 'usuario@email.com', 'usuariopass', 'avatar2.jpg', 1, 0.0);
 
 -- CATEGORIAS
 INSERT INTO categoria (nombre, logo, descripcion, estado) VALUES
@@ -28,21 +28,67 @@ INSERT INTO subcategoria (nombre, logo, descripcion, categoria_id, estado) VALUE
   ('Pop', 'pop.png', 'Música pop', 6, 4);
 
 -- QUIZZES
-INSERT INTO quiz (nombre, descripcion, creador_id, categoria_id, subcategoria_id) VALUES
-  ('Personajes de The Witcher 3', 'Preguntas sobre RPGs', 1, 1, 1),
-  ('Personajes de DOOM', 'Preguntas sobre shooters', 2, 1, 2);
+INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcategoria_id, estado) VALUES
+  -- RPG
+  ('The Witcher 3', 'Preguntas sobre RPGs', 'witcher3.jpg', 1, 1, 1, 4),
+  ('Final Fantasy VII', 'Quiz sobre personajes y lugares de FFVII', 'ffvii.jpg', 2, 1, 1, 4),
+  ('Elder Scrolls: Skyrim', 'Quiz sobre Skyrim y sus dragones', 'skyrim.jpg', 1, 1, 1, 4),
+  -- Shooter
+  ('DOOM', 'Preguntas sobre shooters', 'doom.jpg', 2, 1, 2, 4),
+  ('Call of Duty', 'Quiz sobre armas y mapas de CoD', 'cod.jpg', 1, 1, 2, 4),
+  ('Overwatch', 'Quiz sobre héroes de Overwatch', 'overwatch.jpg', 2, 1, 2, 4),
+  -- Pintura
+  ('Grandes pintores', 'Quiz sobre pintores famosos', 'picasso.jpg', 1, 2, 3, 4),
+  ('Obras maestras', 'Quiz sobre obras de pintura', 'monalisa.jpg', 2, 2, 3, 4),
+  ('Estilos de pintura', 'Quiz sobre estilos artísticos', 'impresionismo.jpg', 1, 2, 3, 4),
+  -- Escultura
+  ('Escultores famosos', 'Quiz sobre escultores', 'michelangelo.jpg', 2, 2, 4, 4),
+  ('Obras de escultura', 'Quiz sobre obras de escultura', 'david.jpg', 1, 2, 4, 4),
+  ('Tipos de escultura', 'Quiz sobre tipos de escultura', 'abstracta.jpg', 2, 2, 4, 4),
+  -- Física
+  ('Físicos célebres', 'Quiz sobre físicos famosos', 'einstein.jpg', 1, 3, 5, 4),
+  ('Teorías físicas', 'Quiz sobre teorías de la física', 'relatividad.jpg', 2, 3, 5, 4),
+  ('Experimentos históricos', 'Quiz sobre experimentos físicos', 'cavendish.jpg', 1, 3, 5, 4),
+  -- Biología
+  ('Biólogos célebres', 'Quiz sobre biólogos famosos', 'darwin.jpg', 2, 3, 6, 4),
+  ('Descubrimientos biológicos', 'Quiz sobre descubrimientos', 'adn.jpg', 1, 3, 6, 4),
+  ('Ramas de la biología', 'Quiz sobre ramas de la biología', 'botanica.jpg', 2, 3, 6, 4),
+  -- Fútbol
+  ('Jugadores de fútbol', 'Quiz sobre futbolistas famosos', 'messi.jpg', 1, 4, 7, 4),
+  ('Equipos históricos', 'Quiz sobre equipos de fútbol', 'equiposFutbol.jpg', 2, 4, 7, 4),
+  ('Copas del mundo', 'Quiz sobre mundiales de fútbol', 'mundial.jpg', 1, 4, 7, 4),
+  -- Baloncesto
+  ('Jugadores de baloncesto', 'Quiz sobre baloncestistas', 'jordan.jpg', 2, 4, 8, 4),
+  ('Equipos de baloncesto', 'Quiz sobre equipos de baloncesto', 'equiposBaloncesto.jpg', 1, 4, 8, 4),
+  ('NBA', 'Quiz sobre la NBA', 'nba.jpg', 2, 4, 8, 4),
+  -- Edad Media
+  ('Edad Media', 'Quiz sobre historia medieval', 'edadmedia.jpg', 1, 5, 9, 4),
+  ('Castillos medievales', 'Quiz sobre castillos', 'castillo.jpg', 2, 5, 9, 4),
+  ('Personajes medievales', 'Quiz sobre personajes', 'juana_arca.jpg', 1, 5, 9, 4),
+  -- Edad Moderna
+  ('Edad Moderna', 'Quiz sobre historia moderna', 'edadmoderna.jpg', 2, 5, 10, 4),
+  ('Revoluciones modernas', 'Quiz sobre revoluciones', 'revolucion_francesa.jpg', 1, 5, 10, 4),
+  ('Personajes modernos', 'Quiz sobre personajes', 'napoleon.jpg', 2, 5, 10, 4),
+  -- Rock
+  ('Bandas de rock', 'Quiz sobre bandas de rock', 'queen.jpg', 1, 6, 11, 4),
+  ('Álbumes de rock', 'Quiz sobre álbumes', 'abbeyroad.jpg', 2, 6, 11, 4),
+  ('Historia del rock', 'Quiz sobre historia del rock', 'woodstock.jpg', 1, 6, 11, 4),
+  -- Pop
+  ('Artistas pop', 'Quiz sobre artistas pop', 'bruno.jpg', 2, 6, 12, 4),
+  ('Canciones pop', 'Quiz sobre canciones pop', 'bad_guy.jpg', 1, 6, 12, 4),
+  ('Historia del pop', 'Quiz sobre historia del pop', 'pop_history.jpg', 2, 6, 12, 4);
 
 -- PREGUNTAS para The Witcher 3 (quiz_id = 1)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es el protagonista de The Witcher 3?', 'geralt.png', 1, 1),
-  ('¿Quién es la hechicera pelirroja amiga de Geralt?', 'triss.png', 2, 1),
-  ('¿Quién es la bruja de los bosques de Velen?', 'keira.png', 3, 1);
+  ('¿Quién es el protagonista de The Witcher 3?', 'geralt.jpg', 1, 1),
+  ('¿Quién es la hechicera pelirroja amiga de Geralt?', 'triss.jpg', 2, 1),
+  ('¿Quién es la bruja de los bosques de Velen?', 'keira.jpg', 3, 1);
 
 -- PREGUNTAS para DOOM (quiz_id = 2)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Cómo se llama el protagonista de DOOM?', 'doomslayer.png', 1, 2),
-  ('¿Qué demonio es el más grande en DOOM?', 'cyberdemon.png', 2, 2),
-  ('¿Quién es el científico que libera a los demonios?', 'olivia.png', 3, 2);
+  ('¿Cómo se llama el protagonista de DOOM?', 'doomslayer.jpg', 1, 2),
+  ('¿Qué demonio es el más grande en DOOM?', 'cyberdemon.jpg', 2, 2),
+  ('¿Quién es el científico que libera a los demonios?', 'olivia.jpg', 3, 2);
 
 -- PISTAS para preguntas de The Witcher 3
 INSERT INTO pista (pregunta_id, texto) VALUES

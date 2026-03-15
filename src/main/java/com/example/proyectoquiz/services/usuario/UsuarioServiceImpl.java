@@ -42,17 +42,19 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new AuthException();
         }
 
-        String email = authentication.getName();
+        // String email = authentication.getName();
 
-        Usuario usuario = usuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         if (usuario == null) {
-            throw new UserNotFoundException(email);
+            throw new UserNotFoundException(usuario.getEmail());
         }
 
-        if (usuario.getRol() != Rol.ADMIN && !usuario.getId().equals(id)) {
-            throw new RuntimeException("No tienes permisos para actualizar este usuario");
-        }
+        // if (usuario.getRol() != Rol.ADMIN && !usuario.getId().equals(id)) {
+        // throw new RuntimeException("No tienes permisos para actualizar este
+        // usuario");
+        // }
 
         Usuario existingUsuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -60,6 +62,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         existingUsuario.setNombre(usuarioDTO.getNombre());
         existingUsuario.setEmail(usuarioDTO.getEmail());
         existingUsuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
+        existingUsuario.setRol(Rol.valueOf(usuarioDTO.getRol().toUpperCase()));
+        existingUsuario.setAvatar(usuarioDTO.getAvatar());
 
         return usuarioRepository.save(existingUsuario);
     }
@@ -79,7 +83,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setEmail(usuarioDTO.getEmail());
         usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
-        usuario.setAvatar(usuarioDTO.getAvatar());
         usuario.setRol(Rol.valueOf(usuarioDTO.getRol().toUpperCase()));
 
         return usuarioRepository.save(usuario);

@@ -13,7 +13,11 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
     List<Quiz> findBySubcategoriaId(Long subcategoriaId);
 
-    List<Quiz> findByNombreContainingIgnoreCase(String nombre);
+    List<Quiz> findByCategoriaIdAndEstado(Long categoriaId, Estado estado);
+
+    List<Quiz> findBySubcategoriaIdAndEstado(Long subcategoriaId, Estado estado);
+
+    List<Quiz> findByNombreContainingIgnoreCaseAndEstado(String nombre, Estado estado);
 
     List<Quiz> findByEstado(Estado estado);
 }

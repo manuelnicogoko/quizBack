@@ -59,6 +59,14 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
                 return new ResponseEntity<Object>(body, HttpStatus.NOT_FOUND);
         }
 
+        @ExceptionHandler(CredencialesIncorrectasException.class)
+        public ResponseEntity<?> handleCredencialesIncorrectas(
+                        CredencialesIncorrectasException ex, WebRequest request) {
+                ExceptionBody body = new ExceptionBody(LocalDateTime.now(), HttpStatus.UNAUTHORIZED, ex.getMessage(),
+                                ((ServletWebRequest) request).getRequest().getRequestURI());
+                return new ResponseEntity<Object>(body, HttpStatus.UNAUTHORIZED);
+        }
+
         @Override
         protected ResponseEntity<Object> handleExceptionInternal(
                         Exception ex, @Nullable Object body, HttpHeaders headers,

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,14 +29,19 @@ public class QuizController {
         return ResponseEntity.status(HttpStatus.OK).body(quizService.getAllQuizzes());
     }
 
-    @GetMapping("/{categoriaId}")
+    @GetMapping("/categoria/{categoriaId}")
     public ResponseEntity<?> getQuizzesByCategory(@PathVariable Long categoriaId) {
         return ResponseEntity.status(HttpStatus.OK).body(quizService.getQuizzesByCategoriaId(categoriaId));
     }
 
-    @GetMapping("/{subcategoriaId}")
+    @GetMapping("/subcategoria/{subcategoriaId}")
     public ResponseEntity<?> getQuizzesBySubcategory(@PathVariable Long subcategoriaId) {
         return ResponseEntity.status(HttpStatus.OK).body(quizService.getQuizzesBySubcategoriaId(subcategoriaId));
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<?> getQuizzesByName(@PathVariable String nombre) {
+        return ResponseEntity.status(HttpStatus.OK).body(quizService.getQuizzesByNombre(nombre));
     }
 
     @GetMapping("/{id}")
