@@ -72,7 +72,7 @@ public class AuthController {
     if (usuarioRepository.existsByEmail(signUpRequest.getEmail())) {
       return ResponseEntity
           .badRequest()
-          .body(new MessageResponse("Error: Ya existe un usuario con ese email"));
+          .body(new MessageResponse("Ya existe un usuario con ese email"));
     }
 
     return ResponseEntity.ok(usuarioService.saveUsuario(signUpRequest));

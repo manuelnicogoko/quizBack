@@ -120,10 +120,31 @@ INSERT INTO respuesta (pregunta_id, texto) VALUES
   (5, 'Cyberdemon'),
   (6, 'Olivia Pierce');
 
--- PARTIDAS
-INSERT INTO partida (nombre, max_jugadores, publica, vidas, tiempo_ronda, fecha_creacion, estado, codigo, quiz_id, usuario_id) VALUES
-  ('Partida Pública 1', 4, true, 3, 60, '2026-02-18', 0, 'ABC123', 1, 1),
-  ('Partida Pública 2', 3, true, 2, 45, '2026-02-18', 0, 'DEF456', 2, 2);
+-- PARTIDAS DE PRUEBA (15 públicas, 5 privadas)
+INSERT INTO partida (nombre, max_jugadores, publica, vidas, tiempo_ronda, fecha_creacion, estado, codigo, quiz_id, usuario_id, numero_jugadores) VALUES
+  -- Públicas
+  ('RPG - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'RPG001', 1, 1, 2),
+  ('RPG - Partida 2', 5, true, 2, 50, '2026-03-21', 0, 'RPG002', 2, 2, 3),
+  ('Shooter - Partida 1', 3, true, 3, 45, '2026-03-21', 0, 'SHOOT1', 4, 1, 1),
+  ('Shooter - Partida 2', 6, true, 4, 70, '2026-03-21', 0, 'SHOOT2', 5, 2, 6),
+  ('Pintura - Partida 1', 4, true, 2, 60, '2026-03-21', 0, 'PAINT1', 7, 1, 2),
+  ('Pintura - Partida 2', 5, true, 3, 55, '2026-03-21', 0, 'PAINT2', 8, 2, 3),
+  ('Escultura - Partida 1', 3, true, 2, 40, '2026-03-21', 0, 'SCULP1', 10, 1, 1),
+  ('Física - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'PHYS01', 13, 2, 2),
+  ('Biología - Partida 1', 5, true, 2, 50, '2026-03-21', 0, 'BIO001', 16, 1, 3),
+  ('Fútbol - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'FUTB01', 19, 2, 2),
+  ('Baloncesto - Partida 1', 3, true, 2, 45, '2026-03-21', 0, 'BASK01', 22, 1, 1),
+  ('Edad Media - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'MEDIEV', 25, 2, 2),
+  ('Edad Moderna - Partida 1', 5, true, 2, 55, '2026-03-21', 0, 'MODERN', 28, 1, 3),
+  ('Rock - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'ROCK01', 31, 2, 2),
+  ('Pop - Partida 1', 3, true, 2, 45, '2026-03-21', 0, 'POP001', 34, 1, 1),
+
+  -- Privadas
+  ('RPG - Privada', 4, false, 3, 60, '2026-03-21', 0, 'RPGPRV', 3, 2, 2),
+  ('Shooter - Privada', 5, false, 2, 50, '2026-03-21', 0, 'SHTPRV', 6, 1, 3),
+  ('Pintura - Privada', 3, false, 2, 40, '2026-03-21', 0, 'PAIPRV', 9, 2, 1),
+  ('Física - Privada', 4, false, 3, 60, '2026-03-21', 0, 'PHYPRV', 15, 1, 2),
+  ('Pop - Privada', 5, false, 2, 55, '2026-03-21', 0, 'POPPRV', 36, 2, 3);
 
 -- RONDAS (solo para la partida 1, tantas como preguntas en el quiz 1)
 INSERT INTO ronda (numero_ronda, estado, partida_id, pregunta_id) VALUES

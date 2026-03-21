@@ -61,6 +61,8 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.DELETE, "/categoria/**", "/subcategoria/**").hasAnyRole("ADMIN")
             /* Usuarios */
             .requestMatchers("/usuario/all").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.PUT, "/usuario/{id}").hasAnyRole("ADMIN", "USER")
+            .requestMatchers(HttpMethod.PUT, "/usuario/{id}/register").permitAll()
             .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasAnyRole("ADMIN", "USER")
             /* Partidas */
             .requestMatchers(HttpMethod.POST, "/partida/**").hasAnyRole("ADMIN", "USER")

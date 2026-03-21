@@ -42,8 +42,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new AuthException();
         }
 
-        // String email = authentication.getName();
-
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -51,19 +49,42 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new UserNotFoundException(usuario.getEmail());
         }
 
-        // if (usuario.getRol() != Rol.ADMIN && !usuario.getId().equals(id)) {
-        // throw new RuntimeException("No tienes permisos para actualizar este
-        // usuario");
-        // }
-
         Usuario existingUsuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        existingUsuario.setNombre(usuarioDTO.getNombre());
-        existingUsuario.setEmail(usuarioDTO.getEmail());
-        existingUsuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
-        existingUsuario.setRol(Rol.valueOf(usuarioDTO.getRol().toUpperCase()));
-        existingUsuario.setAvatar(usuarioDTO.getAvatar());
+        List<Usuario> usuariosConMismoNombre = usuarioRepository
+                .findByNombreContainingIgnoreCase(usuarioDTO.getNombre());
+        String usuarioNombre = usuarioDTO.getNombre() != null ? usuarioDTO.getNombre() : existingUsuario.getNombre();
+        if (usuariosConMismoNombre != null && !usuariosConMismoNombre.isEmpty()
+                && !usuariosConMismoNombre.get(0).getId().equals(id)) {
+            throw new RuntimeException("El nombre ya está registrado");
+        }
+
+        Usuario usuariosConMismoEmail = usuarioRepository.findByEmail(usuarioDTO.getEmail());
+        String usuarioEmail = usuarioDTO.getEmail() != null ? usuarioDTO.getEmail() : existingUsuario.getEmail();
+        if (usuariosConMismoEmail != null && !usuariosConMismoEmail.getId().equals(id)) {
+            throw new RuntimeException("El email ya está registrado");
+        }
+
+        String usuarioPassword = usuarioDTO.getPassword() != null
+                ? passwordEncoder.encode(usuarioDTO.getPassword())
+                : existingUsuario.getPassword();
+
+        Rol usuarioRol = Rol.valueOf("USER");
+        if (existingUsuario.getRol() != Rol.ADMIN) {
+            usuarioRol = Rol.valueOf(usuarioDTO.getRol().toUpperCase());
+        } else {
+            usuarioRol = existingUsuario.getRol() != null ? Rol.valueOf(usuarioDTO.getRol().toUpperCase())
+                    : Rol.valueOf("USER");
+        }
+
+        String usuarioAvatar = usuarioDTO.getAvatar() != null ? usuarioDTO.getAvatar() : existingUsuario.getAvatar();
+
+        existingUsuario.setNombre(usuarioNombre);
+        existingUsuario.setEmail(usuarioEmail);
+        existingUsuario.setPassword(usuarioPassword);
+        existingUsuario.setRol(usuarioRol);
+        existingUsuario.setAvatar(usuarioAvatar);
 
         return usuarioRepository.save(existingUsuario);
     }

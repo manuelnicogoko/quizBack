@@ -1,6 +1,7 @@
 package com.example.proyectoquiz.services.partida;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.PartidaDTO;
+import com.example.proyectoquiz.dto.PartidaListadoDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.PartidaNotFoundException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
@@ -43,16 +45,50 @@ public class PartidaServiceImpl implements PartidaService {
         return partidaRepository.findAll();
     }
 
-    public List<Partida> getPartidasPublicas() {
-        return partidaRepository.findByPublicaTrue();
+    public List<PartidaListadoDTO> getPartidasPublicas() {
+        List<Partida> partidas = partidaRepository.findByPublicaTrue();
+        List<PartidaListadoDTO> listadoPartidas = new ArrayList<>();
+
+        for (Partida partida : partidas) {
+            PartidaListadoDTO partidaDTO = new PartidaListadoDTO();
+            partidaDTO.setId(partida.getId());
+            partidaDTO.setNombre(partida.getNombre());
+            partidaDTO.setMaxJugadores(partida.getMaxJugadores());
+            partidaDTO.setNumeroJugadores(partida.getNumeroJugadores());
+            if (partida.getQuiz() != null) {
+                partidaDTO.setQuiz(partida.getQuiz().getNombre());
+            }
+            partidaDTO.setCodigo(partida.getCodigo());
+            partidaDTO.setCodigoSocket(partida.getCodigoSocket());
+            partidaDTO.setTiempoRonda(partida.getTiempoRonda());
+            partidaDTO.setVidas(partida.getVidas());
+            partidaDTO.setPublica(partida.getPublica());
+
+            listadoPartidas.add(partidaDTO);
+        }
+
+        return listadoPartidas;
     }
 
-    public Partida getPartidaByCodigo(String codigo) throws RuntimeException {
+    public PartidaListadoDTO getPartidaByCodigo(String codigo) throws RuntimeException {
         Partida partida = partidaRepository.findByCodigo(codigo);
         if (partida == null) {
             throw new PartidaNotFoundException(codigo);
         }
-        return partida;
+        PartidaListadoDTO partidaDTO = new PartidaListadoDTO();
+        partidaDTO.setId(partida.getId());
+        partidaDTO.setNombre(partida.getNombre());
+        partidaDTO.setMaxJugadores(partida.getMaxJugadores());
+        partidaDTO.setNumeroJugadores(partida.getNumeroJugadores());
+        if (partida.getQuiz() != null) {
+            partidaDTO.setQuiz(partida.getQuiz().getNombre());
+        }
+        partidaDTO.setCodigo(partida.getCodigo());
+        partidaDTO.setCodigoSocket(partida.getCodigoSocket());
+        partidaDTO.setTiempoRonda(partida.getTiempoRonda());
+        partidaDTO.setVidas(partida.getVidas());
+        partidaDTO.setPublica(partida.getPublica());
+        return partidaDTO;
     }
 
     public Partida savePartida(PartidaDTO partidaDTO) throws RuntimeException, UserNotFoundException, AuthException {

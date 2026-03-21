@@ -33,6 +33,11 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getAllUsuarios());
     }
 
+    @PutMapping("/{id}/register")
+    public ResponseEntity<?> updateUsuarioRegister(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUsuario(id, usuarioDTO));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUsuario(id, usuarioDTO));
