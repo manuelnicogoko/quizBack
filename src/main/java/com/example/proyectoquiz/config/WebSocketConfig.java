@@ -27,10 +27,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+        System.out.println("Allowed origin: " + allowedOrigin);
         // El punto de entrada para la conexión inicial del WebSocket
         registry.addEndpoint("/ws-cryptum")
                 // allowed origin is read from application-*.properties
-                .setAllowedOrigins(allowedOrigin)
-                .withSockJS();
+                .setAllowedOrigins("*")
+                .setAllowedOriginPatterns("*");
+        // .withSockJS()
+        // .setSessionCookieNeeded(false);
     }
+
 }

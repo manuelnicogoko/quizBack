@@ -13,5 +13,5 @@ public interface InscripcionService {
 
     public Inscripcion saveInscripcion(InscripcionDTO inscripcionDTO) throws RuntimeException, UserNotFoundException;
 
-    public void deleteInscripcion(Long id) throws RuntimeException;
+    public void deleteInscripcionPorCodigo(String codigoInscripcion) throws RuntimeException;
 }

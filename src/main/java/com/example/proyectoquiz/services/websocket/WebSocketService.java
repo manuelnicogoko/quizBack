@@ -4,11 +4,13 @@ public interface WebSocketService {
 
     public void unirJugador(String idSocket);
 
-    public void excluirJugador(String idSocket, Long idInscripcion);
+    public void excluirJugador(String codSocket, String codigoInscripcion);
+
+    public void actualizarJugadores(String codSocket);
 
     public void actualizarListado();
 
-    public void borrarPartida(String idSocket, Long idPartida);
+    public void cancelarPartida(String codSocket);
 
     public void terminarPartida(String idSocket, String codInscripcionPartida);
 

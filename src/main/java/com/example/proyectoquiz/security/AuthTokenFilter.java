@@ -59,4 +59,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         return null;
     }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.startsWith("/ws-cryptum");
+    }
 }

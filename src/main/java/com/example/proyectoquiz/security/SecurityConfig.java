@@ -55,6 +55,8 @@ public class SecurityConfig {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/h2-console/**").permitAll() // Permitir acceso a H2-console
+            .requestMatchers("/ws-cryptum/**").permitAll() // Permitir acceso a WebSocket
+            .requestMatchers(HttpMethod.POST, "/partida/**").permitAll()
             /* Categorias y Subcategorias */
             .requestMatchers(HttpMethod.POST, "/categoria/**", "/subcategoria/**").hasAnyRole("ADMIN", "USER")
             .requestMatchers(HttpMethod.PUT, "/categoria/**", "/subcategoria/**").hasAnyRole("ADMIN")
@@ -65,25 +67,26 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.PUT, "/usuario/{id}/register").permitAll()
             .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasAnyRole("ADMIN", "USER")
             /* Partidas */
-            .requestMatchers(HttpMethod.POST, "/partida/**").hasAnyRole("ADMIN", "USER")
-            .requestMatchers(HttpMethod.PUT, "/partida/**").hasAnyRole("ADMIN", "USER")
+            // .requestMatchers(HttpMethod.POST, "/partida/**").hasAnyRole("ADMIN", "USER")
+            // .requestMatchers(HttpMethod.PUT, "/partida/**").hasAnyRole("ADMIN", "USER")
             .requestMatchers(HttpMethod.DELETE, "/partida/**").hasAnyRole("ADMIN", "USER")
             /* Rondas */
-            .requestMatchers(HttpMethod.POST, "/ronda/**").hasAnyRole("ADMIN", "USER")
-            .requestMatchers(HttpMethod.PUT, "/ronda/**").hasAnyRole("ADMIN", "USER")
-            .requestMatchers(HttpMethod.DELETE, "/ronda/**").hasAnyRole("ADMIN", "USER")
+            // .requestMatchers(HttpMethod.POST, "/ronda/**").hasAnyRole("ADMIN", "USER")
+            // .requestMatchers(HttpMethod.PUT, "/ronda/**").hasAnyRole("ADMIN", "USER")
+            // .requestMatchers(HttpMethod.DELETE, "/ronda/**").hasAnyRole("ADMIN", "USER")
             /* Quizzes */
             .requestMatchers(HttpMethod.POST, "/quiz/**").hasAnyRole("ADMIN", "USER")
             .requestMatchers(HttpMethod.PUT, "/quiz/**").hasAnyRole("ADMIN")
             .requestMatchers(HttpMethod.DELETE, "/quiz/**").hasAnyRole("ADMIN")
             /* Pregunta */
-            .requestMatchers(HttpMethod.POST, "/pregunta/**").hasAnyRole("ADMIN", "USER")
+            // .requestMatchers(HttpMethod.POST, "/pregunta/**").hasAnyRole("ADMIN", "USER")
             .requestMatchers(HttpMethod.DELETE, "/pregunta/**").hasAnyRole("ADMIN")
             /* Pistas */
-            .requestMatchers(HttpMethod.POST, "/pista/**").hasAnyRole("ADMIN", "USER")
+            // .requestMatchers(HttpMethod.POST, "/pista/**").hasAnyRole("ADMIN", "USER")
             .requestMatchers(HttpMethod.DELETE, "/pista/**").hasAnyRole("ADMIN")
             /* Respuestas */
-            .requestMatchers(HttpMethod.POST, "/respuesta/**").hasAnyRole("ADMIN", "USER")
+            // .requestMatchers(HttpMethod.POST, "/respuesta/**").hasAnyRole("ADMIN",
+            // "USER")
             .requestMatchers(HttpMethod.DELETE, "/respuesta/**").hasAnyRole("ADMIN")
             .anyRequest().permitAll());
     http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())); // Permitir iframes para

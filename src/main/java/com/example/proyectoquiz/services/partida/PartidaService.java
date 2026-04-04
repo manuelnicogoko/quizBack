@@ -6,6 +6,7 @@ import com.example.proyectoquiz.domain.Partida;
 import com.example.proyectoquiz.dto.PartidaDTO;
 import com.example.proyectoquiz.dto.PartidaListadoDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
+import com.example.proyectoquiz.exceptions.PartidaNotFoundException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 
 public interface PartidaService {
@@ -20,8 +21,9 @@ public interface PartidaService {
 
     public void deletePartida(Long id) throws RuntimeException, UserNotFoundException, AuthException;
 
-    public Partida softDeletePartida(Long id) throws RuntimeException, UserNotFoundException, AuthException;
+    public Partida cancelarPartida(String codigo) throws RuntimeException, PartidaNotFoundException;
 
-    public Partida finalizarPartida(String codigo) throws RuntimeException;
+    public Partida finalizarPartida(String codigo)
+            throws RuntimeException, PartidaNotFoundException;
 
 }

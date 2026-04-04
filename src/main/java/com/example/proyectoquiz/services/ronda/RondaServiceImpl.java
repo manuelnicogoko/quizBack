@@ -35,8 +35,12 @@ public class RondaServiceImpl implements RondaService {
             throw new RuntimeException("Partida no encontrada");
         }
 
-        Quiz quiz = partida.getQuiz();
+        Ronda existente = rondaRepository.findByPartidaIdAndNumeroRonda(partida.getId(), rondaDTO.getNumeroRonda());
+        if (existente != null) {
+            throw new RuntimeException("Ya existe una ronda " + rondaDTO.getNumeroRonda() + " para esta partida");
+        }
 
+        Quiz quiz = partida.getQuiz();
         Pregunta pregunta = preguntaRepository.findByQuizIdAndPosicion(quiz.getId(), rondaDTO.getNumeroRonda());
 
         if (pregunta == null) {
@@ -44,7 +48,6 @@ public class RondaServiceImpl implements RondaService {
         }
 
         Ronda ronda = new Ronda();
-
         ronda.setNumeroRonda(rondaDTO.getNumeroRonda());
         ronda.setEstado(Estado.EN_CURSO);
         ronda.setPartida(partida);

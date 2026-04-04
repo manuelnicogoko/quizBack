@@ -22,7 +22,7 @@ public class PreguntaController {
 
     private final PreguntaService preguntaService;
 
-    @GetMapping("/{quizId}")
+    @GetMapping("/quiz/{quizId}")
     public ResponseEntity<?> getPreguntasByQuizId(@PathVariable Long quizId) {
         return ResponseEntity.status(HttpStatus.OK).body(preguntaService.getPreguntasByQuizId(quizId));
     }

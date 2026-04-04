@@ -3,6 +3,7 @@ package com.example.proyectoquiz.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.proyectoquiz.domain.Inscripcion;
 import com.example.proyectoquiz.dto.InscripcionDTO;
 import com.example.proyectoquiz.services.inscripcion.InscripcionService;
 import com.example.proyectoquiz.services.websocket.WebSocketService;
@@ -30,20 +31,21 @@ public class InscripcionController {
     @GetMapping("/{codPartida}")
     public ResponseEntity<?> getInscripciones(@PathVariable String codPartida) {
         return ResponseEntity.status(HttpStatus.OK).body(inscripcionService.getInscripcionesPorCodigo(codPartida));
-
     }
 
     @PostMapping("/")
     public ResponseEntity<?> createInscripcion(@RequestBody InscripcionDTO inscripcionDTO,
             @RequestHeader String codSocket) {
+        Inscripcion inscripcion = inscripcionService.saveInscripcion(inscripcionDTO);
         webSocketService.unirJugador(codSocket);
-        return ResponseEntity.status(HttpStatus.CREATED).body(inscripcionService.saveInscripcion(inscripcionDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(inscripcion);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteInscripcion(@PathVariable Long id, @RequestHeader String codSocket) {
-        inscripcionService.deleteInscripcion(id);
-        webSocketService.excluirJugador(codSocket, id);
+    @DeleteMapping("/{codigoInscripcion}")
+    public ResponseEntity<?> deleteInscripcion(@PathVariable String codigoInscripcion,
+            @RequestHeader String codSocket) {
+        inscripcionService.deleteInscripcionPorCodigo(codigoInscripcion);
+        webSocketService.excluirJugador(codSocket, codigoInscripcion);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

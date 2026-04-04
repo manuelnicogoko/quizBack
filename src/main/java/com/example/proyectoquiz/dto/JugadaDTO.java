@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class JugadaDTO {
 
+    private String codigoInscripcion;
+
     private String respuesta;
 
     private Double tiempoRespuesta;

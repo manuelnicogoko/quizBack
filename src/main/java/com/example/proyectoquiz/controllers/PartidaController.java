@@ -52,10 +52,11 @@ public class PartidaController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/soft/{id}")
-    public ResponseEntity<?> softDeletePartida(@PathVariable Long id, @RequestHeader String codSocket) {
-        webSocketService.borrarPartida(codSocket, id);
-        return ResponseEntity.status(HttpStatus.OK).body(partidaService.softDeletePartida(id));
+    @PutMapping("/cancelar/{codigoPartida}")
+    public ResponseEntity<?> cancelarPartida(@PathVariable String codigoPartida, @RequestHeader String codSocket) {
+        Partida partida = partidaService.cancelarPartida(codigoPartida);
+        webSocketService.cancelarPartida(codSocket);
+        return ResponseEntity.status(HttpStatus.OK).body(partida);
     }
 
     @PutMapping("/finalizar/{codigo}")

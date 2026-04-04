@@ -23,7 +23,7 @@ public class RespuestaController {
 
     private final RespuestaService respuestaService;
 
-    @GetMapping("/{preguntaId}")
+    @GetMapping("/pregunta/{preguntaId}")
     public ResponseEntity<?> getRespuestasByPreguntaId(@PathVariable Long preguntaId) {
         return ResponseEntity.status(HttpStatus.OK).body(respuestaService.getRespuestasByPreguntaId(preguntaId));
     }

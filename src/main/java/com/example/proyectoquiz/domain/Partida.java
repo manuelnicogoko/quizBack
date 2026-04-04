@@ -40,15 +40,16 @@ public class Partida {
 
     private String codigo;
 
+    private String codigoAnfitrion;
+
     private String codigoSocket;
 
     private Integer numeroJugadores;
+
+    private String nombreAnfitrion;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Quiz quiz;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Usuario usuario;
 }

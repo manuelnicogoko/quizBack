@@ -24,7 +24,7 @@ public class Inscripcion {
 
     private String nombre;
 
-    private Boolean anonimo;
+    private String codigoInscripcion;
 
     private Double puntuacionTotalPartida;
 

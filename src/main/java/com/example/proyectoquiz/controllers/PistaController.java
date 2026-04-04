@@ -23,7 +23,7 @@ public class PistaController {
 
     private final PistaService pistaService;
 
-    @GetMapping("/{preguntaId}")
+    @GetMapping("/pregunta/{preguntaId}")
     public ResponseEntity<?> getPistasByPreguntaId(@PathVariable Long preguntaId) {
         return ResponseEntity.status(HttpStatus.OK).body(pistaService.getPistasByPreguntaId(preguntaId));
     }

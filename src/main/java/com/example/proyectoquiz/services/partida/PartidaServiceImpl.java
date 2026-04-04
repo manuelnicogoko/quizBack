@@ -63,6 +63,7 @@ public class PartidaServiceImpl implements PartidaService {
             partidaDTO.setTiempoRonda(partida.getTiempoRonda());
             partidaDTO.setVidas(partida.getVidas());
             partidaDTO.setPublica(partida.getPublica());
+            partidaDTO.setQuizId(partida.getQuiz().getId());
 
             listadoPartidas.add(partidaDTO);
         }
@@ -86,24 +87,28 @@ public class PartidaServiceImpl implements PartidaService {
         partidaDTO.setCodigo(partida.getCodigo());
         partidaDTO.setCodigoSocket(partida.getCodigoSocket());
         partidaDTO.setTiempoRonda(partida.getTiempoRonda());
+        partidaDTO.setCodigoAnfitrion(partida.getCodigoAnfitrion());
         partidaDTO.setVidas(partida.getVidas());
         partidaDTO.setPublica(partida.getPublica());
+        partidaDTO.setQuizId(partida.getQuiz().getId());
         return partidaDTO;
     }
 
     public Partida savePartida(PartidaDTO partidaDTO) throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombreUsuario;
+        Usuario usuario = null;
 
-        if (authentication == null) {
-            throw new AuthException();
-        }
-
-        String email = authentication.getName();
-
-        Usuario usuario = usuarioRepository.findByEmail(email);
-
-        if (usuario == null) {
-            throw new UserNotFoundException(email);
+        if (authentication == null || "anonymousUser".equals(authentication.getName())) {
+            nombreUsuario = partidaDTO.getNombreAnfitrion();
+            // usuario = null; // explícito, pero no necesario
+        } else {
+            String email = authentication.getName();
+            usuario = usuarioRepository.findByEmail(email);
+            if (usuario == null) {
+                throw new UserNotFoundException(email);
+            }
+            nombreUsuario = usuario.getNombre();
         }
 
         Quiz quiz = quizRepository.findById(partidaDTO.getQuiz())
@@ -120,9 +125,10 @@ public class PartidaServiceImpl implements PartidaService {
         partida.setTiempoRonda(partidaDTO.getTiempoRonda());
         partida.setFechaCreacion(LocalDate.now());
         partida.setEstado(Estado.EN_CURSO);
-        partida.setUsuario(usuario);
+        partida.setNombreAnfitrion(nombreUsuario);
         partida.setCodigo(codigo);
         partida.setCodigoSocket(codigoSocket);
+        partida.setCodigoAnfitrion(null);
         partida.setQuiz(quiz);
 
         return partidaRepository.save(partida);
@@ -150,60 +156,45 @@ public class PartidaServiceImpl implements PartidaService {
         partidaRepository.deleteById(id);
     }
 
-    public Partida softDeletePartida(Long id) throws RuntimeException, UserNotFoundException, AuthException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null) {
-            throw new AuthException();
-        }
-
-        String email = authentication.getName();
-
-        Usuario usuario = usuarioRepository.findByEmail(email);
-
-        if (usuario == null) {
-            throw new UserNotFoundException(email);
-        }
-
-        Partida partida = partidaRepository.findById(id).orElseThrow(() -> new PartidaNotFoundException(id.toString()));
-
-        if (partida.getUsuario().getId() != usuario.getId()) {
-            throw new RuntimeException("No tienes permisos para eliminar esta partida");
-        }
-
-        partida.setEstado(Estado.CANCELADA);
-        return partidaRepository.save(partida);
-    }
-
-    public Partida finalizarPartida(String codigo) throws RuntimeException, UserNotFoundException, AuthException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null) {
-            throw new AuthException();
-        }
-
-        String email = authentication.getName();
-
-        Usuario usuario = usuarioRepository.findByEmail(email);
-
-        if (usuario == null) {
-            throw new UserNotFoundException(email);
-        }
-
+    public Partida cancelarPartida(String codigo) throws RuntimeException, PartidaNotFoundException {
         Partida partida = partidaRepository.findByCodigo(codigo);
 
+        if (partida != null) {
+            for (Inscripcion inscripcion : inscripcionRepository.findByPartidaCodigo(codigo)) {
+                if (inscripcion != null) {
+                    inscripcionRepository.delete(inscripcion);
+                }
+            }
+            partida.setEstado(Estado.CANCELADA);
+            return partidaRepository.save(partida);
+        } else {
+            throw new PartidaNotFoundException(codigo);
+        }
+    }
+
+    public Partida finalizarPartida(String codigo)
+            throws RuntimeException, PartidaNotFoundException {
+
+        Partida partida = partidaRepository.findByCodigo(codigo);
         if (partida == null) {
             throw new PartidaNotFoundException(codigo);
         }
 
-        Inscripcion inscripcion = inscripcionRepository.findByUsuarioIdAndPartidaId(usuario.getId(), partida.getId());
-
-        if (inscripcion == null) {
+        List<Inscripcion> inscripciones = inscripcionRepository.findByPartidaCodigo(codigo);
+        if (inscripciones.isEmpty()) {
             throw new RuntimeException("Inscripcion no encontrada");
         }
 
-        usuario.setPuntuacionTotal(usuario.getPuntuacionTotal() + inscripcion.getPuntuacionTotalPartida());
+        for (Inscripcion inscripcion : inscripciones) {
+            Usuario usuario = inscripcion.getUsuario();
+            if (usuario != null) {
+                usuario.setPuntuacionTotal(usuario.getPuntuacionTotal() + inscripcion.getPuntuacionTotalPartida());
+                usuarioRepository.save(usuario);
+            }
+        }
+
         partida.setEstado(Estado.FINALIZADA);
         return partidaRepository.save(partida);
     }
+
 }

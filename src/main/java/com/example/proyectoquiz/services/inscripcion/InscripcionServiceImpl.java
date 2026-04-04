@@ -1,6 +1,5 @@
 package com.example.proyectoquiz.services.inscripcion;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
@@ -15,6 +14,7 @@ import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.InscripcionRepository;
 import com.example.proyectoquiz.repository.PartidaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
+import com.example.proyectoquiz.utils.GenerarCodigoPartida;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +26,8 @@ public class InscripcionServiceImpl implements InscripcionService {
     private final UsuarioRepository usuarioRepository;
 
     private final PartidaRepository partidaRepository;
+
+    private final GenerarCodigoPartida generarCodigoPartida;
 
     public List<Inscripcion> getInscripciones(Long partidaId) {
         return inscripcionRepository.findByPartidaId(partidaId);
@@ -42,17 +44,6 @@ public class InscripcionServiceImpl implements InscripcionService {
             throw new RuntimeException("El nombre es obligatorio");
         }
 
-        List<Usuario> usuarios = usuarioRepository.findByNombreContainingIgnoreCase(inscripcionDTO.getNombre());
-        List<String> nombresUsuarios = new ArrayList<>();
-
-        for (Usuario usuario : usuarios) {
-            nombresUsuarios.add(usuario.getNombre());
-        }
-
-        if (nombresUsuarios.contains(inscripcionDTO.getNombre())) {
-            throw new RuntimeException("El nombre ya existe, por favor elige otro");
-        }
-
         Partida partida = partidaRepository.findByCodigo(inscripcionDTO.getCodigoPartida());
         if (partida == null) {
             throw new RuntimeException("Partida no encontrada");
@@ -60,12 +51,22 @@ public class InscripcionServiceImpl implements InscripcionService {
 
         Inscripcion inscripcion = new Inscripcion();
 
-        if (authentication == null) {
+        String codigoInscripcion = generarCodigoPartida.generarCodigoAleatorio();
+
+        if (partida.getCodigoAnfitrion() == null || partida.getCodigoAnfitrion().isEmpty()) {
+            partida.setCodigoAnfitrion(codigoInscripcion);
+            partidaRepository.save(partida);
+        }
+
+        if (authentication == null || "anonymousUser".equals(authentication.getName())) {
+            if (inscripcionDTO.getNombre() == null || inscripcionDTO.getNombre().isEmpty()) {
+                throw new RuntimeException("El nombre es obligatorio");
+            }
+            if (inscripcionRepository.existsByPartidaAndNombre(partida, inscripcionDTO.getNombre())) {
+                throw new RuntimeException("Ese nombre ya está en uso en esta partida");
+            }
             inscripcion.setNombre(inscripcionDTO.getNombre());
-            inscripcion.setAnonimo(true);
             inscripcion.setUsuario(null);
-            inscripcion.setPuntuacionTotalPartida(0.0);
-            inscripcion.setPartida(partida);
         } else {
             String email = authentication.getName();
             Usuario usuario = usuarioRepository.findByEmail(email);
@@ -73,20 +74,28 @@ public class InscripcionServiceImpl implements InscripcionService {
                 throw new UserNotFoundException(email);
             }
             inscripcion.setNombre(inscripcionDTO.getNombre());
-            inscripcion.setAnonimo(false);
             inscripcion.setUsuario(usuario);
-            inscripcion.setPuntuacionTotalPartida(0.0);
-            inscripcion.setPartida(partida);
         }
-        partida.setNumeroJugadores(partida.getNumeroJugadores() + 1);
+
+        inscripcion.setCodigoInscripcion(codigoInscripcion);
+        inscripcion.setPuntuacionTotalPartida(0.0);
+        inscripcion.setPartida(partida);
+
+        Integer numJugadores = partida.getNumeroJugadores();
+        if (numJugadores == null) {
+            numJugadores = 0;
+        }
+
+        partida.setNumeroJugadores(numJugadores + 1);
         partidaRepository.save(partida);
         return inscripcionRepository.save(inscripcion);
     }
 
-    public void deleteInscripcion(Long id) throws RuntimeException {
-        Inscripcion inscripcion = inscripcionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Inscripcion no encontrada"));
+    public void deleteInscripcionPorCodigo(String codigoInscripcion) throws RuntimeException {
+        Inscripcion inscripcion = inscripcionRepository.findByCodigoInscripcion(codigoInscripcion);
 
-        inscripcionRepository.delete(inscripcion);
+        if (inscripcion != null) {
+            inscripcionRepository.delete(inscripcion);
+        }
     }
 }

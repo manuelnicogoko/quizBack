@@ -20,4 +20,7 @@ public class PartidaDTO {
     private Double tiempoRonda;
 
     private Long quiz;
+
+    private String nombreAnfitrion;
+
 }

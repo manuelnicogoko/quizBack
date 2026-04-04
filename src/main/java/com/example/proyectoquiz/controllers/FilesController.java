@@ -39,7 +39,7 @@ public class FilesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(fileStorageService.store(filename, file, destino));
     }
 
-    @PostMapping("/imagen/{quizId}/{preguntaPos}/{filename:.+}")
+    @PostMapping("/pregunta/{quizId}/{preguntaPos}/{filename:.+}")
     public ResponseEntity<?> postPreguntaImagen(@PathVariable Long quizId, @PathVariable Integer preguntaPos,
             @PathVariable String filename, @RequestParam("file") MultipartFile file) throws IOException {
         Path destino = Path.of("imagenPreg/" + quizId + "/" + preguntaPos + "/");
@@ -72,7 +72,7 @@ public class FilesController {
         return ResponseEntity.ok().body(file);
     }
 
-    @GetMapping("/imagen/{quizID}/{preguntaPos}/{filename:.+}")
+    @GetMapping("/pregunta/{quizID}/{preguntaPos}/{filename:.+}")
     public ResponseEntity<?> getPreguntaImagen(@PathVariable Long quizID, @PathVariable Integer preguntaPos,
             @PathVariable String filename) {
         Resource file = fileStorageService.loadAsResource("imagenPreg/" + quizID + "/" + preguntaPos + "/" + filename);

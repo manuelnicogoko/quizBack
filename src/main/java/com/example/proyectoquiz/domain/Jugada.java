@@ -40,5 +40,5 @@ public class Jugada {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Usuario usuario;
+    private Inscripcion inscripcion;
 }

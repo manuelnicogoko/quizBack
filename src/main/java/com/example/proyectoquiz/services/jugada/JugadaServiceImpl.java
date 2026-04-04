@@ -3,8 +3,6 @@ package com.example.proyectoquiz.services.jugada;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Inscripcion;
@@ -14,17 +12,13 @@ import com.example.proyectoquiz.domain.Pregunta;
 import com.example.proyectoquiz.domain.Respuesta;
 import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Ronda;
-import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.JugadaDTO;
-import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.PartidaNotFoundException;
-import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.InscripcionRepository;
 import com.example.proyectoquiz.repository.JugadaRepository;
 import com.example.proyectoquiz.repository.PartidaRepository;
 import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.RondaRepository;
-import com.example.proyectoquiz.repository.UsuarioRepository;
 
 import com.example.proyectoquiz.repository.RespuestaRepository;
 
@@ -37,8 +31,6 @@ public class JugadaServiceImpl implements JugadaService {
     private static final Double PUNTUACION_CORRECTA = 10.0;
 
     private final JugadaRepository jugadaRepository;
-
-    private final UsuarioRepository usuarioRepository;
 
     private final PartidaRepository partidaRepository;
 
@@ -55,29 +47,13 @@ public class JugadaServiceImpl implements JugadaService {
     }
 
     public Jugada saveJugada(String codPartida, Integer numeroRonda, JugadaDTO jugadaDTO)
-            throws RuntimeException, UserNotFoundException, PartidaNotFoundException, AuthException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null) {
-            throw new AuthException();
-        }
-
-        String email = authentication.getName();
-
-        Usuario usuario = usuarioRepository.findByEmail(email);
-
-        if (usuario == null) {
-            throw new UserNotFoundException(email);
-        }
-
+            throws RuntimeException, PartidaNotFoundException {
         Partida partida = partidaRepository.findByCodigo(codPartida);
-
         if (partida == null) {
             throw new PartidaNotFoundException(codPartida);
         }
 
         Quiz quiz = partida.getQuiz();
-
         Pregunta pregunta = preguntaRepository.findByQuizIdAndPosicion(quiz.getId(), numeroRonda);
         if (pregunta == null) {
             throw new RuntimeException("Pregunta no encontrada");
@@ -89,19 +65,20 @@ public class JugadaServiceImpl implements JugadaService {
         }
 
         Jugada jugada = new Jugada();
-
         List<Respuesta> respuestas = respuestaRepository.findByPreguntaId(pregunta.getId());
-
         List<String> opcionesCorrectas = new ArrayList<>();
-
         for (Respuesta respuesta : respuestas) {
             opcionesCorrectas.add(respuesta.getTexto());
         }
 
-        Inscripcion inscripcion = inscripcionRepository.findByUsuarioIdAndPartidaId(usuario.getId(), partida.getId());
-
+        String codigoInscripcion = jugadaDTO.getCodigoInscripcion();
+        if (codigoInscripcion == null || codigoInscripcion.isEmpty()) {
+            throw new RuntimeException("Código de Inscripción requerido");
+        }
+        Inscripcion inscripcion = inscripcionRepository.findByCodigoInscripcionAndPartidaId(codigoInscripcion,
+                partida.getId());
         if (inscripcion == null) {
-            throw new RuntimeException("Inscripcion no encontrada");
+            throw new RuntimeException("Inscripción no encontrada");
         }
 
         String respuesta = jugadaDTO.getRespuesta();
@@ -110,22 +87,16 @@ public class JugadaServiceImpl implements JugadaService {
             jugada.setCorrecta(true);
             jugada.setPuntuacion(PUNTUACION_CORRECTA);
             inscripcion.setPuntuacionTotalPartida(inscripcion.getPuntuacionTotalPartida() + PUNTUACION_CORRECTA);
-            jugada.setTiempoRespuesta(jugadaDTO.getTiempoRespuesta());
-            jugada.setPartida(partida);
-            jugada.setRonda(ronda);
-            jugada.setUsuario(usuario);
-            inscripcionRepository.save(inscripcion);
         } else {
             jugada.setRespuesta(respuesta);
             jugada.setCorrecta(false);
             jugada.setPuntuacion(0.00);
-            inscripcion.setPuntuacionTotalPartida(inscripcion.getPuntuacionTotalPartida());
-            jugada.setTiempoRespuesta(jugadaDTO.getTiempoRespuesta());
-            jugada.setPartida(partida);
-            jugada.setRonda(ronda);
-            jugada.setUsuario(usuario);
-            inscripcionRepository.save(inscripcion);
         }
+        jugada.setTiempoRespuesta(jugadaDTO.getTiempoRespuesta());
+        jugada.setPartida(partida);
+        jugada.setRonda(ronda);
+        jugada.setInscripcion(inscripcion);
+        inscripcionRepository.save(inscripcion);
 
         return jugadaRepository.save(jugada);
     }

@@ -29,4 +29,8 @@ public class PartidaListadoDTO {
 
     private String quiz;
 
+    private String codigoAnfitrion;
+
+    private Long quizId;
+
 }
