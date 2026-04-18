@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubcategoriaDTO {
+public class CategoriaAdminDTO {
 
     private String nombre;
 
-    private String descripcion;
+    private String logo;
 
-    private Long categoriaId;
+    private String descripcion;
 }

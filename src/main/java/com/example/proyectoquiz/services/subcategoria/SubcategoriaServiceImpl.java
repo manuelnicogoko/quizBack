@@ -12,6 +12,7 @@ import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Subcategoria;
 import com.example.proyectoquiz.domain.Usuario;
+import com.example.proyectoquiz.dto.SubcategoriaAdminDTO;
 import com.example.proyectoquiz.dto.SubcategoriaDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
@@ -47,7 +48,6 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         Subcategoria subcategoria = new Subcategoria();
 
         subcategoria.setNombre(subcategoriaDTO.getNombre());
-        subcategoria.setLogo(subcategoriaDTO.getLogo());
         subcategoria.setDescripcion(subcategoriaDTO.getDescripcion());
         subcategoria.setEstado(Estado.PENDIENTE);
 
@@ -59,7 +59,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         return subcategoriaRepository.save(subcategoria);
     }
 
-    public Subcategoria updateSubcategoria(Long id, SubcategoriaDTO subcategoriaDTO)
+    public Subcategoria updateSubcategoria(Long id, SubcategoriaAdminDTO subcategoriaDTO)
             throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

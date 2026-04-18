@@ -11,6 +11,7 @@ import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
+import com.example.proyectoquiz.dto.CategoriaAdminDTO;
 import com.example.proyectoquiz.dto.CategoriaDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
@@ -60,13 +61,12 @@ public class CategoriaServiceImpl implements CategoriaService {
 
         Categoria categoria = new Categoria();
         categoria.setNombre(categoriaDTO.getNombre());
-        categoria.setLogo(categoriaDTO.getLogo());
         categoria.setDescripcion(categoriaDTO.getDescripcion());
         categoria.setEstado(Estado.PENDIENTE);
         return categoriaRepository.save(categoria);
     }
 
-    public Categoria updateCategoria(Long id, CategoriaDTO categoriaDTO)
+    public Categoria updateCategoria(Long id, CategoriaAdminDTO categoriaDTO)
             throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

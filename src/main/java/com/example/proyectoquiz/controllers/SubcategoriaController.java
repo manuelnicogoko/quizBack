@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.proyectoquiz.dto.SubcategoriaAdminDTO;
 import com.example.proyectoquiz.dto.SubcategoriaDTO;
 import com.example.proyectoquiz.services.subcategoria.SubcategoriaService;
 
@@ -39,7 +40,7 @@ public class SubcategoriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> putSubcategoria(@PathVariable Long id, @RequestBody SubcategoriaDTO subcategoriaDTO) {
+    public ResponseEntity<?> putSubcategoria(@PathVariable Long id, @RequestBody SubcategoriaAdminDTO subcategoriaDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(subcategoriaService.updateSubcategoria(id, subcategoriaDTO));
     }
 

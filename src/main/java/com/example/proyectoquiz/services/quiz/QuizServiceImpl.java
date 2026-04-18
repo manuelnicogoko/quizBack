@@ -9,15 +9,22 @@ import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.domain.Estado;
+import com.example.proyectoquiz.domain.Pista;
+import com.example.proyectoquiz.domain.Pregunta;
 import com.example.proyectoquiz.domain.Quiz;
+import com.example.proyectoquiz.domain.Respuesta;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Subcategoria;
 import com.example.proyectoquiz.domain.Usuario;
+import com.example.proyectoquiz.dto.PreguntaDTO;
 import com.example.proyectoquiz.dto.QuizDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
+import com.example.proyectoquiz.repository.PistaRepository;
+import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
+import com.example.proyectoquiz.repository.RespuestaRepository;
 import com.example.proyectoquiz.repository.SubcategoriaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 import com.example.proyectoquiz.services.correo.CorreoService;
@@ -29,6 +36,12 @@ import lombok.RequiredArgsConstructor;
 public class QuizServiceImpl implements QuizService {
 
     private final QuizRepository quizRepository;
+
+    private final PreguntaRepository preguntaRepository;
+
+    private final PistaRepository pistaRepository;
+
+    private final RespuestaRepository respuestaRepository;
 
     private final CategoriaRepository categoriaRepository;
 
@@ -91,7 +104,38 @@ public class QuizServiceImpl implements QuizService {
 
         Subcategoria subcategoria = subcategoriaRepository.findById(quizDTO.getSubcategoriaId())
                 .orElseThrow(() -> new RuntimeException("Subcategoría no encontrada"));
+
         quiz.setSubcategoria(subcategoria);
+
+        Quiz quizDevuelto = quizRepository.save(quiz);
+
+        if (quizDTO.getPreguntas() != null) {
+            for (PreguntaDTO preguntaDTO : quizDTO.getPreguntas()) {
+                Pregunta pregunta = new Pregunta();
+                pregunta.setEnunciado(preguntaDTO.getEnunciado());
+                pregunta.setPosicion(preguntaDTO.getPosicion());
+                pregunta.setQuiz(quiz);
+                Pregunta preguntaGuardada = preguntaRepository.save(pregunta);
+
+                if (preguntaDTO.getPistas() != null) {
+                    for (String pistaTexto : preguntaDTO.getPistas()) {
+                        Pista pista = new Pista();
+                        pista.setTexto(pistaTexto);
+                        pista.setPregunta(preguntaGuardada);
+                        pistaRepository.save(pista);
+                    }
+                }
+
+                if (preguntaDTO.getRespuestas() != null) {
+                    for (String respuestaTexto : preguntaDTO.getRespuestas()) {
+                        Respuesta respuesta = new Respuesta();
+                        respuesta.setTexto(respuestaTexto);
+                        respuesta.setPregunta(preguntaGuardada);
+                        respuestaRepository.save(respuesta);
+                    }
+                }
+            }
+        }
 
         String enlace = frontendUrl + "/quiz/" + quiz.getId();
 
@@ -100,7 +144,7 @@ public class QuizServiceImpl implements QuizService {
 
         correoService.enviarEmail(adminEmail, "Nuevo Quiz Pendiente", mensaje);
 
-        return quizRepository.save(quiz);
+        return quizDevuelto;
     }
 
     public void deleteQuiz(Long id) throws RuntimeException, UserNotFoundException, AuthException {

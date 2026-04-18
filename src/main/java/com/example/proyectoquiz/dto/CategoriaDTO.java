@@ -11,7 +11,5 @@ public class CategoriaDTO {
 
     private String nombre;
 
-    private String logo;
-
     private String descripcion;
 }

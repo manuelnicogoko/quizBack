@@ -2,6 +2,7 @@ package com.example.proyectoquiz.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.proyectoquiz.dto.CategoriaAdminDTO;
 import com.example.proyectoquiz.dto.CategoriaDTO;
 import com.example.proyectoquiz.services.categoria.CategoriaService;
 
@@ -40,7 +41,7 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> putCategoria(@PathVariable Long id, @RequestBody CategoriaDTO categoriaDTO) {
+    public ResponseEntity<?> putCategoria(@PathVariable Long id, @RequestBody CategoriaAdminDTO categoriaDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.updateCategoria(id, categoriaDTO));
     }
 

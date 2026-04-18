@@ -1,5 +1,7 @@
 package com.example.proyectoquiz.domain;
 
+import java.util.List;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
