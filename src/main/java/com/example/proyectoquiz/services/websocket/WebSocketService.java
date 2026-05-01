@@ -17,4 +17,8 @@ public interface WebSocketService {
     public void nuevaRonda(String idSocket, Integer numeroRonda);
 
     public void terminarRonda(String idSocket, Integer numero);
+
+    public void notificacionQuizPendienteAprobacion(Long userId);
+
+    public void notificacionNuevoQuiz();
 }

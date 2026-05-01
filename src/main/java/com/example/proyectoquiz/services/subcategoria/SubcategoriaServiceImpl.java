@@ -39,6 +39,10 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         return subcategoriaRepository.findByEstado(Estado.ACEPTADO);
     }
 
+    public List<Subcategoria> getAllSubcategoriasEditar() {
+        return subcategoriaRepository.findAll();
+    }
+
     public Subcategoria getSubcategoriaById(Long id) throws RuntimeException {
         return subcategoriaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subcategoria no encontrada"));
@@ -82,15 +86,8 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         Subcategoria subcategoria = subcategoriaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subcategoria no encontrada"));
 
-        subcategoria.setNombre(subcategoriaDTO.getNombre());
         subcategoria.setLogo(subcategoriaDTO.getLogo());
-        subcategoria.setDescripcion(subcategoriaDTO.getDescripcion());
         subcategoria.setEstado(Estado.ACEPTADO);
-
-        Categoria categoria = categoriaRepository.findById(subcategoriaDTO.getCategoriaId())
-                .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
-
-        subcategoria.setCategoria(categoria);
 
         return subcategoriaRepository.save(subcategoria);
     }

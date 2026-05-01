@@ -12,6 +12,8 @@ public interface CategoriaService {
 
         public List<Categoria> getAllCategorias();
 
+        public List<Categoria> getAllCategoriasEditar();
+
         public Categoria getCategoriaById(Long id) throws RuntimeException;
 
         public Categoria saveCategoria(CategoriaDTO categoriaDTO)

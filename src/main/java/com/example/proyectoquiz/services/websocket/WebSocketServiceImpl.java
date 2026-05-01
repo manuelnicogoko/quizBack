@@ -45,4 +45,12 @@ public class WebSocketServiceImpl implements WebSocketService {
         messagingTemplate.convertAndSend("/topic/partida/" + codSocket,
                 "TR " + numero);
     }
+
+    public void notificacionQuizPendienteAprobacion(Long userId) {
+        messagingTemplate.convertAndSend("/topic/notificacion/user/" + userId, "QP");
+    }
+
+    public void notificacionNuevoQuiz() {
+        messagingTemplate.convertAndSend("/topic/notificacion/admin", "NQ");
+    }
 }

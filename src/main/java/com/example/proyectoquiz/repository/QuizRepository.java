@@ -2,6 +2,8 @@ package com.example.proyectoquiz.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.proyectoquiz.domain.Estado;
@@ -13,11 +15,13 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
     List<Quiz> findBySubcategoriaId(Long subcategoriaId);
 
-    List<Quiz> findByCategoriaIdAndEstado(Long categoriaId, Estado estado);
+    Page<Quiz> findByCategoriaIdAndEstado(Long categoriaId, Estado estado, Pageable pageable);
 
-    List<Quiz> findBySubcategoriaIdAndEstado(Long subcategoriaId, Estado estado);
+    Page<Quiz> findBySubcategoriaIdAndEstado(Long subcategoriaId, Estado estado, Pageable pageable);
 
-    List<Quiz> findByNombreContainingIgnoreCaseAndEstado(String nombre, Estado estado);
+    Page<Quiz> findByNombreContainingIgnoreCaseAndEstado(String nombre, Estado estado, Pageable pageable);
 
-    List<Quiz> findByEstado(Estado estado);
+    Page<Quiz> findByCreadorId(Long creadorId, Pageable pageable);
+
+    Page<Quiz> findByEstado(Estado estado, Pageable pageable);
 }

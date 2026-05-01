@@ -5,5 +5,6 @@ public enum Estado {
     FINALIZADA,
     CANCELADA,
     PENDIENTE,
-    ACEPTADO
+    ACEPTADO,
+    RECHAZADO
 }

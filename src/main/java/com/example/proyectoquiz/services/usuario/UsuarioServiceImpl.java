@@ -2,6 +2,7 @@ package com.example.proyectoquiz.services.usuario;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +15,7 @@ import com.example.proyectoquiz.dto.UsuarioDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.UsuarioRepository;
+import com.example.proyectoquiz.security.JwtUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final PasswordEncoder passwordEncoder;
 
     private final UsuarioRepository usuarioRepository;
+
+    private final JwtUtils jwtUtils;
 
     public List<Usuario> getAllUsuarios() {
         return usuarioRepository.findAll();
@@ -128,5 +132,24 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new RuntimeException("No tienes permisos para actualizar este usuario");
         }
         usuarioRepository.deleteById(id);
+    }
+
+    public String validateUserToken(String token) throws RuntimeException {
+        String tokenSinBearer = token.replace("Bearer ", "");
+        boolean valid = jwtUtils.validateJwtToken(tokenSinBearer);
+
+        String message = "";
+        if (valid) {
+            String email = jwtUtils.getUserNameFromJwtToken(token);
+            Usuario usuario = usuarioRepository.findByEmail(email);
+            if (usuario == null) {
+                message = "Token no válido o caducado";
+            } else {
+                message = "Token válido";
+            }
+        } else {
+            message = "Token no válido o caducado";
+        }
+        return message;
     }
 }

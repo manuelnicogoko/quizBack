@@ -1,7 +1,7 @@
 -- USUARIOS
 INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VALUES
-  ('admin', 'admin@email.com', 'adminpass', 'avatar1.jpg', 0, 0.0),
-  ('usuario', 'usuario@email.com', 'usuariopass', 'avatar2.jpg', 1, 0.0);
+  ('admin', 'admin@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 0, 0.0),
+  ('usuario', 'usuario@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 0.0);
 
 -- CATEGORIAS
 INSERT INTO categoria (nombre, logo, descripcion, estado) VALUES
@@ -150,3 +150,17 @@ INSERT INTO partida (nombre, max_jugadores, publica, vidas, tiempo_ronda, fecha_
 INSERT INTO ronda (numero_ronda, estado, partida_id, pregunta_id) VALUES
   (1, 1, 1, 1),
   (2, 2, 1, 2);
+
+-- QUIZZES PENDIENTES DE ACEPTAR (creador_id = 2, estado = 3 -> PENDIENTE)
+INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcategoria_id, estado) VALUES
+  ('Quiz de Marvel', 'Preguntas sobre el universo Marvel', 'marvel.jpg', 2, 1, 1, 3),
+  ('Quiz de Animales', '¿Cuánto sabes sobre animales?', 'animales.jpg', 2, 3, 6, 3),
+  ('Quiz de Historia de España', 'Historia y personajes de España', 'espana.jpg', 2, 5, 9, 3),
+  ('Quiz de Videojuegos Indie', 'Juegos indie populares', 'indie.jpg', 2, 1, 2, 3),
+  ('Quiz de Música Clásica', 'Compositores y obras clásicas', 'clasica.jpg', 2, 6, 12, 3);
+
+-- QUIZZES RECHAZADOS (creador_id = 2, estado = 2 -> RECHAZADO)
+INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcategoria_id, estado) VALUES
+  ('Quiz de Series Canceladas', 'Preguntas sobre series que fueron canceladas', 'series_canceladas.jpg', 2, 1, 2, 2),
+  ('Quiz de Animales Extintos', '¿Cuánto sabes sobre animales extintos?', 'extintos.jpg', 2, 3, 6, 2),
+  ('Quiz de Inventos Fallidos', 'Inventos que no triunfaron en la historia', 'fallidos.jpg', 2, 5, 10, 2);

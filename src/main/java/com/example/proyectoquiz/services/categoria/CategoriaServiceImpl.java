@@ -35,6 +35,10 @@ public class CategoriaServiceImpl implements CategoriaService {
         return categoriaRepository.findByEstado(Estado.ACEPTADO);
     }
 
+    public List<Categoria> getAllCategoriasEditar() {
+        return categoriaRepository.findAll();
+    }
+
     public Categoria getCategoriaById(Long id) throws RuntimeException {
         return categoriaRepository.findById(id).orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
     }
@@ -88,9 +92,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
         Categoria categoria = categoriaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
-        categoria.setNombre(categoriaDTO.getNombre());
         categoria.setLogo(categoriaDTO.getLogo());
-        categoria.setDescripcion(categoriaDTO.getDescripcion());
         categoria.setEstado(Estado.ACEPTADO);
         return categoriaRepository.save(categoria);
     }

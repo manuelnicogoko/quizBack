@@ -30,6 +30,11 @@ public class CategoriaController {
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.getAllCategorias());
     }
 
+    @GetMapping("/all/editar")
+    public ResponseEntity<?> getCategoriasEditar() {
+        return ResponseEntity.status(HttpStatus.OK).body(categoriaService.getAllCategoriasEditar());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoria(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.getCategoriaById(id));

@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoriaAdminDTO {
 
-    private String nombre;
-
     private String logo;
 
-    private String descripcion;
+    private String estado;
 }

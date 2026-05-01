@@ -7,10 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubcategoriaAdminDTO {
-
-    private String logo;
-
-    private String estado;
-
+public class PreguntaActualizacionDTO {
+    private String imagen;
 }

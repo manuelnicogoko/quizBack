@@ -1,21 +1,22 @@
 package com.example.proyectoquiz.services.quiz;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.example.proyectoquiz.domain.Quiz;
+import com.example.proyectoquiz.dto.QuizAdminDTO;
 import com.example.proyectoquiz.dto.QuizDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 
 public interface QuizService {
 
-    public List<Quiz> getAllQuizzes();
+    public Page<Quiz> getAllQuizzes(Integer pageNumber);
 
-    public List<Quiz> getQuizzesByCategoriaId(Long categoriaId);
+    public Page<Quiz> getQuizzesByCategoriaId(Long categoriaId, Integer pageNumber);
 
-    public List<Quiz> getQuizzesBySubcategoriaId(Long subcategoriaId);
+    public Page<Quiz> getQuizzesBySubcategoriaId(Long subcategoriaId, Integer pageNumber);
 
-    public List<Quiz> getQuizzesByNombre(String nombre) throws RuntimeException;
+    public Page<Quiz> getQuizzesByNombre(String nombre, Integer pageNumber) throws RuntimeException;
 
     public Quiz getQuizById(Long id) throws RuntimeException;
 
@@ -23,5 +24,10 @@ public interface QuizService {
 
     public void deleteQuiz(Long id) throws RuntimeException, UserNotFoundException, AuthException;
 
-    public Quiz updateQuiz(Long id, QuizDTO quizDTO) throws RuntimeException, UserNotFoundException, AuthException;
+    public Quiz updateQuiz(Long id, QuizAdminDTO quizDTO)
+            throws RuntimeException, UserNotFoundException, AuthException;
+
+    public Page<Quiz> getQuizzesByUsuario(Long creadorId, int pageNumber);
+
+    public Page<Quiz> getQuizzesPendientes(int pageNumber);
 }

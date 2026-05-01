@@ -12,6 +12,8 @@ public interface SubcategoriaService {
 
     public List<Subcategoria> getAllSubcategorias();
 
+    public List<Subcategoria> getAllSubcategoriasEditar();
+
     public Subcategoria getSubcategoriaById(Long id) throws RuntimeException;
 
     public Subcategoria saveSubcategoria(SubcategoriaDTO subcategoriaDTO) throws RuntimeException;

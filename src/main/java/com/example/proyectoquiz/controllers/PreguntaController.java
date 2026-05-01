@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.proyectoquiz.dto.PreguntaActualizacionDTO;
 import com.example.proyectoquiz.dto.PreguntaDTO;
 import com.example.proyectoquiz.services.pregunta.PreguntaService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,6 +44,12 @@ public class PreguntaController {
     public ResponseEntity<?> savePregunta(@PathVariable Long quizId, @RequestBody PreguntaDTO preguntaDTO)
             throws RuntimeException {
         return ResponseEntity.status(HttpStatus.CREATED).body(preguntaService.savePregunta(quizId, preguntaDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updatePregunta(@PathVariable Long id, @RequestBody PreguntaActualizacionDTO preguntaDTO)
+            throws RuntimeException {
+        return ResponseEntity.status(HttpStatus.OK).body(preguntaService.updatePregunta(id, preguntaDTO));
     }
 
     @DeleteMapping("/{id}")

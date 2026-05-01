@@ -29,6 +29,11 @@ public class SubcategoriaController {
         return ResponseEntity.status(HttpStatus.OK).body(subcategoriaService.getAllSubcategorias());
     }
 
+    @GetMapping("/all/editar")
+    public ResponseEntity<?> getSubcategoriasEditar() {
+        return ResponseEntity.status(HttpStatus.OK).body(subcategoriaService.getAllSubcategoriasEditar());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getSubcategoria(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(subcategoriaService.getSubcategoriaById(id));

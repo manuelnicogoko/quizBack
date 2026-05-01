@@ -1,7 +1,11 @@
 package com.example.proyectoquiz.services.quiz;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.domain.Estado;
+import com.example.proyectoquiz.domain.Notificacion;
 import com.example.proyectoquiz.domain.Pista;
 import com.example.proyectoquiz.domain.Pregunta;
 import com.example.proyectoquiz.domain.Quiz;
@@ -17,6 +22,7 @@ import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Subcategoria;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.PreguntaDTO;
+import com.example.proyectoquiz.dto.QuizAdminDTO;
 import com.example.proyectoquiz.dto.QuizDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
@@ -28,6 +34,8 @@ import com.example.proyectoquiz.repository.RespuestaRepository;
 import com.example.proyectoquiz.repository.SubcategoriaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 import com.example.proyectoquiz.services.correo.CorreoService;
+import com.example.proyectoquiz.services.notificaciones.NotificacionService;
+import com.example.proyectoquiz.services.websocket.WebSocketService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -49,7 +57,13 @@ public class QuizServiceImpl implements QuizService {
 
     private final UsuarioRepository usuarioRepository;
 
+    private final NotificacionService notificacionService;
+
+    private final WebSocketService webSocketService;
+
     private final CorreoService correoService;
+
+    private final Integer PAGE_SIZE_DEFAULT = 9;
 
     @Value("${app.frontend.url}")
     private String frontendUrl;
@@ -57,20 +71,24 @@ public class QuizServiceImpl implements QuizService {
     @Value("${spring.mail.username}")
     private String adminEmail;
 
-    public List<Quiz> getAllQuizzes() {
-        return quizRepository.findByEstado(Estado.ACEPTADO);
+    public Page<Quiz> getAllQuizzes(Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE_DEFAULT);
+        return quizRepository.findByEstado(Estado.ACEPTADO, pageable);
     }
 
-    public List<Quiz> getQuizzesByCategoriaId(Long categoriaId) {
-        return quizRepository.findByCategoriaIdAndEstado(categoriaId, Estado.ACEPTADO);
+    public Page<Quiz> getQuizzesByCategoriaId(Long categoriaId, Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE_DEFAULT);
+        return quizRepository.findByCategoriaIdAndEstado(categoriaId, Estado.ACEPTADO, pageable);
     }
 
-    public List<Quiz> getQuizzesBySubcategoriaId(Long subcategoriaId) {
-        return quizRepository.findBySubcategoriaIdAndEstado(subcategoriaId, Estado.ACEPTADO);
+    public Page<Quiz> getQuizzesBySubcategoriaId(Long subcategoriaId, Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE_DEFAULT);
+        return quizRepository.findBySubcategoriaIdAndEstado(subcategoriaId, Estado.ACEPTADO, pageable);
     }
 
-    public List<Quiz> getQuizzesByNombre(String nombre) throws RuntimeException {
-        return quizRepository.findByNombreContainingIgnoreCaseAndEstado(nombre, Estado.ACEPTADO);
+    public Page<Quiz> getQuizzesByNombre(String nombre, Integer pageNumber) throws RuntimeException {
+        Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE_DEFAULT);
+        return quizRepository.findByNombreContainingIgnoreCaseAndEstado(nombre, Estado.ACEPTADO, pageable);
     }
 
     public Quiz getQuizById(Long id) throws RuntimeException {
@@ -137,12 +155,22 @@ public class QuizServiceImpl implements QuizService {
             }
         }
 
-        String enlace = frontendUrl + "/quiz/" + quiz.getId();
+        String enlace = frontendUrl + "quiz/" + quiz.getId();
 
         String mensaje = "El usuario " + usuario.getNombre() + " ha solicitado crear el quiz " + quiz.getNombre()
                 + "\n\nGestiona el quiz aquí: \n" + enlace;
 
         correoService.enviarEmail(adminEmail, "Nuevo Quiz Pendiente", mensaje);
+
+        Notificacion notificacion = new Notificacion();
+        notificacion.setMensaje("Quiz: " + quizDevuelto.getNombre());
+        notificacion.setTipo("NUEVO_QUIZ");
+        notificacion.setLeida(false);
+        notificacion.setFecha(LocalDateTime.now());
+        notificacion.setQuizId(quizDevuelto.getId());
+        notificacion.setDestinatario(null);
+
+        notificacionService.crearYNotificar(notificacion, null, webSocketService);
 
         return quizDevuelto;
     }
@@ -168,7 +196,8 @@ public class QuizServiceImpl implements QuizService {
         quizRepository.deleteById(id);
     }
 
-    public Quiz updateQuiz(Long id, QuizDTO quizDTO) throws RuntimeException, UserNotFoundException, AuthException {
+    public Quiz updateQuiz(Long id, QuizAdminDTO quizDTO)
+            throws RuntimeException, UserNotFoundException, AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
@@ -191,7 +220,7 @@ public class QuizServiceImpl implements QuizService {
 
         quiz.setNombre(quizDTO.getNombre());
         quiz.setDescripcion(quizDTO.getDescripcion());
-        quiz.setEstado(Estado.ACEPTADO);
+        quiz.setEstado(Estado.valueOf(quizDTO.getEstado()));
 
         Categoria categoria = categoriaRepository.findById(quizDTO.getCategoriaId())
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
@@ -203,7 +232,29 @@ public class QuizServiceImpl implements QuizService {
 
         quiz.setSubcategoria(subcategoria);
 
-        return quizRepository.save(quiz);
+        Quiz quizDevuelto = quizRepository.save(quiz);
+
+        Notificacion notificacion = new Notificacion();
+        notificacion.setMensaje(
+                "Quiz: " + quizDevuelto.getNombre());
+        notificacion.setTipo("ESTADO_QUIZ");
+        notificacion.setLeida(false);
+        notificacion.setFecha(LocalDateTime.now());
+        notificacion.setQuizId(quizDevuelto.getId());
+        notificacion.setDestinatario(quizDevuelto.getCreador());
+
+        notificacionService.crearYNotificar(notificacion, quizDevuelto.getCreador().getId(), webSocketService);
+
+        return quizDevuelto;
     }
 
+    public Page<Quiz> getQuizzesByUsuario(Long creadorId, int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE_DEFAULT);
+        return quizRepository.findByCreadorId(creadorId, pageable);
+    }
+
+    public Page<Quiz> getQuizzesPendientes(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE_DEFAULT);
+        return quizRepository.findByEstado(Estado.PENDIENTE, pageable);
+    }
 }

@@ -20,4 +20,6 @@ public interface UsuarioService {
     public Usuario saveUsuario(RegisterDTO usuarioDTO) throws RuntimeException;
 
     public void deleteUsuario(Long id) throws RuntimeException, UserNotFoundException, AuthException;
+
+    public String validateUserToken(String token) throws RuntimeException;
 }
