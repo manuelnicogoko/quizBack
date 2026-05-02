@@ -59,10 +59,6 @@ public class CategoriaServiceImpl implements CategoriaService {
             throw new UserNotFoundException(email);
         }
 
-        if (usuario.getRol() != Rol.ADMIN) {
-            throw new RuntimeException("No tienes permisos para crear una categoria");
-        }
-
         Categoria categoria = new Categoria();
         categoria.setNombre(categoriaDTO.getNombre());
         categoria.setDescripcion(categoriaDTO.getDescripcion());

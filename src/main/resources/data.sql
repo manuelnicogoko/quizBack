@@ -161,6 +161,6 @@ INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcat
 
 -- QUIZZES RECHAZADOS (creador_id = 2, estado = 2 -> RECHAZADO)
 INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcategoria_id, estado) VALUES
-  ('Quiz de Series Canceladas', 'Preguntas sobre series que fueron canceladas', 'series_canceladas.jpg', 2, 1, 2, 2),
-  ('Quiz de Animales Extintos', '¿Cuánto sabes sobre animales extintos?', 'extintos.jpg', 2, 3, 6, 2),
-  ('Quiz de Inventos Fallidos', 'Inventos que no triunfaron en la historia', 'fallidos.jpg', 2, 5, 10, 2);
+  ('Quiz de Series Canceladas', 'Preguntas sobre series que fueron canceladas', 'series_canceladas.jpg', 2, 1, 2, 5),
+  ('Quiz de Animales Extintos', '¿Cuánto sabes sobre animales extintos?', 'extintos.jpg', 2, 3, 6, 5),
+  ('Quiz de Inventos Fallidos', 'Inventos que no triunfaron en la historia', 'fallidos.jpg', 2, 5, 10, 5);
