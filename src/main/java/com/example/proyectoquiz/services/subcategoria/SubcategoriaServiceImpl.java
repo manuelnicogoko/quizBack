@@ -49,8 +49,12 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
     }
 
     public Subcategoria saveSubcategoria(SubcategoriaDTO subcategoriaDTO) throws RuntimeException {
-        Subcategoria subcategoria = new Subcategoria();
+        Subcategoria existente = subcategoriaRepository.findByNombreIgnoreCase(subcategoriaDTO.getNombre());
+        if (existente != null) {
+            return existente;
+        }
 
+        Subcategoria subcategoria = new Subcategoria();
         subcategoria.setNombre(subcategoriaDTO.getNombre());
         subcategoria.setDescripcion(subcategoriaDTO.getDescripcion());
         subcategoria.setEstado(Estado.PENDIENTE);
@@ -114,7 +118,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         List<Quiz> quizzes = quizRepository.findBySubcategoriaId(id);
 
         if (!quizzes.isEmpty()) {
-            Subcategoria subcategoriaOtros = subcategoriaRepository.findByNombre("Otros");
+            Subcategoria subcategoriaOtros = subcategoriaRepository.findByNombreIgnoreCase("Otros");
 
             for (Quiz quiz : quizzes) {
                 quiz.setSubcategoria(subcategoriaOtros);

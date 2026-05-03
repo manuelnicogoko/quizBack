@@ -11,5 +11,5 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     List<Categoria> findByEstado(Estado estado);
 
-    Categoria findByNombre(String nombre);
+    Categoria findByNombreIgnoreCase(String nombre);
 }

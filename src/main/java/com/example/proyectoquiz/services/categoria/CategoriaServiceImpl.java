@@ -52,11 +52,15 @@ public class CategoriaServiceImpl implements CategoriaService {
         }
 
         String email = authentication.getName();
-
         Usuario usuario = usuarioRepository.findByEmail(email);
 
         if (usuario == null) {
             throw new UserNotFoundException(email);
+        }
+
+        Categoria existente = categoriaRepository.findByNombreIgnoreCase(categoriaDTO.getNombre());
+        if (existente != null) {
+            return existente;
         }
 
         Categoria categoria = new Categoria();
@@ -115,7 +119,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         List<Quiz> quizzes = quizRepository.findByCategoriaId(id);
 
         if (!quizzes.isEmpty()) {
-            Categoria categoriaOtros = categoriaRepository.findByNombre("Otros");
+            Categoria categoriaOtros = categoriaRepository.findByNombreIgnoreCase("Otros");
 
             for (Quiz quiz : quizzes) {
                 quiz.setCategoria(categoriaOtros);

@@ -1,7 +1,11 @@
 -- USUARIOS
 INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VALUES
-  ('admin', 'admin@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 0, 0.0),
-  ('usuario', 'usuario@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 0.0);
+  ('admin', 'admin@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 0, 200.0),
+  ('usuario', 'usuario@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 300.0),
+  ('usuario1', 'usuario1@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 200.0),
+  ('usuario2', 'usuario2@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 100.0),
+  ('usuario3', 'usuario3@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 50.0);
+
 
 -- CATEGORIAS
 INSERT INTO categoria (nombre, logo, descripcion, estado) VALUES
@@ -25,7 +29,8 @@ INSERT INTO subcategoria (nombre, logo, descripcion, categoria_id, estado) VALUE
   ('Edad Media', 'edadmedia.png', 'Historia medieval', 5, 4),
   ('Edad Moderna', 'edadmoderna.png', 'Historia moderna', 5, 4),
   ('Rock', 'rock.png', 'Música rock', 6, 4),
-  ('Pop', 'pop.png', 'Música pop', 6, 4);
+  ('Pop', 'pop.png', 'Música pop', 6, 4),
+  ('MOBA', 'moba.png', 'Juegos de arena de batalla multijugador', 1, 4);
 
 -- QUIZZES
 INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcategoria_id, estado) VALUES
@@ -164,3 +169,54 @@ INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcat
   ('Quiz de Series Canceladas', 'Preguntas sobre series que fueron canceladas', 'series_canceladas.jpg', 2, 1, 2, 5),
   ('Quiz de Animales Extintos', '¿Cuánto sabes sobre animales extintos?', 'extintos.jpg', 2, 3, 6, 5),
   ('Quiz de Inventos Fallidos', 'Inventos que no triunfaron en la historia', 'fallidos.jpg', 2, 5, 10, 5);
+
+-- QUIZ: Adivina el campeón de League of Legends
+INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcategoria_id, estado) VALUES
+  ('Adivina el campeón de LoL', '¿Puedes adivinar el campeón de League of Legends por su imagen y pistas?', 'lol.jpg', 1, 1, 13, 4);
+-- PREGUNTAS para el quiz de LoL (quiz_id = 45)
+INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
+  ('¿Quién es este campeón?', 'ahri.jpg', 1, 45),         -- id 61
+  ('¿Quién es este campeón?', 'yasuo.jpg', 2, 45),        -- id 62
+  ('¿Quién es este campeón?', 'teemo.jpg', 3, 45),        -- id 63
+  ('¿Quién es este campeón?', 'lux.jpg', 4, 45),          -- id 64
+  ('¿Quién es este campeón?', 'garen.jpg', 5, 45),        -- id 65
+  ('¿Quién es este campeón?', 'jinx.jpg', 6, 45),         -- id 66
+  ('¿Quién es este campeón?', 'thresh.jpg', 7, 45),       -- id 67
+  ('¿Quién es este campeón?', 'lee_sin.jpg', 8, 45),      -- id 68
+  ('¿Quién es este campeón?', 'miss_fortune.jpg', 9, 45), -- id 69
+  ('¿Quién es este campeón?', 'ekko.jpg', 10, 45);        -- id 70
+
+-- Ahora usa esos IDs en las pistas y respuestas:
+INSERT INTO pista (pregunta_id, texto) VALUES
+  (7, 'Zorra de nueve colas'),
+  (7, 'Campeona maga de mid'),
+  (8, 'Samurái del viento'),
+  (8, 'Famoso por su frase: "El viento es mi guía"'),
+  (9, 'Yordle explorador'),
+  (9, 'Coloca setas invisibles'),
+  (10, 'Dama de la luz'),
+  (10, 'Hermana de Garen'),
+  (11, 'Guerrero de Demacia'),
+  (11, 'Usa una espada enorme'),
+  (12, 'Artillera loca'),
+  (12, 'Cabello azul y armas gigantes'),
+  (13, 'Carcelero de las almas'),
+  (13, 'Soporte con linterna'),
+  (14, 'Monje ciego'),
+  (14, 'Especialista en artes marciales'),
+  (15, 'Pirata pistolera'),
+  (15, 'Dispara balas dobles'),
+  (16, 'Controla el tiempo'),
+  (16, 'Joven prodigio de Zaun');
+
+INSERT INTO respuesta (pregunta_id, texto) VALUES
+  (7, 'Ahri'),
+  (8, 'Yasuo'),
+  (9, 'Teemo'),
+  (10, 'Lux'),
+  (11, 'Garen'),
+  (12, 'Jinx'),
+  (13, 'Thresh'),
+  (14, 'Lee Sin'),
+  (15, 'Miss Fortune'),
+  (16, 'Ekko');

@@ -28,7 +28,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JugadaServiceImpl implements JugadaService {
 
-    private static final Double PUNTUACION_CORRECTA = 10.0;
+    private static final double PUNTUACION_MAXIMA = 100.0;
+    private static final double TIEMPO_GRACIA = 5.0;
+    private static final double PENALIZACION_TIEMPO = 0.10;
+    private static final double PENALIZACION_FALLO = 0.20;
 
     private final JugadaRepository jugadaRepository;
 
@@ -52,6 +55,8 @@ public class JugadaServiceImpl implements JugadaService {
         if (partida == null) {
             throw new PartidaNotFoundException(codPartida);
         }
+        int maxFallos = partida.getVidas();
+        double maxTiempoRespuesta = partida.getTiempoRonda();
 
         Quiz quiz = partida.getQuiz();
         Pregunta pregunta = preguntaRepository.findByQuizIdAndPosicion(quiz.getId(), numeroRonda);
@@ -82,17 +87,44 @@ public class JugadaServiceImpl implements JugadaService {
         }
 
         String respuesta = jugadaDTO.getRespuesta();
-        if (opcionesCorrectas.contains(respuesta)) {
+        boolean esCorrecta = opcionesCorrectas.contains(respuesta);
+
+        Long fallosPrevios = jugadaRepository.countByInscripcionIdAndRondaIdAndCorrectaFalse(
+                inscripcion.getId(), ronda.getId());
+
+        double tiempoRespuesta = jugadaDTO.getTiempoRespuesta() != null ? jugadaDTO.getTiempoRespuesta() : 0.0;
+
+        double puntuacion = PUNTUACION_MAXIMA;
+
+        if (esCorrecta) {
+            puntuacion -= PUNTUACION_MAXIMA * PENALIZACION_FALLO * fallosPrevios;
+
+            if (tiempoRespuesta > TIEMPO_GRACIA) {
+                double segundosExtra = tiempoRespuesta - TIEMPO_GRACIA;
+                int tramos = (int) Math.ceil(segundosExtra / 5.0);
+                puntuacion -= PUNTUACION_MAXIMA * PENALIZACION_TIEMPO * tramos;
+            }
+
+            if (fallosPrevios >= maxFallos || tiempoRespuesta >= maxTiempoRespuesta) {
+                puntuacion = 0.0;
+            }
+
+            if (puntuacion < 0)
+                puntuacion = 0.0;
+            if (puntuacion > PUNTUACION_MAXIMA)
+                puntuacion = PUNTUACION_MAXIMA;
+
             jugada.setRespuesta(respuesta);
             jugada.setCorrecta(true);
-            jugada.setPuntuacion(PUNTUACION_CORRECTA);
-            inscripcion.setPuntuacionTotalPartida(inscripcion.getPuntuacionTotalPartida() + PUNTUACION_CORRECTA);
+            jugada.setPuntuacion(puntuacion);
+            inscripcion.setPuntuacionTotalPartida(inscripcion.getPuntuacionTotalPartida() + puntuacion);
         } else {
             jugada.setRespuesta(respuesta);
             jugada.setCorrecta(false);
             jugada.setPuntuacion(0.00);
         }
-        jugada.setTiempoRespuesta(jugadaDTO.getTiempoRespuesta());
+
+        jugada.setTiempoRespuesta(tiempoRespuesta);
         jugada.setPartida(partida);
         jugada.setRonda(ronda);
         jugada.setInscripcion(inscripcion);

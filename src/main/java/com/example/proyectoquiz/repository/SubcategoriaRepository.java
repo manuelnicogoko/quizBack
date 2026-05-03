@@ -11,5 +11,5 @@ public interface SubcategoriaRepository extends JpaRepository<Subcategoria, Long
 
     List<Subcategoria> findByEstado(Estado estado);
 
-    Subcategoria findByNombre(String nombre);
+    Subcategoria findByNombreIgnoreCase(String nombre);
 }
