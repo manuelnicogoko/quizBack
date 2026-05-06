@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.proyectoquiz.config.PropiedadesApp;
 import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Inscripcion;
 import com.example.proyectoquiz.domain.Partida;
@@ -18,6 +19,7 @@ import com.example.proyectoquiz.dto.PartidaDTO;
 import com.example.proyectoquiz.dto.PartidaListadoDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
 import com.example.proyectoquiz.exceptions.PartidaNotFoundException;
+import com.example.proyectoquiz.exceptions.PropiedadAppException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.InscripcionRepository;
 import com.example.proyectoquiz.repository.PartidaRepository;
@@ -40,6 +42,8 @@ public class PartidaServiceImpl implements PartidaService {
     private final GenerarCodigoPartida generarCodigoPartida;
 
     private final InscripcionRepository inscripcionRepository;
+
+    private final PropiedadesApp propiedadesApp;
 
     public List<Partida> getAllPartidas() {
         return partidaRepository.findAll();
@@ -94,8 +98,33 @@ public class PartidaServiceImpl implements PartidaService {
         return partidaDTO;
     }
 
-    public Partida savePartida(PartidaDTO partidaDTO) throws RuntimeException, UserNotFoundException, AuthException {
+    public Partida savePartida(PartidaDTO partidaDTO)
+            throws RuntimeException, UserNotFoundException, AuthException, PropiedadAppException {
+        if (partidaRepository.count() >= propiedadesApp.getMaxPartidasJugando()) {
+            throw new PropiedadAppException(
+                    "No se pueden crear más partidas. Límite alcanzado: " + propiedadesApp.getMaxPartidasJugando());
+        }
+        if (partidaDTO.getMaxJugadores() > propiedadesApp.getMaxJugadorPartida()) {
+            throw new PropiedadAppException(
+                    "No se pueden añadir más jugadores a la partida. Máximo: " + propiedadesApp.getMaxJugadorPartida());
+        }
+        if (partidaDTO.getMaxJugadores() < propiedadesApp.getMinJugadorPartida()) {
+            throw new PropiedadAppException("No se pueden crear partidas con menos de "
+                    + propiedadesApp.getMinJugadorPartida() + " jugadores.");
+        }
+        if (partidaDTO.getVidas() > propiedadesApp.getMaxVidas()
+                || partidaDTO.getVidas() < propiedadesApp.getMinVidas()) {
+            throw new PropiedadAppException("El número de vidas debe estar entre " + propiedadesApp.getMinVidas()
+                    + " y " + propiedadesApp.getMaxVidas());
+        }
+        if (partidaDTO.getTiempoRonda() > propiedadesApp.getMaxTiempoRonda()
+                || partidaDTO.getTiempoRonda() < propiedadesApp.getMinTiempoRonda()) {
+            throw new PropiedadAppException("El tiempo de ronda debe estar entre " + propiedadesApp.getMinTiempoRonda()
+                    + " y " + propiedadesApp.getMaxTiempoRonda() + " segundos.");
+        }
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         String nombreUsuario;
         Usuario usuario = null;
 

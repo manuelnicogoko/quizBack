@@ -8,11 +8,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.proyectoquiz.config.PropiedadesApp;
 import com.example.proyectoquiz.domain.Rol;
 import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.RegisterDTO;
 import com.example.proyectoquiz.dto.UsuarioDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
+import com.example.proyectoquiz.exceptions.PropiedadAppException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 import com.example.proyectoquiz.security.JwtUtils;
@@ -28,6 +30,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     private final JwtUtils jwtUtils;
+
+    private final PropiedadesApp propiedadesApp;
 
     public List<Usuario> getAllUsuarios() {
         return usuarioRepository.findAll();
@@ -94,6 +98,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     public Usuario saveUsuario(RegisterDTO usuarioDTO) throws RuntimeException {
+        if (usuarioRepository.count() >= propiedadesApp.getMaxUsuariosCreados()) {
+            throw new PropiedadAppException(
+                    "No se pueden registrar más usuarios. Límite alcanzado: " + propiedadesApp.getMaxUsuariosCreados());
+        }
+
         Usuario usuario = new Usuario();
 
         if (usuarioRepository.findByEmail(usuarioDTO.getEmail()) != null) {

@@ -6,6 +6,7 @@ import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.dto.CategoriaAdminDTO;
 import com.example.proyectoquiz.dto.CategoriaDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
+import com.example.proyectoquiz.exceptions.PropiedadAppException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 
 public interface CategoriaService {
@@ -17,7 +18,7 @@ public interface CategoriaService {
         public Categoria getCategoriaById(Long id) throws RuntimeException;
 
         public Categoria saveCategoria(CategoriaDTO categoriaDTO)
-                        throws RuntimeException, UserNotFoundException, AuthException;
+                        throws RuntimeException, UserNotFoundException, AuthException, PropiedadAppException;
 
         public Categoria updateCategoria(Long id, CategoriaAdminDTO categoriaDTO)
                         throws RuntimeException, UserNotFoundException, AuthException;

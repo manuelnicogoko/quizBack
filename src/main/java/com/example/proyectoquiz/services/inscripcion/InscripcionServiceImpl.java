@@ -95,7 +95,13 @@ public class InscripcionServiceImpl implements InscripcionService {
         Inscripcion inscripcion = inscripcionRepository.findByCodigoInscripcion(codigoInscripcion);
 
         if (inscripcion != null) {
+            Partida partida = inscripcion.getPartida();
             inscripcionRepository.delete(inscripcion);
+
+            if (partida != null && partida.getNumeroJugadores() != null && partida.getNumeroJugadores() > 0) {
+                partida.setNumeroJugadores(partida.getNumeroJugadores() - 1);
+                partidaRepository.save(partida);
+            }
         }
     }
 }

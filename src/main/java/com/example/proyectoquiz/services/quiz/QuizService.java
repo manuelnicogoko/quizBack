@@ -6,6 +6,7 @@ import com.example.proyectoquiz.domain.Quiz;
 import com.example.proyectoquiz.dto.QuizAdminDTO;
 import com.example.proyectoquiz.dto.QuizDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
+import com.example.proyectoquiz.exceptions.PropiedadAppException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 
 public interface QuizService {
@@ -20,7 +21,8 @@ public interface QuizService {
 
     public Quiz getQuizById(Long id) throws RuntimeException;
 
-    public Quiz saveQuiz(QuizDTO quizDTO) throws RuntimeException, UserNotFoundException, AuthException;
+    public Quiz saveQuiz(QuizDTO quizDTO)
+            throws RuntimeException, UserNotFoundException, AuthException, PropiedadAppException;
 
     public void deleteQuiz(Long id) throws RuntimeException, UserNotFoundException, AuthException;
 

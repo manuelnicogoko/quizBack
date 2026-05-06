@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.proyectoquiz.config.PropiedadesApp;
 import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Quiz;
@@ -14,6 +15,7 @@ import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.CategoriaAdminDTO;
 import com.example.proyectoquiz.dto.CategoriaDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
+import com.example.proyectoquiz.exceptions.PropiedadAppException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
@@ -31,6 +33,8 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     private final QuizRepository quizRepository;
 
+    private final PropiedadesApp propiedadesApp;
+
     public List<Categoria> getAllCategorias() {
         return categoriaRepository.findByEstado(Estado.ACEPTADO);
     }
@@ -44,7 +48,12 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     public Categoria saveCategoria(CategoriaDTO categoriaDTO)
-            throws RuntimeException, UserNotFoundException, AuthException {
+            throws RuntimeException, UserNotFoundException, AuthException, PropiedadAppException {
+        if (categoriaRepository.count() >= propiedadesApp.getMaxCategoriasCreadas()) {
+            throw new PropiedadAppException(
+                    "No se pueden crear más categorías. Límite alcanzado: " + propiedadesApp.getMaxCategoriasCreadas());
+        }
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {

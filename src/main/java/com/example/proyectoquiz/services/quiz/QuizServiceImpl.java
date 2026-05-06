@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.proyectoquiz.config.PropiedadesApp;
 import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Notificacion;
@@ -25,6 +26,7 @@ import com.example.proyectoquiz.dto.PreguntaDTO;
 import com.example.proyectoquiz.dto.QuizAdminDTO;
 import com.example.proyectoquiz.dto.QuizDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
+import com.example.proyectoquiz.exceptions.PropiedadAppException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
 import com.example.proyectoquiz.repository.PistaRepository;
@@ -63,6 +65,8 @@ public class QuizServiceImpl implements QuizService {
 
     private final CorreoService correoService;
 
+    private final PropiedadesApp propiedadesApp;
+
     private final Integer PAGE_SIZE_DEFAULT = 9;
 
     @Value("${app.frontend.url}")
@@ -95,7 +99,21 @@ public class QuizServiceImpl implements QuizService {
         return quizRepository.findById(id).orElseThrow(() -> new RuntimeException("Quiz no encontrado"));
     }
 
-    public Quiz saveQuiz(QuizDTO quizDTO) throws RuntimeException, UserNotFoundException, AuthException {
+    public Quiz saveQuiz(QuizDTO quizDTO)
+            throws RuntimeException, UserNotFoundException, AuthException, PropiedadAppException {
+        if (quizRepository.count() >= propiedadesApp.getMaxQuizzesCreados()) {
+            throw new PropiedadAppException(
+                    "No se pueden crear más quizzes. Límite alcanzado: " + propiedadesApp.getMaxQuizzesCreados());
+        }
+        if (quizDTO.getPreguntas().size() > propiedadesApp.getMaxPreguntas()) {
+            throw new PropiedadAppException(
+                    "Un quiz no puede tener más de " + propiedadesApp.getMaxPreguntas() + " preguntas.");
+        }
+        if (quizDTO.getPreguntas().size() < propiedadesApp.getMinPreguntas()) {
+            throw new PropiedadAppException(
+                    "Un quiz debe tener al menos " + propiedadesApp.getMinPreguntas() + " preguntas.");
+        }
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
@@ -109,6 +127,7 @@ public class QuizServiceImpl implements QuizService {
         if (usuario == null) {
             throw new UserNotFoundException(email);
         }
+
         Quiz quiz = new Quiz();
         quiz.setCreador(usuario);
         quiz.setNombre(quizDTO.getNombre());

@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.proyectoquiz.config.PropiedadesApp;
 import com.example.proyectoquiz.domain.Categoria;
 import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Quiz;
@@ -15,6 +16,7 @@ import com.example.proyectoquiz.domain.Usuario;
 import com.example.proyectoquiz.dto.SubcategoriaAdminDTO;
 import com.example.proyectoquiz.dto.SubcategoriaDTO;
 import com.example.proyectoquiz.exceptions.AuthException;
+import com.example.proyectoquiz.exceptions.PropiedadAppException;
 import com.example.proyectoquiz.exceptions.UserNotFoundException;
 import com.example.proyectoquiz.repository.CategoriaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
@@ -35,6 +37,8 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 
     private final QuizRepository quizRepository;
 
+    private final PropiedadesApp propiedadesApp;
+
     public List<Subcategoria> getAllSubcategorias() {
         return subcategoriaRepository.findByEstado(Estado.ACEPTADO);
     }
@@ -48,8 +52,15 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
                 .orElseThrow(() -> new RuntimeException("Subcategoria no encontrada"));
     }
 
-    public Subcategoria saveSubcategoria(SubcategoriaDTO subcategoriaDTO) throws RuntimeException {
+    public Subcategoria saveSubcategoria(SubcategoriaDTO subcategoriaDTO)
+            throws RuntimeException, PropiedadAppException {
+        if (subcategoriaRepository.count() >= propiedadesApp.getMaxSubcategoriasCreadas()) {
+            throw new PropiedadAppException("No se pueden crear más subcategorías. Límite alcanzado: "
+                    + propiedadesApp.getMaxSubcategoriasCreadas());
+        }
+
         Subcategoria existente = subcategoriaRepository.findByNombreIgnoreCase(subcategoriaDTO.getNombre());
+
         if (existente != null) {
             return existente;
         }
