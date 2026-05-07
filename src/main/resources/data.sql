@@ -18,7 +18,7 @@ INSERT INTO parametro_app (nombre, tipo_dato, valor) VALUES
 -- USUARIOS
 INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VALUES
   ('admin', 'admin@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 0, 200.0),
-  ('usuario', 'usuario@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 300.0),
+  ('usuario', 'usuario@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117885/userAvatar/3/undefined.jpg', 1, 300.0),
   ('usuario1', 'usuario1@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 200.0),
   ('usuario2', 'usuario2@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 100.0),
   ('usuario3', 'usuario3@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 50.0);
@@ -26,92 +26,93 @@ INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VAL
 
 -- CATEGORIAS
 INSERT INTO categoria (nombre, logo, descripcion, estado) VALUES
-  ('Videojuegos', 'videojuegos.png', 'Todo sobre videojuegos', 4),
-  ('Arte', 'arte.png', 'Todo sobre arte', 4),
-  ('Ciencia', 'ciencia.png', 'Ciencia y descubrimientos', 4),
-  ('Deportes', 'deportes.png', 'Todo sobre deportes', 4),
-  ('Historia', 'historia.png', 'Hechos históricos y personajes', 4),
-  ('Música', 'musica.png', 'Música y artistas', 4),
-  ('Cine', 'cine.png', 'Todo sobre películas y cine', 4);
+  -- ('Videojuegos', 'videojuegos.png', 'Todo sobre videojuegos', 4),
+  ('Videojuegos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117622/categoriaLogo/1/videojuegos.png', 'Todo sobre videojuegos', 4),
+  ('Arte', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117623/categoriaLogo/2/arte.png', 'Todo sobre arte', 4),
+  ('Ciencia', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117624/categoriaLogo/3/ciencia.png', 'Ciencia y descubrimientos', 4),
+  ('Deportes', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117625/categoriaLogo/4/deportes.png', 'Todo sobre deportes', 4),
+  ('Historia', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117626/categoriaLogo/5/historia.png', 'Hechos históricos y personajes', 4),
+  ('Música', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117627/categoriaLogo/6/musica.png', 'Música y artistas', 4),
+  ('Cine', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117627/categoriaLogo/6/musica.png', 'Todo sobre películas y cine', 4);
 
 -- SUBCATEGORIAS
 INSERT INTO subcategoria (nombre, logo, descripcion, categoria_id, estado) VALUES
-  ('RPG', 'rpg.png', 'Juegos de rol', 1, 4),
-  ('Shooter', 'shooter.png', 'Juegos de disparos', 1, 4),
-  ('Pintura', 'pintura.png', 'Pintores y estilos', 2, 4),
-  ('Escultura', 'escultura.png', 'Escultores y obras', 2, 4),
-  ('Física', 'fisica.png', 'Física y científicos', 3, 4),
-  ('Biología', 'biologia.png', 'Biología y naturaleza', 3, 4),
-  ('Fútbol', 'futbol.png', 'Todo sobre fútbol', 4, 4),
-  ('Baloncesto', 'baloncesto.png', 'Todo sobre baloncesto', 4, 4),
-  ('Edad Media', 'edadmedia.png', 'Historia medieval', 5, 4),
-  ('Edad Moderna', 'edadmoderna.png', 'Historia moderna', 5, 4),
-  ('Rock', 'rock.png', 'Música rock', 6, 4),
-  ('Pop', 'pop.png', 'Música pop', 6, 4),
-  ('MOBA', 'moba.png', 'Juegos de arena de batalla multijugador', 1, 4),
-  ('Ciencia Ficción', 'cienciaFiccion.png', 'Películas de ciencia ficción', 7, 4),
-  ('Fantasía', 'fantasia.png', 'Películas de fantasía', 7, 4);
+  ('RPG', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117843/subcategoriaLogo/1/rpg.png', 'Juegos de rol', 1, 4),
+  ('Shooter', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117849/subcategoriaLogo/2/shooter.png', 'Juegos de disparos', 1, 4),
+  ('Pintura', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117850/subcategoriaLogo/3/pintura.png', 'Pintores y estilos', 2, 4),
+  ('Escultura', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117850/subcategoriaLogo/4/escultura.png', 'Escultores y obras', 2, 4),
+  ('Física', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117851/subcategoriaLogo/5/fisica.png', 'Física y científicos', 3, 4),
+  ('Biología', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117852/subcategoriaLogo/6/biologia.png', 'Biología y naturaleza', 3, 4),
+  ('Fútbol', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117853/subcategoriaLogo/7/futbol.png', 'Todo sobre fútbol', 4, 4),
+  ('Baloncesto', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117854/subcategoriaLogo/8/baloncesto.png', 'Todo sobre baloncesto', 4, 4),
+  ('Edad Media', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117854/subcategoriaLogo/9/edadmedia.png', 'Historia medieval', 5, 4),
+  ('Edad Moderna', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117844/subcategoriaLogo/10/edadmoderna.png', 'Historia moderna', 5, 4),
+  ('Rock', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117845/subcategoriaLogo/11/rock.png', 'Música rock', 6, 4),
+  ('Pop', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117845/subcategoriaLogo/12/pop.png', 'Música pop', 6, 4),
+  ('MOBA', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117846/subcategoriaLogo/13/moba.png', 'Juegos de arena de batalla multijugador', 1, 4),
+  ('Ciencia Ficción', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117847/subcategoriaLogo/14/cienciaFiccion.png', 'Películas de ciencia ficción', 7, 4),
+  ('Fantasía', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117848/subcategoriaLogo/15/fantasia.png', 'Películas de fantasía', 7, 4);
 
 -- QUIZZES
 INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcategoria_id, estado) VALUES
   -- RPG
-  ('The Witcher 3', 'Quiz sobre personajes', 'witcher3.jpg', 1, 1, 1, 4),
-  ('Final Fantasy VII', 'Quiz sobre personajes', 'ffvii.jpg', 2, 1, 1, 4),
-  ('Elder Scrolls: Skyrim', 'Quiz sobre personajes de Skyrim', 'skyrim.jpg', 1, 1, 1, 4),
+  ('The Witcher 3', 'Quiz sobre personajes', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117794/quizPortada/1/witcher3.jpg', 1, 1, 1, 4),
+  ('Final Fantasy VII', 'Quiz sobre personajes', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117806/quizPortada/2/ffvii.jpg', 2, 1, 1, 4),
+  ('Elder Scrolls: Skyrim', 'Quiz sobre personajes de Skyrim', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117819/quizPortada/3/skyrim.jpg', 1, 1, 1, 4),
   -- Shooter
-  ('DOOM', 'Preguntas sobre personajes de DOOM', 'doom.jpg', 2, 1, 2, 4),
-  ('Call of Duty', 'Quiz sobre armas de CoD', 'cod.jpg', 1, 1, 2, 4),
-  ('Overwatch', 'Quiz sobre héroes de Overwatch', 'overwatch.jpg', 2, 1, 2, 4),
+  ('DOOM', 'Preguntas sobre personajes de DOOM', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117819/quizPortada/3/skyrim.jpg', 2, 1, 2, 4),
+  ('Call of Duty', 'Quiz sobre armas de CoD', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117837/quizPortada/5/cod.jpg', 1, 1, 2, 4),
+  ('Overwatch', 'Quiz sobre héroes de Overwatch', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117837/quizPortada/5/cod.jpg', 2, 1, 2, 4),
   -- Pintura
-  ('Grandes pintores', 'Quiz sobre pintores famosos', 'picasso.jpg', 1, 2, 3, 4),
-  ('Obras maestras', 'Quiz sobre obras de pintura', 'monalisa.jpg', 2, 2, 3, 4),
-  ('Estilos de pintura', 'Quiz sobre estilos artísticos', 'impresionismo.jpg', 1, 2, 3, 4),
+  ('Grandes pintores', 'Quiz sobre pintores famosos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117839/quizPortada/7/picasso.jpg', 1, 2, 3, 4),
+  ('Obras maestras', 'Quiz sobre obras de pintura', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117839/quizPortada/7/picasso.jpg', 2, 2, 3, 4),
+  ('Estilos de pintura', 'Quiz sobre estilos artísticos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117839/quizPortada/7/picasso.jpg', 1, 2, 3, 4),
   -- Escultura
-  ('Escultores famosos', 'Quiz sobre escultores', 'michelangelo.jpg', 2, 2, 4, 4),
-  ('Obras de escultura', 'Quiz sobre obras de escultura', 'david.jpg', 1, 2, 4, 4),
-  ('Tipos de escultura', 'Quiz sobre tipos de escultura', 'abstracta.jpg', 2, 2, 4, 4),
+  ('Escultores famosos', 'Quiz sobre escultores', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117795/quizPortada/10/michelangelo.jpg', 2, 2, 4, 4),
+  ('Obras de escultura', 'Quiz sobre obras de escultura', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117796/quizPortada/11/david.jpg', 1, 2, 4, 4),
+  ('Tipos de escultura', 'Quiz sobre tipos de escultura', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117797/quizPortada/12/abstracta.jpg', 2, 2, 4, 4),
   -- Física
-  ('Físicos célebres', 'Quiz sobre físicos famosos', 'einstein.jpg', 1, 3, 5, 4),
-  ('Teorías físicas', 'Quiz sobre teorías de la física', 'relatividad.jpg', 2, 3, 5, 4),
-  ('Experimentos históricos', 'Quiz sobre experimentos físicos', 'cavendish.jpg', 1, 3, 5, 4),
+  ('Físicos célebres', 'Quiz sobre físicos famosos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117798/quizPortada/13/einstein.jpg', 1, 3, 5, 4),
+  ('Teorías físicas', 'Quiz sobre teorías de la física', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117799/quizPortada/14/relatividad.jpg', 2, 3, 5, 4),
+  ('Experimentos históricos', 'Quiz sobre experimentos físicos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117800/quizPortada/15/cavendish.jpg', 1, 3, 5, 4),
   -- Biología
-  ('Biólogos célebres', 'Quiz sobre biólogos famosos', 'darwin.jpg', 2, 3, 6, 4),
-  ('Descubrimientos biológicos', 'Quiz sobre descubrimientos', 'adn.jpg', 1, 3, 6, 4),
-  ('Ramas de la biología', 'Quiz sobre ramas de la biología', 'botanica.jpg', 2, 3, 6, 4),
+  ('Biólogos célebres', 'Quiz sobre biólogos famosos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117801/quizPortada/16/darwin.jpg', 2, 3, 6, 4),
+  ('Descubrimientos biológicos', 'Quiz sobre descubrimientos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117801/quizPortada/16/darwin.jpg', 1, 3, 6, 4),
+  ('Ramas de la biología', 'Quiz sobre ramas de la biología', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117804/quizPortada/18/botanica.jpg', 2, 3, 6, 4),
   -- Fútbol
-  ('Jugadores de fútbol', 'Quiz sobre futbolistas famosos', 'messi.jpg', 1, 4, 7, 4),
-  ('Equipos históricos', 'Quiz sobre equipos de fútbol', 'equiposFutbol.jpg', 2, 4, 7, 4),
-  ('Copas del mundo', 'Quiz sobre mundiales de fútbol', 'mundial.jpg', 1, 4, 7, 4),
+  ('Jugadores de fútbol', 'Quiz sobre futbolistas famosos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117805/quizPortada/19/messi.jpg', 1, 4, 7, 4),
+  ('Equipos históricos', 'Quiz sobre equipos de fútbol', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117808/quizPortada/20/equiposFutbol.jpg', 2, 4, 7, 4),
+  ('Copas del mundo', 'Quiz sobre mundiales de fútbol', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117809/quizPortada/21/mundial.jpg', 1, 4, 7, 4),
   -- Baloncesto
-  ('Jugadores de baloncesto', 'Quiz sobre baloncestistas', 'jordan.jpg', 2, 4, 8, 4),
-  ('Equipos de baloncesto', 'Quiz sobre equipos de baloncesto', 'equiposBaloncesto.jpg', 1, 4, 8, 4),
-  ('NBA', 'Quiz sobre la NBA', 'nba.jpg', 2, 4, 8, 4),
+  ('Jugadores de baloncesto', 'Quiz sobre baloncestistas', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117810/quizPortada/22/jordan.jpg', 2, 4, 8, 4),
+  ('Equipos de baloncesto', 'Quiz sobre equipos de baloncesto', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117811/quizPortada/23/equiposBaloncesto.jpg', 1, 4, 8, 4),
+  ('NBA', 'Quiz sobre la NBA', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117812/quizPortada/24/nba.jpg', 2, 4, 8, 4),
   -- Edad Media
-  ('Edad Media', 'Quiz sobre historia medieval', 'edadmedia.jpg', 1, 5, 9, 4),
-  ('Castillos medievales', 'Quiz sobre castillos', 'castillo.jpg', 2, 5, 9, 4),
-  ('Personajes medievales', 'Quiz sobre personajes', 'juana_arca.jpg', 1, 5, 9, 4),
+  ('Edad Media', 'Quiz sobre historia medieval', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117813/quizPortada/25/edadmedia.jpg', 1, 5, 9, 4),
+  ('Castillos medievales', 'Quiz sobre castillos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117814/quizPortada/26/castillo.jpg', 2, 5, 9, 4),
+  ('Personajes medievales', 'Quiz sobre personajes', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117815/quizPortada/27/juana_arca.jpg', 1, 5, 9, 4),
   -- Edad Moderna
-  ('Edad Moderna', 'Quiz sobre historia moderna', 'edadmoderna.jpg', 2, 5, 10, 4),
-  ('Revoluciones modernas', 'Quiz sobre revoluciones', 'revolucion_francesa.jpg', 1, 5, 10, 4),
-  ('Personajes modernos', 'Quiz sobre personajes', 'napoleon.jpg', 2, 5, 10, 4),
+  ('Edad Moderna', 'Quiz sobre historia moderna', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117817/quizPortada/28/edadmoderna.jpg', 2, 5, 10, 4),
+  ('Revoluciones modernas', 'Quiz sobre revoluciones', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117818/quizPortada/29/revolucion_francesa.jpg', 1, 5, 10, 4),
+  ('Personajes modernos', 'Quiz sobre personajes', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117820/quizPortada/30/napoleon.jpg', 2, 5, 10, 4),
   -- Rock
-  ('Bandas de rock', 'Quiz sobre bandas de rock', 'queen.jpg', 1, 6, 11, 4),
-  ('Álbumes de rock', 'Quiz sobre álbumes', 'abbeyroad.jpg', 2, 6, 11, 4),
-  ('Historia del rock', 'Quiz sobre historia del rock', 'woodstock.jpg', 1, 6, 11, 4),
+  ('Bandas de rock', 'Quiz sobre bandas de rock', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117821/quizPortada/31/queen.jpg', 1, 6, 11, 4),
+  ('Álbumes de rock', 'Quiz sobre álbumes', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117822/quizPortada/32/abbeyroad.jpg', 2, 6, 11, 4),
+  ('Historia del rock', 'Quiz sobre historia del rock', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117823/quizPortada/33/woodstock.jpg', 1, 6, 11, 4),
   -- Pop
-  ('Artistas pop', 'Quiz sobre artistas pop', 'bruno.jpg', 2, 6, 12, 4),
-  ('Canciones pop', 'Quiz sobre canciones pop', 'bad_guy.jpg', 1, 6, 12, 4),
-  ('Historia del pop', 'Quiz sobre historia del pop', 'pop_history.jpg', 2, 6, 12, 4),
+  ('Artistas pop', 'Quiz sobre artistas pop', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117825/quizPortada/34/bruno.jpg', 2, 6, 12, 4),
+  ('Canciones pop', 'Quiz sobre canciones pop', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117826/quizPortada/35/bad_guy.jpg', 1, 6, 12, 4),
+  ('Historia del pop', 'Quiz sobre historia del pop', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117826/quizPortada/35/bad_guy.jpg', 2, 6, 12, 4),
   --Ciencia Ficción
-  ('Star Wars Episodio IV', 'Preguntas sobre Una Nueva Esperanza', 'sw_iv.jpg', 1, 7, 14, 4),
-  ('Star Wars Personajes', '¿Cuánto sabes de los personajes de Star Wars?', 'sw_personajes.jpg', 2, 7, 14, 4),
-  ('Star Wars Naves', 'Quiz sobre naves icónicas de Star Wars', 'sw_naves.jpg', 1, 7, 14, 4),
+  ('Star Wars Episodio IV', 'Preguntas sobre Una Nueva Esperanza', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117829/quizPortada/37/sw_iv.jpg', 1, 7, 14, 4),
+  ('Star Wars Personajes', '¿Cuánto sabes de los personajes de Star Wars?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117830/quizPortada/38/sw_personajes.jpg', 2, 7, 14, 4),
+  ('Star Wars Naves', 'Quiz sobre naves icónicas de Star Wars', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117831/quizPortada/39/sw_naves.jpg', 1, 7, 14, 4),
   -- Fantasía
-  ('El Señor de los Anillos: La Comunidad', 'Preguntas sobre personajes de la película', 'lotr1.jpg', 1, 7, 15, 4),
-  ('El Señor de los Anillos: Las Dos Torres', 'Preguntas sobre personajes de la película', 'lotr2.jpg', 2, 7, 15, 4),
-  ('Personajes de El Señor de los Anillos', '¿Reconoces a los personajes de la saga?', 'lotr_personajes.jpg', 1, 7, 15, 4),
+  ('El Señor de los Anillos: La Comunidad', 'Preguntas sobre personajes de la película', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117833/quizPortada/40/lotr1.jpg', 1, 7, 15, 4),
+  ('El Señor de los Anillos: Las Dos Torres', 'Preguntas sobre personajes de la película', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117834/quizPortada/41/lotr2.jpg', 2, 7, 15, 4),
+  ('Personajes de El Señor de los Anillos', '¿Reconoces a los personajes de la saga?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117836/quizPortada/42/lotr_personajes.jpg', 1, 7, 15, 4),
   -- MOBA
-  ('Adivina el campeón de LoL', '¿Puedes adivinar el campeón de League of Legends por su imagen y pistas?', 'lol.jpg', 1, 1, 13, 4);
+  ('Adivina el campeón de LoL', '¿Puedes adivinar el campeón de League of Legends por su imagen y pistas?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117837/quizPortada/43/lol.jpg', 1, 1, 13, 4);
 
 -- PARTIDAS DE PRUEBA (15 públicas, 5 privadas)
 INSERT INTO partida (nombre, max_jugadores, publica, vidas, tiempo_ronda, fecha_creacion, estado, codigo, codigo_anfitrion, codigo_socket, numero_jugadores, nombre_anfitrion, quiz_id) VALUES
@@ -144,268 +145,268 @@ INSERT INTO partida (nombre, max_jugadores, publica, vidas, tiempo_ronda, fecha_
 
 -- The Witcher 3 (quiz_id = 1)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es el personaje?', 'geralt.jpg', 1, 1),         -- id 1
-  ('¿Quién es el personaje?', 'triss.jpg', 2, 1),          -- id 2
-  ('¿Quién es el personaje?', 'keira.jpg', 3, 1);          -- id 3
+  ('¿Quién es el personaje?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117629/imagenPreg/1/1/geralt.jpg', 1, 1),         -- id 1
+  ('¿Quién es el personaje?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117630/imagenPreg/1/2/triss.jpg', 2, 1),          -- id 2
+  ('¿Quién es el personaje?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117632/imagenPreg/1/3/keira.jpg', 3, 1);          -- id 3
 
 -- Final Fantasy VII (quiz_id = 2)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es el protagonista de FFVII?', 'cloud.jpg', 1, 2),      -- id 4
-  ('¿Quién es la florista de Midgar?', 'aerith.jpg', 2, 2),        -- id 5
-  ('¿Quién es el villano principal?', 'sephiroth.jpg', 3, 2);      -- id 6
+  ('¿Quién es el protagonista de FFVII?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117669/imagenPreg/2/4/cloud.jpg', 1, 2),      -- id 4
+  ('¿Quién es la florista de Midgar?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117670/imagenPreg/2/5/aerith.jpg', 2, 2),        -- id 5
+  ('¿Quién es el villano principal?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117671/imagenPreg/2/6/sephiroth.jpg', 3, 2);      -- id 6
 
 -- Elder Scrolls: Skyrim (quiz_id = 3)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Cómo se llama el protagonista?', 'dovahkiin.jpg', 1, 3),      -- id 7
-  ('¿Qué dragón es el antagonista principal?', 'alduin.jpg', 2, 3),-- id 8
-  ('¿Qué ciudad es la capital de Skyrim?', 'solitude.jpg', 3, 3);  -- id 9
+  ('¿Cómo se llama el protagonista?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117708/imagenPreg/3/7/dovahkiin.jpg', 1, 3),      -- id 7
+  ('¿Qué dragón es el antagonista principal?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117708/imagenPreg/3/7/dovahkiin.jpg', 2, 3),-- id 8
+  ('¿Qué ciudad es la capital de Skyrim?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117711/imagenPreg/3/9/solitude.jpg', 3, 3);  -- id 9
 
 -- DOOM (quiz_id = 4)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Cómo se llama el protagonista de DOOM?', 'doomslayer.jpg', 1, 4), -- id 10
-  ('¿Qué demonio es el más grande en DOOM?', 'cyberdemon.jpg', 2, 4),  -- id 11
-  ('¿Quién es el científico que libera a los demonios?', 'olivia.jpg', 3, 4); -- id 12
+  ('¿Cómo se llama el protagonista de DOOM?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117747/imagenPreg/4/10/doomslayer.jpg', 1, 4), -- id 10
+  ('¿Qué demonio es el más grande en DOOM?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117749/imagenPreg/4/11/cyberdemon.jpg', 2, 4),  -- id 11
+  ('¿Quién es el científico que libera a los demonios?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117750/imagenPreg/4/12/olivia.jpg', 3, 4); -- id 12
 
 -- Call of Duty (quiz_id = 5)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Cuál es el modo multijugador más famoso?', 'cod_multiplayer.jpg', 1, 5), -- id 13
-  ('¿Qué arma es icónica en la saga?', 'ak47.jpg', 2, 5),                    -- id 14
-  ('¿En qué guerra se ambienta el primer juego?', 'ww2.jpg', 3, 5);           -- id 15
+  ('¿Cuál es el modo multijugador más famoso?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117774/imagenPreg/5/13/cod_multiplayer.jpg', 1, 5), -- id 13
+  ('¿Qué arma es icónica en la saga?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117775/imagenPreg/5/14/ak47.jpg', 2, 5),                    -- id 14
+  ('¿En qué guerra se ambienta el primer juego?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117776/imagenPreg/5/15/ww2.jpg', 3, 5);           -- id 15
 
 -- Overwatch (quiz_id = 6)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es la heroína que viaja en el tiempo?', 'tracer.jpg', 1, 6),       -- id 16
-  ('¿Qué gorila científico es un tanque?', 'winston.jpg', 2, 6),              -- id 17
-  ('¿Quién es el francotirador de hielo?', 'widowmaker.jpg', 3, 6);           -- id 18
+  ('¿Quién es la heroína que viaja en el tiempo?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117778/imagenPreg/6/16/tracer.jpg', 1, 6),       -- id 16
+  ('¿Qué gorila científico es un tanque?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117779/imagenPreg/6/17/winston.jpg', 2, 6),              -- id 17
+  ('¿Quién es el francotirador de hielo?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117781/imagenPreg/6/18/widowmaker.jpg', 3, 6);           -- id 18
 
 -- Grandes pintores (quiz_id = 7)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién pintó "La noche estrellada"?', 'vangogh.jpg', 1, 7),               -- id 19
-  ('¿Quién pintó "Guernica"?', 'picasso.jpg', 2, 7),                          -- id 20
-  ('¿Quién pintó "La última cena"?', 'davinci.jpg', 3, 7);                    -- id 21
+  ('¿Quién pintó "La noche estrellada"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117782/imagenPreg/7/19/vangogh.jpg', 1, 7),               -- id 19
+  ('¿Quién pintó "Guernica"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117784/imagenPreg/7/20/picasso.jpg', 2, 7),                          -- id 20
+  ('¿Quién pintó "La última cena"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117785/imagenPreg/7/21/davinci.jpg', 3, 7);                    -- id 21
 
 -- Obras maestras (quiz_id = 8)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién pintó la Mona Lisa?', 'monalisa.jpg', 1, 8),                       -- id 22
-  ('¿Qué obra representa a Adán y Dios tocándose?', 'capilla_sistina.jpg', 2, 8), -- id 23
-  ('¿Qué cuadro muestra relojes derretidos?', 'persistencia_memoria.jpg', 3, 8); -- id 24
+  ('¿Quién pintó la Mona Lisa?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117785/imagenPreg/7/21/davinci.jpg', 1, 8),                       -- id 22
+  ('¿Qué obra representa a Adán y Dios tocándose?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117788/imagenPreg/8/23/capilla_sistina.jpg', 2, 8), -- id 23
+  ('¿Qué cuadro muestra relojes derretidos?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117789/imagenPreg/8/24/persistencia_memoria.jpg', 3, 8); -- id 24
 
 -- Estilos de pintura (quiz_id = 9)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Qué estilo es "Impresión, sol naciente"?', 'impresionismo.jpg', 1, 9),   -- id 25
-  ('¿Qué movimiento es "El grito"?', 'expresionismo.jpg', 2, 9),              -- id 26
-  ('¿Qué estilo es "Composición VII" de Kandinsky?', 'abstracto.jpg', 3, 9);  -- id 27
+  ('¿Qué estilo es "Impresión, sol naciente"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117789/imagenPreg/8/24/persistencia_memoria.jpg', 1, 9),   -- id 25
+  ('¿Qué movimiento es "El grito"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117791/imagenPreg/9/26/expresionismo.jpg', 2, 9),              -- id 26
+  ('¿Qué estilo es "Composición VII" de Kandinsky?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117793/imagenPreg/9/27/abstracto.jpg', 3, 9);  -- id 27
 
 -- Escultores famosos (quiz_id = 10)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién esculpió el David?', 'david.jpg', 1, 10),                          -- id 28
-  ('¿Quién esculpió "El pensador"?', 'pensador.jpg', 2, 10),                  -- id 29
-  ('¿Quién esculpió "La piedad"?', 'piedad.jpg', 3, 10);                      -- id 30
+  ('¿Quién esculpió el David?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117633/imagenPreg/10/28/david.jpg', 1, 10),                          -- id 28
+  ('¿Quién esculpió "El pensador"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117634/imagenPreg/10/29/pensador.jpg', 2, 10),                  -- id 29
+  ('¿Quién esculpió "La piedad"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117635/imagenPreg/10/30/piedad.jpg', 3, 10);                      -- id 30
 
 -- Obras de escultura (quiz_id = 11)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Dónde está el Moái?', 'moai.jpg', 1, 11),                                -- id 31
-  ('¿Qué escultura está en Nueva York?', 'libertad.jpg', 2, 11),              -- id 32
-  ('¿Qué esfinge está en Egipto?', 'esfinge.jpg', 3, 11);                     -- id 33
+  ('¿Dónde está el Moái?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117637/imagenPreg/11/31/moai.jpg', 1, 11),                                -- id 31
+  ('¿Qué escultura está en Nueva York?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117638/imagenPreg/11/32/libertad.jpg', 2, 11),              -- id 32
+  ('¿Qué esfinge está en Egipto?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117639/imagenPreg/11/33/esfinge.jpg', 3, 11);                     -- id 33
 
 -- Tipos de escultura (quiz_id = 12)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Qué es una escultura abstracta?', 'abstracta.jpg', 1, 12),               -- id 34
-  ('¿Qué es una escultura cinética?', 'kinetica.jpg', 2, 12),                 -- id 35
-  ('¿Qué es una escultura monumental?', 'monumental.jpg', 3, 12);             -- id 36
+  ('¿Qué es una escultura abstracta?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117640/imagenPreg/12/34/abstracta.jpg', 1, 12),               -- id 34
+  ('¿Qué es una escultura cinética?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117641/imagenPreg/12/35/kinetica.jpg', 2, 12),                 -- id 35
+  ('¿Qué es una escultura monumental?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117642/imagenPreg/12/36/monumental.jpg', 3, 12);             -- id 36
 
 -- Físicos célebres (quiz_id = 13)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién desarrolló la teoría de la relatividad?', 'einstein.jpg', 1, 13),  -- id 37
-  ('¿Quién es conocido como el padre de la física moderna?', 'newton.jpg', 2, 13), -- id 38
-  ('¿Quién descubrió la radiactividad?', 'curie.jpg', 3, 13);                 -- id 39
+  ('¿Quién desarrolló la teoría de la relatividad?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117643/imagenPreg/13/37/einstein.jpg', 1, 13),  -- id 37
+  ('¿Quién es conocido como el padre de la física moderna?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117645/imagenPreg/13/38/newton.jpg', 2, 13), -- id 38
+  ('¿Quién descubrió la radiactividad?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117646/imagenPreg/13/39/curie.jpg', 3, 13);                 -- id 39
 
 -- Teorías físicas (quiz_id = 14)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Qué teoría explica la gravedad?', 'gravedad.jpg', 1, 14),                -- id 40
-  ('¿Qué teoría describe el comportamiento de la luz?', 'cuantica.jpg', 2, 14), -- id 41
-  ('¿Qué teoría unifica la electricidad y el magnetismo?', 'electromagnetismo.jpg', 3, 14); -- id 42
+  ('¿Qué teoría explica la gravedad?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117647/imagenPreg/14/40/gravedad.jpg', 1, 14),                -- id 40
+  ('¿Qué teoría describe el comportamiento de la luz?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117648/imagenPreg/14/41/cuantica.jpg', 2, 14), -- id 41
+  ('¿Qué teoría unifica la electricidad y el magnetismo?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117649/imagenPreg/14/42/electromagnetismo.jpg', 3, 14); -- id 42
 
 -- Experimentos históricos (quiz_id = 15)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién realizó el experimento de la doble rendija?', 'doble_rendija.jpg', 1, 15), -- id 43
-  ('¿Qué experimento demostró la existencia de electrones?', 'tubo_crookes.jpg', 2, 15), -- id 44
-  ('¿Quién midió la carga del electrón?', 'gota_aceite.jpg', 3, 15);           -- id 45
+  ('¿Quién realizó el experimento de la doble rendija?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117650/imagenPreg/15/43/doble_rendija.jpg', 1, 15), -- id 43
+  ('¿Qué experimento demostró la existencia de electrones?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117651/imagenPreg/15/44/tubo_crookes.jpg', 2, 15), -- id 44
+  ('¿Quién midió la carga del electrón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117652/imagenPreg/15/45/gota_aceite.jpg', 3, 15);           -- id 45
 
 -- Biólogos célebres (quiz_id = 16)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién propuso la teoría de la evolución?', 'darwin.jpg', 1, 16),          -- id 46
-  ('¿Quién descubrió la penicilina?', 'fleming.jpg', 2, 16),                   -- id 47
-  ('¿Quién es conocido como el padre de la genética?', 'mendel.jpg', 3, 16);   -- id 48
+  ('¿Quién propuso la teoría de la evolución?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117653/imagenPreg/16/46/darwin.jpg', 1, 16),          -- id 46
+  ('¿Quién descubrió la penicilina?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117654/imagenPreg/16/47/fleming.jpg', 2, 16),                   -- id 47
+  ('¿Quién es conocido como el padre de la genética?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117655/imagenPreg/16/48/mendel.jpg', 3, 16);   -- id 48
 
 -- Descubrimientos biológicos (quiz_id = 17)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién descubrió la estructura del ADN?', 'adn.jpg', 1, 17),               -- id 49
-  ('¿Qué científico identificó los glóbulos rojos?', 'sangre.jpg', 2, 17),     -- id 50
-  ('¿Quién desarrolló la teoría celular?', 'celula.jpg', 3, 17);               -- id 51
+  ('¿Quién descubrió la estructura del ADN?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117657/imagenPreg/17/49/adn.jpg', 1, 17),               -- id 49
+  ('¿Qué científico identificó los glóbulos rojos?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117657/imagenPreg/17/50/sangre.jpg', 2, 17),     -- id 50
+  ('¿Quién desarrolló la teoría celular?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117659/imagenPreg/17/51/celula.jpg', 3, 17);               -- id 51
 
 -- Ramas de la biología (quiz_id = 18)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Qué rama estudia las plantas?', 'botanica.jpg', 1, 18),                   -- id 52
-  ('¿Qué rama estudia los animales?', 'zoologia.jpg', 2, 18),                  -- id 53
-  ('¿Qué rama estudia los microorganismos?', 'microbiologia.jpg', 3, 18);      -- id 54
+  ('¿Qué rama estudia las plantas?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117660/imagenPreg/18/52/botanica.jpg', 1, 18),                   -- id 52
+  ('¿Qué rama estudia los animales?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117661/imagenPreg/18/53/zoologia.jpg', 2, 18),                  -- id 53
+  ('¿Qué rama estudia los microorganismos?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117663/imagenPreg/18/54/microbiologia.jpg', 3, 18);      -- id 54
 
 -- Jugadores de fútbol (quiz_id = 19)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es el máximo goleador de la historia?', 'messi.jpg', 1, 19),        -- id 55
-  ('¿Quién ganó 5 Balones de Oro?', 'cristiano.jpg', 2, 19),                   -- id 56
-  ('¿Quién es conocido como "O Rei"?', 'pele.jpg', 3, 19);                     -- id 57
+  ('¿Quién es el máximo goleador de la historia?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117664/imagenPreg/19/55/messi.jpg', 1, 19),        -- id 55
+  ('¿Quién ganó 5 Balones de Oro?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117665/imagenPreg/19/56/cristiano.jpg', 2, 19),                   -- id 56
+  ('¿Quién es conocido como "O Rei"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117667/imagenPreg/19/57/pele.jpg', 3, 19);                     -- id 57
 
 -- Equipos históricos (quiz_id = 20)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Qué equipo ha ganado más Champions?', 'realmadrid.jpg', 1, 20),           -- id 58
-  ('¿Qué club es conocido como "Los Diablos Rojos"?', 'manutd.jpg', 2, 20),    -- id 59
-  ('¿Qué equipo es famoso por su tiki-taka?', 'barcelona.jpg', 3, 20);         -- id 60
+  ('¿Qué equipo ha ganado más Champions?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117673/imagenPreg/20/58/realmadrid.jpg', 1, 20),           -- id 58
+  ('¿Qué club es conocido como "Los Diablos Rojos"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117674/imagenPreg/20/59/manutd.jpg', 2, 20),    -- id 59
+  ('¿Qué equipo es famoso por su tiki-taka?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117675/imagenPreg/20/60/barcelona.jpg', 3, 20);         -- id 60
 
 -- Copas del mundo (quiz_id = 21)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Qué país ha ganado más Mundiales?', 'brasil.jpg', 1, 21),                 -- id 61
-  ('¿En qué año se jugó el primer Mundial?', 'uruguay1930.jpg', 2, 21),        -- id 62
-  ('¿Quién marcó el "Gol del Siglo"?', 'maradona.jpg', 3, 21);                 -- id 63
+  ('¿Qué país ha ganado más Mundiales?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117676/imagenPreg/21/61/brasil.jpg', 1, 21),                 -- id 61
+  ('¿En qué año se jugó el primer Mundial?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117676/imagenPreg/21/61/brasil.jpg', 2, 21),        -- id 62
+  ('¿Quién marcó el "Gol del Siglo"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117678/imagenPreg/21/63/maradona.jpg', 3, 21);                 -- id 63
 
 -- Jugadores de baloncesto (quiz_id = 22)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es considerado el mejor de la historia?', 'jordan.jpg', 1, 22),     -- id 64
-  ('¿Quién tiene el récord de triples en la NBA?', 'curry.jpg', 2, 22),        -- id 65
-  ('¿Quién es apodado "King James"?', 'lebron.jpg', 3, 22);                    -- id 66
+  ('¿Quién es considerado el mejor de la historia?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117678/imagenPreg/21/63/maradona.jpg', 1, 22),     -- id 64
+  ('¿Quién tiene el récord de triples en la NBA?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117680/imagenPreg/22/65/curry.jpg', 2, 22),        -- id 65
+  ('¿Quién es apodado "King James"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117681/imagenPreg/22/66/lebron.jpg', 3, 22);                    -- id 66
 
 -- Equipos de baloncesto (quiz_id = 23)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Qué equipo tiene más anillos de la NBA?', 'lakers.jpg', 1, 23),           -- id 67
-  ('¿Qué equipo es conocido como "Los Celtics"?', 'celtics.jpg', 2, 23),       -- id 68
-  ('¿Qué equipo juega en el Madison Square Garden?', 'knicks.jpg', 3, 23);     -- id 69
+  ('¿Qué equipo tiene más anillos de la NBA?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117683/imagenPreg/23/67/lakers.jpg', 1, 23),           -- id 67
+  ('¿Qué equipo es conocido como "Los Celtics"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117684/imagenPreg/23/68/celtics.jpg', 2, 23),       -- id 68
+  ('¿Qué equipo juega en el Madison Square Garden?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117684/imagenPreg/23/68/celtics.jpg', 3, 23);     -- id 69
 
 -- NBA (quiz_id = 24)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién fue el MVP de la NBA en 2021?', 'jokic.jpg', 1, 24),                -- id 70
-  ('¿Qué jugador tiene más puntos en la historia?', 'kareem.jpg', 2, 24),      -- id 71
-  ('¿Qué equipo ganó el anillo en 2020?', 'lakers2020.jpg', 3, 24);            -- id 72
+  ('¿Quién fue el MVP de la NBA en 2021?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117686/imagenPreg/24/70/jokic.jpg', 1, 24),                -- id 70
+  ('¿Qué jugador tiene más puntos en la historia?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117688/imagenPreg/24/71/kareem.jpg', 2, 24),      -- id 71
+  ('¿Qué equipo ganó el anillo en 2020?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117689/imagenPreg/24/72/lakers2020.jpg', 3, 24);            -- id 72
 
 -- Edad Media (quiz_id = 25)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿En qué año cayó Constantinopla?', 'constantinopla.jpg', 1, 25),           -- id 73
-  ('¿Qué guerra duró 100 años?', 'guerra100.jpg', 2, 25),                      -- id 74
-  ('¿Quién fue Juana de Arco?', 'juana_arca.jpg', 3, 25);                      -- id 75
+  ('¿En qué año cayó Constantinopla?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117690/imagenPreg/25/73/constantinopla.jpg', 1, 25),           -- id 73
+  ('¿Qué guerra duró 100 años?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117692/imagenPreg/25/74/guerra100.jpg', 2, 25),                      -- id 74
+  ('¿Quién fue Juana de Arco?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117693/imagenPreg/25/75/juana_arca.jpg', 3, 25);                      -- id 75
 
 -- Castillos medievales (quiz_id = 26)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Dónde está el castillo de Neuschwanstein?', 'neuschwanstein.jpg', 1, 26), -- id 76
-  ('¿Qué castillo inspiró a Disney?', 'disney_castle.jpg', 2, 26),             -- id 77
-  ('¿Qué castillo está en Edimburgo?', 'edimburgo.jpg', 3, 26);                -- id 78
+  ('¿Dónde está el castillo de Neuschwanstein?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117693/imagenPreg/25/75/juana_arca.jpg', 1, 26), -- id 76
+  ('¿Qué castillo inspiró a Disney?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117695/imagenPreg/26/77/disney_castle.jpg', 2, 26),             -- id 77
+  ('¿Qué castillo está en Edimburgo?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117696/imagenPreg/26/78/edimburgo.jpg', 3, 26);                -- id 78
 
 -- Personajes medievales (quiz_id = 27)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién fue Ricardo Corazón de León?', 'ricardo.jpg', 1, 27),               -- id 79
-  ('¿Quién fue Gengis Kan?', 'gengis.jpg', 2, 27),                             -- id 80
-  ('¿Quién fue Saladino?', 'saladino.jpg', 3, 27);                             -- id 81
+  ('¿Quién fue Ricardo Corazón de León?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117696/imagenPreg/26/78/edimburgo.jpg', 1, 27),               -- id 79
+  ('¿Quién fue Gengis Kan?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117696/imagenPreg/26/78/edimburgo.jpg', 2, 27),                             -- id 80
+  ('¿Quién fue Saladino?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117700/imagenPreg/27/81/saladino.jpg', 3, 27);                             -- id 81
 
 -- Edad Moderna (quiz_id = 28)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿En qué año comenzó la Revolución Francesa?', 'revolucion_francesa.jpg', 1, 28), -- id 82
-  ('¿Quién fue Napoleón Bonaparte?', 'napoleon.jpg', 2, 28),                   -- id 83
-  ('¿Qué invento revolucionó la imprenta?', 'imprenta.jpg', 3, 28);            -- id 84
+  ('¿En qué año comenzó la Revolución Francesa?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117701/imagenPreg/28/82/revolucion_francesa.jpg', 1, 28), -- id 82
+  ('¿Quién fue Napoleón Bonaparte?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117702/imagenPreg/28/83/napoleon.jpg', 2, 28),                   -- id 83
+  ('¿Qué invento revolucionó la imprenta?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117703/imagenPreg/28/84/imprenta.jpg', 3, 28);            -- id 84
 
 -- Revoluciones modernas (quiz_id = 29)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién lideró la independencia de América?', 'bolivar.jpg', 1, 29),        -- id 85
-  ('¿Qué revolución ocurrió en Rusia en 1917?', 'rusia1917.jpg', 2, 29),       -- id 86
-  ('¿Quién fue Martin Luther King?', 'mlk.jpg', 3, 29);                        -- id 87
+  ('¿Quién lideró la independencia de América?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117704/imagenPreg/29/85/bolivar.jpg', 1, 29),        -- id 85
+  ('¿Qué revolución ocurrió en Rusia en 1917?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117706/imagenPreg/29/86/rusia1917.jpg', 2, 29),       -- id 86
+  ('¿Quién fue Martin Luther King?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117707/imagenPreg/29/87/mlk.jpg', 3, 29);                        -- id 87
 
 -- Personajes modernos (quiz_id = 30)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién fue Albert Einstein?', 'einstein.jpg', 1, 30),                      -- id 88
-  ('¿Quién fue Marie Curie?', 'curie.jpg', 2, 30),                             -- id 89
-  ('¿Quién fue Mahatma Gandhi?', 'gandhi.jpg', 3, 30);                         -- id 90
+  ('¿Quién fue Albert Einstein?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117713/imagenPreg/30/88/einstein.jpg', 1, 30),                      -- id 88
+  ('¿Quién fue Marie Curie?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117714/imagenPreg/30/89/curie.jpg', 2, 30),                             -- id 89
+  ('¿Quién fue Mahatma Gandhi?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117715/imagenPreg/30/90/gandhi.jpg', 3, 30);                         -- id 90
 
 -- Bandas de rock (quiz_id = 31)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es el vocalista de Queen?', 'queen.jpg', 1, 31),                    -- id 91
-  ('¿Qué banda compuso "Stairway to Heaven"?', 'ledzeppelin.jpg', 2, 31),      -- id 92
-  ('¿Qué banda es famosa por "Satisfaction"?', 'rollingstones.jpg', 3, 31);    -- id 93
+  ('¿Quién es el vocalista de Queen?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117716/imagenPreg/31/91/queen.jpg', 1, 31),                    -- id 91
+  ('¿Qué banda compuso "Stairway to Heaven"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117717/imagenPreg/31/92/ledzeppelin.jpg', 2, 31),      -- id 92
+  ('¿Qué banda es famosa por "Satisfaction"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117719/imagenPreg/31/93/rollingstones.jpg', 3, 31);    -- id 93
 
 -- Álbumes de rock (quiz_id = 32)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién grabó "Abbey Road"?', 'abbeyroad.jpg', 1, 32),                      -- id 94
-  ('¿Qué álbum es "The Wall"?', 'thewall.jpg', 2, 32),                         -- id 95
-  ('¿Qué álbum es "Back in Black"?', 'backinblack.jpg', 3, 32);                -- id 96
+  ('¿Quién grabó "Abbey Road"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117720/imagenPreg/32/94/abbeyroad.jpg', 1, 32),                      -- id 94
+  ('¿Qué álbum es "The Wall"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117721/imagenPreg/32/95/thewall.jpg', 2, 32),                         -- id 95
+  ('¿Qué álbum es "Back in Black"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117722/imagenPreg/32/96/backinblack.jpg', 3, 32);                -- id 96
 
 -- Historia del rock (quiz_id = 33)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Dónde fue el festival de Woodstock?', 'woodstock.jpg', 1, 33),            -- id 97
-  ('¿Quién fue el "Rey del Rock"?', 'elvis.jpg', 2, 33),                       -- id 98
-  ('¿Qué banda británica revolucionó la música en los 60?', 'beatles.jpg', 3, 33); -- id 99
+  ('¿Dónde fue el festival de Woodstock?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117723/imagenPreg/33/97/woodstock.jpg', 1, 33),            -- id 97
+  ('¿Quién fue el "Rey del Rock"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117725/imagenPreg/33/98/elvis.jpg', 2, 33),                       -- id 98
+  ('¿Qué banda británica revolucionó la música en los 60?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117726/imagenPreg/33/99/beatles.jpg', 3, 33); -- id 99
 
 -- Artistas pop (quiz_id = 34)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es conocido como el "Rey del Pop"?', 'mj.jpg', 1, 34),              -- id 100
-  ('¿Quién canta "Bad Guy"?', 'billie.jpg', 2, 34),                            -- id 101
-  ('¿Quién es la artista de "Rolling in the Deep"?', 'adele.jpg', 3, 34);      -- id 102
+  ('¿Quién es conocido como el "Rey del Pop"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117727/imagenPreg/34/100/mj.jpg', 1, 34),              -- id 100
+  ('¿Quién canta "Bad Guy"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117728/imagenPreg/34/101/billie.jpg', 2, 34),                            -- id 101
+  ('¿Quién es la artista de "Rolling in the Deep"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117729/imagenPreg/34/102/adele.jpg', 3, 34);      -- id 102
 
 -- Canciones pop (quiz_id = 35)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién canta "Shape of You"?', 'edsheeran.jpg', 1, 35),                    -- id 103
-  ('¿Qué grupo canta "Dancing Queen"?', 'abba.jpg', 2, 35),                    -- id 104
-  ('¿Quién canta "Like a Prayer"?', 'madonna.jpg', 3, 35);                     -- id 105
+  ('¿Quién canta "Shape of You"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117730/imagenPreg/35/103/edsheeran.jpg', 1, 35),                    -- id 103
+  ('¿Qué grupo canta "Dancing Queen"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117732/imagenPreg/35/104/abba.jpg', 2, 35),                    -- id 104
+  ('¿Quién canta "Like a Prayer"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117733/imagenPreg/35/105/madonna.jpg', 3, 35);                     -- id 105
 
 -- Historia del pop (quiz_id = 36)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién fue la primera superestrella pop?', 'elvis.jpg', 1, 36),            -- id 106
-  ('¿Qué artista popularizó el "moonwalk"?', 'mj.jpg', 2, 36),                 -- id 107
-  ('¿Qué grupo británico marcó los 60?', 'beatles.jpg', 3, 36);                -- id 108
+  ('¿Quién fue la primera superestrella pop?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117734/imagenPreg/36/106/elvis.jpg', 1, 36),            -- id 106
+  ('¿Qué artista popularizó el "moonwalk"?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117735/imagenPreg/36/107/mj.jpg', 2, 36),                 -- id 107
+  ('¿Qué grupo británico marcó los 60?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117736/imagenPreg/36/108/beatles.jpg', 3, 36);                -- id 108
 
 -- Star Wars Episodio IV (quiz_id = 37)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es el protagonista principal?', 'luke.jpg', 1, 37),                 -- id 109
-  ('¿Qué droide acompaña a Luke?', 'r2d2.jpg', 2, 37),                         -- id 110
-  ('¿Quién es el villano principal?', 'vader.jpg', 3, 37);                     -- id 111
+  ('¿Quién es el protagonista principal?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778121432/fotonoticia_20150620132813_412_rxux0j.jpg', 1, 37),                 -- id 109
+  ('¿Qué droide acompaña a Luke?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778121463/360_F_928173610_MDO4XGYmOJ2685TTwhNW2Y1vktrWh8kX_spriwj.jpg', 2, 37),                         -- id 110
+  ('¿Quién es el villano principal?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778121502/thumb-1920-59190_ukryjt.jpg', 3, 37);                     -- id 111
 
 -- Star Wars Personajes (quiz_id = 38)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es la princesa de Alderaan?', 'leia.jpg', 1, 38),                   -- id 112
-  ('¿Quién es el contrabandista amigo de Luke?', 'han.jpg', 2, 38),            -- id 113
-  ('¿Quién es el maestro Jedi verde?', 'yoda.jpg', 3, 38);                     -- id 114
+  ('¿Quién es la princesa de Alderaan?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117741/imagenPreg/38/112/leia.jpg', 1, 38),                   -- id 112
+  ('¿Quién es el contrabandista amigo de Luke?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117742/imagenPreg/38/113/han.jpg', 2, 38),            -- id 113
+  ('¿Quién es el maestro Jedi verde?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117743/imagenPreg/38/114/yoda.jpg', 3, 38);                     -- id 114
 
 -- Star Wars Naves (quiz_id = 39)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Cómo se llama la nave de Han Solo?', 'falcon.jpg', 1, 39),                -- id 115
-  ('¿Qué nave usa el Imperio?', 'tie.jpg', 2, 39),                             -- id 116
-  ('¿Qué nave destruye la Estrella de la Muerte?', 'xwing.jpg', 3, 39);        -- id 117
+  ('¿Cómo se llama la nave de Han Solo?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117744/imagenPreg/39/115/falcon.jpg', 1, 39),                -- id 115
+  ('¿Qué nave usa el Imperio?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117745/imagenPreg/39/116/tie.jpg', 2, 39),                             -- id 116
+  ('¿Qué nave destruye la Estrella de la Muerte?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117746/imagenPreg/39/117/xwing.jpg', 3, 39);        -- id 117
 
 -- El Señor de los Anillos: La Comunidad (quiz_id = 40)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es el portador del anillo?', 'frodo.jpg', 1, 40),                   -- id 118
-  ('¿Quién es el mago gris?', 'gandalf.jpg', 2, 40),                           -- id 119
-  ('¿Quién es el rey de Gondor?', 'aragorn.jpg', 3, 40);                       -- id 120
+  ('¿Quién es el portador del anillo?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117751/imagenPreg/40/118/frodo.jpg', 1, 40),                   -- id 118
+  ('¿Quién es el mago gris?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117752/imagenPreg/40/119/gandalf.jpg', 2, 40),                           -- id 119
+  ('¿Quién es el rey de Gondor?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117753/imagenPreg/40/120/aragorn.jpg', 3, 40);                       -- id 120
 
 -- El Señor de los Anillos: Las Dos Torres (quiz_id = 41)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es el traidor de la comunidad?', 'boromir.jpg', 1, 41),             -- id 121
-  ('¿Quién es el elfo arquero?', 'legolas.jpg', 2, 41),                        -- id 122
-  ('¿Quién es el enano guerrero?', 'gimli.jpg', 3, 41);                        -- id 123
+  ('¿Quién es el traidor de la comunidad?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117754/imagenPreg/41/121/boromir.jpg', 1, 41),             -- id 121
+  ('¿Quién es el elfo arquero?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117755/imagenPreg/41/122/legolas.jpg', 2, 41),                        -- id 122
+  ('¿Quién es el enano guerrero?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117757/imagenPreg/41/123/gimli.jpg', 3, 41);                        -- id 123
 
 -- Personajes de El Señor de los Anillos (quiz_id = 42)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es el señor oscuro?', 'sauron.jpg', 1, 42),                         -- id 124
-  ('¿Quién es la dama de Lothlórien?', 'galadriel.jpg', 2, 42),                -- id 125
-  ('¿Quién es el hobbit leal amigo de Frodo?', 'sam.jpg', 3, 42);              -- id 126
+  ('¿Quién es el señor oscuro?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117758/imagenPreg/42/124/sauron.jpg', 1, 42),                         -- id 124
+  ('¿Quién es la dama de Lothlórien?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117759/imagenPreg/42/125/galadriel.jpg', 2, 42),                -- id 125
+  ('¿Quién es el hobbit leal amigo de Frodo?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117760/imagenPreg/42/126/sam.jpg', 3, 42);              -- id 126
 
 -- Adivina el campeón de LoL (quiz_id = 43)
 INSERT INTO pregunta (enunciado, imagen, posicion, quiz_id) VALUES
-  ('¿Quién es este campeón?', 'ahri.jpg', 1, 43),         -- id 127
-  ('¿Quién es este campeón?', 'yasuo.jpg', 2, 43),        -- id 128
-  ('¿Quién es este campeón?', 'teemo.jpg', 3, 43),        -- id 129
-  ('¿Quién es este campeón?', 'lux.jpg', 4, 43),          -- id 130
-  ('¿Quién es este campeón?', 'garen.jpg', 5, 43),        -- id 131
-  ('¿Quién es este campeón?', 'jinx.jpg', 6, 43),         -- id 132
-  ('¿Quién es este campeón?', 'thresh.jpg', 7, 43),       -- id 133
-  ('¿Quién es este campeón?', 'lee_sin.jpg', 8, 43),      -- id 134
-  ('¿Quién es este campeón?', 'miss_fortune.jpg', 9, 43), -- id 135
-  ('¿Quién es este campeón?', 'ekko.jpg', 10, 43);        -- id 136
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117761/imagenPreg/43/127/ahri.jpg', 1, 43),         -- id 127
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117762/imagenPreg/43/128/yasuo.jpg', 2, 43),        -- id 128
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117764/imagenPreg/43/129/teemo.jpg', 3, 43),        -- id 129
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117765/imagenPreg/43/130/lux.jpg', 4, 43),          -- id 130
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117766/imagenPreg/43/131/garen.jpg', 5, 43),        -- id 131
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117767/imagenPreg/43/132/jinx.jpg', 6, 43),         -- id 132
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117769/imagenPreg/43/133/thresh.jpg', 7, 43),       -- id 133
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117770/imagenPreg/43/134/lee_sin.jpg', 8, 43),      -- id 134
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117771/imagenPreg/43/135/miss_fortune.jpg', 9, 43), -- id 135
+  ('¿Quién es este campeón?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117772/imagenPreg/43/136/ekko.jpg', 10, 43);        -- id 136
 
 -- QUIZZES PREGUNTAS
 

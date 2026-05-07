@@ -2,6 +2,7 @@ package com.example.proyectoquiz.controllers;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Map;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -60,35 +61,82 @@ public class FilesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(fileStorageService.store(filename, file, destino));
     }
 
+    // @GetMapping("/categoria/{categoriaId}/{filename:.+}")
+    // public ResponseEntity<?> getLogoCategoriaLogo(@PathVariable Long categoriaId,
+    // @PathVariable String filename) {
+    // Resource file = fileStorageService.loadAsResource("categoriaLogo/" +
+    // categoriaId + "/" + filename);
+    // return ResponseEntity.ok().body(file);
+    // }
+
+    // @GetMapping("/subcategoria/{subcategoriaId}/{filename:.+}")
+    // public ResponseEntity<?> getSubcategoriaLogo(@PathVariable Long
+    // subcategoriaId, @PathVariable String filename) {
+    // Resource file = fileStorageService.loadAsResource("subcategoriaLogo/" +
+    // subcategoriaId + "/" + filename);
+    // return ResponseEntity.ok().body(file);
+    // }
+
+    // @GetMapping("/pregunta/{quizID}/{preguntaPos}/{filename:.+}")
+    // public ResponseEntity<?> getPreguntaImagen(@PathVariable Long quizID,
+    // @PathVariable Integer preguntaPos,
+    // @PathVariable String filename) {
+    // Resource file = fileStorageService.loadAsResource("imagenPreg/" + quizID +
+    // "/" + preguntaPos + "/" + filename);
+    // return ResponseEntity.ok().body(file);
+    // }
+
+    // @GetMapping("/avatar/{userID}/{filename:.+}")
+    // public ResponseEntity<?> getAvatar(@PathVariable Long userID, @PathVariable
+    // String filename) {
+    // Resource file = fileStorageService.loadAsResource("userAvatar/" + userID +
+    // "/" + filename);
+    // return ResponseEntity.ok().body(file);
+    // }
+
+    // @GetMapping("/portada/{quizID}/{filename:.+}")
+    // public ResponseEntity<?> getPortada(@PathVariable Long quizID, @PathVariable
+    // String filename) {
+    // Resource file = fileStorageService.loadAsResource("quizPortada/" + quizID +
+    // "/" + filename);
+    // return ResponseEntity.ok().body(file);
+    // }
+
     @GetMapping("/categoria/{categoriaId}/{filename:.+}")
-    public ResponseEntity<?> getLogoCategoriaLogo(@PathVariable Long categoriaId, @PathVariable String filename) {
-        Resource file = fileStorageService.loadAsResource("categoriaLogo/" + categoriaId + "/" + filename);
-        return ResponseEntity.ok().body(file);
+    public ResponseEntity<String> getLogoCategoriaLogo(@PathVariable Long categoriaId, @PathVariable String filename) {
+        Path destino = Path.of("categoriaLogo/" + categoriaId + "/");
+        String url = fileStorageService.getUrl(destino, filename);
+        return ResponseEntity.ok(url);
     }
 
     @GetMapping("/subcategoria/{subcategoriaId}/{filename:.+}")
-    public ResponseEntity<?> getSubcategoriaLogo(@PathVariable Long subcategoriaId, @PathVariable String filename) {
-        Resource file = fileStorageService.loadAsResource("subcategoriaLogo/" + subcategoriaId + "/" + filename);
-        return ResponseEntity.ok().body(file);
+    public ResponseEntity<String> getSubcategoriaLogo(@PathVariable Long subcategoriaId,
+            @PathVariable String filename) {
+        Path destino = Path.of("subcategoriaLogo/" + subcategoriaId + "/");
+        String url = fileStorageService.getUrl(destino, filename);
+        return ResponseEntity.ok(url);
     }
 
     @GetMapping("/pregunta/{quizID}/{preguntaPos}/{filename:.+}")
-    public ResponseEntity<?> getPreguntaImagen(@PathVariable Long quizID, @PathVariable Integer preguntaPos,
+    public ResponseEntity<String> getPreguntaImagen(@PathVariable Long quizID, @PathVariable Integer preguntaPos,
             @PathVariable String filename) {
-        Resource file = fileStorageService.loadAsResource("imagenPreg/" + quizID + "/" + preguntaPos + "/" + filename);
-        return ResponseEntity.ok().body(file);
+        Path destino = Path.of("imagenPreg/" + quizID + "/" + preguntaPos + "/");
+        String url = fileStorageService.getUrl(destino, filename);
+        return ResponseEntity.ok(url);
     }
 
     @GetMapping("/avatar/{userID}/{filename:.+}")
-    public ResponseEntity<?> getAvatar(@PathVariable Long userID, @PathVariable String filename) {
-        Resource file = fileStorageService.loadAsResource("userAvatar/" + userID + "/" + filename);
-        return ResponseEntity.ok().body(file);
+    public ResponseEntity<String> getAvatar(@PathVariable Long userID, @PathVariable String filename) {
+        Path destino = Path.of("userAvatar/" + userID + "/");
+        String url = fileStorageService.getUrl(destino, filename);
+        return ResponseEntity.ok(url);
     }
 
     @GetMapping("/portada/{quizID}/{filename:.+}")
-    public ResponseEntity<?> getPortada(@PathVariable Long quizID, @PathVariable String filename) {
-        Resource file = fileStorageService.loadAsResource("quizPortada/" + quizID + "/" + filename);
-        return ResponseEntity.ok().body(file);
+    public ResponseEntity<String> getPortada(@PathVariable Long quizID, @PathVariable String filename) {
+        Path destino = Path.of("quizPortada/" + quizID + "/");
+        String url = fileStorageService.getUrl(destino, filename);
+        return ResponseEntity.ok(url);
     }
 
 }

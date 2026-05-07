@@ -14,4 +14,6 @@ public interface FileStorageService {
     public Resource loadAsResource(String filename);
 
     public Path getRootLocation();
+
+    public String getUrl(Path destino, String filename);
 }
