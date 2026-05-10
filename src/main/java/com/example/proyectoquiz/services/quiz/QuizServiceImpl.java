@@ -1,12 +1,10 @@
 package com.example.proyectoquiz.services.quiz;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,7 +33,6 @@ import com.example.proyectoquiz.repository.QuizRepository;
 import com.example.proyectoquiz.repository.RespuestaRepository;
 import com.example.proyectoquiz.repository.SubcategoriaRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
-import com.example.proyectoquiz.services.correo.CorreoService;
 import com.example.proyectoquiz.services.notificaciones.NotificacionService;
 import com.example.proyectoquiz.services.websocket.WebSocketService;
 
@@ -63,17 +60,9 @@ public class QuizServiceImpl implements QuizService {
 
     private final WebSocketService webSocketService;
 
-    private final CorreoService correoService;
-
     private final PropiedadesApp propiedadesApp;
 
     private final Integer PAGE_SIZE_DEFAULT = 9;
-
-    @Value("${app.frontend.url}")
-    private String frontendUrl;
-
-    @Value("${spring.mail.username}")
-    private String adminEmail;
 
     public Page<Quiz> getAllQuizzes(Integer pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE_DEFAULT);
@@ -174,13 +163,6 @@ public class QuizServiceImpl implements QuizService {
             }
         }
 
-        String enlace = frontendUrl + "quiz/" + quiz.getId();
-
-        String mensaje = "El usuario " + usuario.getNombre() + " ha solicitado crear el quiz " + quiz.getNombre()
-                + "\n\nGestiona el quiz aquí: \n" + enlace;
-
-        correoService.enviarEmail(adminEmail, "Nuevo Quiz Pendiente", mensaje);
-
         Notificacion notificacion = new Notificacion();
         notificacion.setMensaje("Quiz: " + quizDevuelto.getNombre());
         notificacion.setTipo("NUEVO_QUIZ");
@@ -265,6 +247,13 @@ public class QuizServiceImpl implements QuizService {
         notificacionService.crearYNotificar(notificacion, quizDevuelto.getCreador().getId(), webSocketService);
 
         return quizDevuelto;
+    }
+
+    public Quiz updateQuizPortada(Long id, String nuevaPortada) {
+        Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Quiz no encontrado"));
+        quiz.setPortada(nuevaPortada);
+        return quizRepository.save(quiz);
     }
 
     public Page<Quiz> getQuizzesByUsuario(Long creadorId, int pageNumber) {

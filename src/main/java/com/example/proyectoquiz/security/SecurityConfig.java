@@ -76,6 +76,7 @@ public class SecurityConfig {
             // .requestMatchers(HttpMethod.DELETE, "/ronda/**").hasAnyRole("ADMIN", "USER")
             /* Quizzes */
             .requestMatchers(HttpMethod.POST, "/quiz/**").hasAnyRole("ADMIN", "USER")
+            .requestMatchers(HttpMethod.PUT, "/quiz/{id}/portada").hasAnyRole("ADMIN", "USER")
             .requestMatchers(HttpMethod.PUT, "/quiz/**").hasAnyRole("ADMIN")
             .requestMatchers(HttpMethod.DELETE, "/quiz/**").hasAnyRole("ADMIN")
             /* Pregunta */

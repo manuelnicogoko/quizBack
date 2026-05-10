@@ -72,6 +72,11 @@ public class QuizController {
         return ResponseEntity.status(HttpStatus.OK).body(quizService.updateQuiz(id, quizDTO));
     }
 
+    @PutMapping("/{id}/portada")
+    public ResponseEntity<?> updateQuizPortada(@PathVariable Long id, @RequestBody String nuevaPortada) {
+        return ResponseEntity.status(HttpStatus.OK).body(quizService.updateQuizPortada(id, nuevaPortada));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteQuiz(@PathVariable Long id) throws RuntimeException {
         quizService.deleteQuiz(id);
