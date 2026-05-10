@@ -75,8 +75,9 @@ public class PartidaServiceImpl implements PartidaService {
         return listadoPartidas;
     }
 
-    public PartidaListadoDTO getPartidaByCodigo(String codigo) throws RuntimeException {
-        Partida partida = partidaRepository.findByCodigoAndEstado(codigo, Estado.EN_CURSO);
+    public PartidaListadoDTO getPartidaByCodigo(String codigo) throws RuntimeException, PartidaNotFoundException {
+        Partida partida = partidaRepository.findByCodigoAndEstadoIn(
+                codigo, List.of(Estado.EN_CURSO, Estado.EN_PARTIDA));
         if (partida == null) {
             throw new PartidaNotFoundException(codigo);
         }

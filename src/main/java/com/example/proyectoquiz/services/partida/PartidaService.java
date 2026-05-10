@@ -16,7 +16,7 @@ public interface PartidaService {
 
         public List<PartidaListadoDTO> getPartidasPublicas();
 
-        public PartidaListadoDTO getPartidaByCodigo(String codigo) throws RuntimeException;
+        public PartidaListadoDTO getPartidaByCodigo(String codigo) throws RuntimeException, PartidaNotFoundException;
 
         public Partida savePartida(PartidaDTO partidaDTO)
                         throws RuntimeException, UserNotFoundException, AuthException, PropiedadAppException;
