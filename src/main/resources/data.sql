@@ -18,9 +18,9 @@ INSERT INTO parametro_app (nombre, tipo_dato, valor) VALUES
 -- USUARIOS
 INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VALUES
   ('admin', 'admin@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 0, 200.0),
-  ('usuario', 'usuario@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117885/userAvatar/3/undefined.jpg', 1, 300.0),
-  ('usuario1', 'usuario1@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 200.0),
-  ('usuario2', 'usuario2@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 100.0),
+  ('usuario', 'usuario@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379461/profile1_avfx4d.png', 1, 300.0),
+  ('usuario1', 'usuario1@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379467/profile2_bkfr4d.png', 1, 200.0),
+  ('usuario2', 'usuario2@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379472/profile3_y4akw5.png', 1, 100.0),
   ('usuario3', 'usuario3@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 50.0);
 
 -- CATEGORIAS
@@ -61,11 +61,11 @@ INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcat
   -- Shooter
   ('DOOM', 'Preguntas sobre personajes de DOOM', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117819/quizPortada/3/skyrim.jpg', 2, 1, 2, 4),
   ('Call of Duty', 'Quiz sobre armas de CoD', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117837/quizPortada/5/cod.jpg', 1, 1, 2, 4),
-  ('Overwatch', 'Quiz sobre héroes de Overwatch', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117837/quizPortada/5/cod.jpg', 2, 1, 2, 4),
+  ('Overwatch', 'Quiz sobre héroes de Overwatch', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117838/quizPortada/6/overwatch.jpg', 2, 1, 2, 4),
   -- Pintura
   ('Grandes pintores', 'Quiz sobre pintores famosos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117839/quizPortada/7/picasso.jpg', 1, 2, 3, 4),
-  ('Obras maestras', 'Quiz sobre obras de pintura', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117839/quizPortada/7/picasso.jpg', 2, 2, 3, 4),
-  ('Estilos de pintura', 'Quiz sobre estilos artísticos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117839/quizPortada/7/picasso.jpg', 1, 2, 3, 4),
+  ('Obras maestras', 'Quiz sobre obras de pintura', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117841/quizPortada/8/monalisa.jpg', 2, 2, 3, 4),
+  ('Estilos de pintura', 'Quiz sobre estilos artísticos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117842/quizPortada/9/impresionismo.jpg', 1, 2, 3, 4),
   -- Escultura
   ('Escultores famosos', 'Quiz sobre escultores', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117795/quizPortada/10/michelangelo.jpg', 2, 2, 4, 4),
   ('Obras de escultura', 'Quiz sobre obras de escultura', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117796/quizPortada/11/david.jpg', 1, 2, 4, 4),
@@ -76,7 +76,7 @@ INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcat
   ('Experimentos históricos', 'Quiz sobre experimentos físicos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117800/quizPortada/15/cavendish.jpg', 1, 3, 5, 4),
   -- Biología
   ('Biólogos célebres', 'Quiz sobre biólogos famosos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117801/quizPortada/16/darwin.jpg', 2, 3, 6, 4),
-  ('Descubrimientos biológicos', 'Quiz sobre descubrimientos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117801/quizPortada/16/darwin.jpg', 1, 3, 6, 4),
+  ('Descubrimientos biológicos', 'Quiz sobre descubrimientos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117802/quizPortada/17/adn.jpg', 1, 3, 6, 4),
   ('Ramas de la biología', 'Quiz sobre ramas de la biología', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117804/quizPortada/18/botanica.jpg', 2, 3, 6, 4),
   -- Fútbol
   ('Jugadores de fútbol', 'Quiz sobre futbolistas famosos', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117805/quizPortada/19/messi.jpg', 1, 4, 7, 4),
@@ -101,7 +101,7 @@ INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcat
   -- Pop
   ('Artistas pop', 'Quiz sobre artistas pop', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117825/quizPortada/34/bruno.jpg', 2, 6, 12, 4),
   ('Canciones pop', 'Quiz sobre canciones pop', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117826/quizPortada/35/bad_guy.jpg', 1, 6, 12, 4),
-  ('Historia del pop', 'Quiz sobre historia del pop', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117826/quizPortada/35/bad_guy.jpg', 2, 6, 12, 4),
+  ('Historia del pop', 'Quiz sobre historia del pop', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117828/quizPortada/36/pop_history.jpg', 2, 6, 12, 4),
   --Ciencia Ficción
   ('Star Wars Episodio IV', 'Preguntas sobre Una Nueva Esperanza', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117829/quizPortada/37/sw_iv.jpg', 1, 7, 14, 4),
   ('Star Wars Personajes', '¿Cuánto sabes de los personajes de Star Wars?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117830/quizPortada/38/sw_personajes.jpg', 2, 7, 14, 4),
