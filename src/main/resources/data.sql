@@ -32,7 +32,7 @@ INSERT INTO categoria (nombre, logo, descripcion, estado) VALUES
   ('Deportes', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117625/categoriaLogo/4/deportes.png', 'Todo sobre deportes', 4),
   ('Historia', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117626/categoriaLogo/5/historia.png', 'Hechos históricos y personajes', 4),
   ('Música', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117627/categoriaLogo/6/musica.png', 'Música y artistas', 4),
-  ('Cine', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117627/categoriaLogo/6/musica.png', 'Todo sobre películas y cine', 4);
+  ('Cine', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117628/categoriaLogo/7/cine.png', 'Todo sobre películas y cine', 4);
 
 -- SUBCATEGORIAS
 INSERT INTO subcategoria (nombre, logo, descripcion, categoria_id, estado) VALUES
