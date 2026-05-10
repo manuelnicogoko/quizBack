@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Inscripcion;
 import com.example.proyectoquiz.domain.Partida;
 import com.example.proyectoquiz.domain.Usuario;
@@ -44,7 +45,7 @@ public class InscripcionServiceImpl implements InscripcionService {
             throw new RuntimeException("El nombre es obligatorio");
         }
 
-        Partida partida = partidaRepository.findByCodigo(inscripcionDTO.getCodigoPartida());
+        Partida partida = partidaRepository.findByCodigoAndEstado(inscripcionDTO.getCodigoPartida(), Estado.EN_CURSO);
         if (partida == null) {
             throw new RuntimeException("Partida no encontrada");
         }

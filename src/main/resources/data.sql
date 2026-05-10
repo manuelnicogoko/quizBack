@@ -23,7 +23,6 @@ INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VAL
   ('usuario2', 'usuario2@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 100.0),
   ('usuario3', 'usuario3@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 50.0);
 
-
 -- CATEGORIAS
 INSERT INTO categoria (nombre, logo, descripcion, estado) VALUES
   -- ('Videojuegos', 'videojuegos.png', 'Todo sobre videojuegos', 4),
@@ -114,31 +113,31 @@ INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcat
   -- MOBA
   ('Adivina el campeón de LoL', '¿Puedes adivinar el campeón de League of Legends por su imagen y pistas?', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117837/quizPortada/43/lol.jpg', 1, 1, 13, 4);
 
--- PARTIDAS DE PRUEBA (15 públicas, 5 privadas)
-INSERT INTO partida (nombre, max_jugadores, publica, vidas, tiempo_ronda, fecha_creacion, estado, codigo, codigo_anfitrion, codigo_socket, numero_jugadores, nombre_anfitrion, quiz_id) VALUES
-  -- Públicas
-  ('RPG - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'RPG001', 'ANF1', 'SOCK1', 2, 'admin', 1),
-  ('RPG - Partida 2', 5, true, 2, 50, '2026-03-21', 0, 'RPG002', 'ANF2', 'SOCK2', 3, 'usuario', 2),
-  ('Shooter - Partida 1', 3, true, 3, 45, '2026-03-21', 0, 'SHOOT1', 'ANF3', 'SOCK3', 1, 'admin', 4),
-  ('Shooter - Partida 2', 6, true, 4, 70, '2026-03-21', 0, 'SHOOT2', 'ANF4', 'SOCK4', 6, 'usuario', 5),
-  ('Pintura - Partida 1', 4, true, 2, 60, '2026-03-21', 0, 'PAINT1', 'ANF5', 'SOCK5', 2, 'admin', 7),
-  ('Pintura - Partida 2', 5, true, 3, 55, '2026-03-21', 0, 'PAINT2', 'ANF6', 'SOCK6', 3, 'usuario', 8),
-  ('Escultura - Partida 1', 3, true, 2, 40, '2026-03-21', 0, 'SCULP1', 'ANF7', 'SOCK7', 1, 'admin', 10),
-  ('Física - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'PHYS01', 'ANF8', 'SOCK8', 2, 'usuario', 13),
-  ('Biología - Partida 1', 5, true, 2, 50, '2026-03-21', 0, 'BIO001', 'ANF9', 'SOCK9', 3, 'admin', 16),
-  -- ('Fútbol - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'FUTB01', 'ANF10', 'SOCK10', 2, 'usuario', 19),
-  -- ('Baloncesto - Partida 1', 3, true, 2, 45, '2026-03-21', 0, 'BASK01', 'ANF11', 'SOCK11', 1, 'admin', 22),
-  -- ('Edad Media - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'MEDIEV', 'ANF12', 'SOCK12', 2, 'usuario', 25),
-  -- ('Edad Moderna - Partida 1', 5, true, 2, 55, '2026-03-21', 0, 'MODERN', 'ANF13', 'SOCK13', 3, 'admin', 28),
-  -- ('Rock - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'ROCK01', 'ANF14', 'SOCK14', 2, 'usuario', 31),
-  -- ('Pop - Partida 1', 3, true, 2, 45, '2026-03-21', 0, 'POP001', 'ANF15', 'SOCK15', 1, 'admin', 34),
+-- -- PARTIDAS DE PRUEBA (15 públicas, 5 privadas)
+-- INSERT INTO partida (nombre, max_jugadores, publica, vidas, tiempo_ronda, fecha_creacion, estado, codigo, codigo_anfitrion, codigo_socket, numero_jugadores, nombre_anfitrion, quiz_id) VALUES
+--   -- Públicas
+--   ('RPG - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'RPG001', 'ANF1', 'SOCK1', 2, 'admin', 1),
+--   ('RPG - Partida 2', 5, true, 2, 50, '2026-03-21', 0, 'RPG002', 'ANF2', 'SOCK2', 3, 'usuario', 2),
+--   ('Shooter - Partida 1', 3, true, 3, 45, '2026-03-21', 0, 'SHOOT1', 'ANF3', 'SOCK3', 1, 'admin', 4),
+--   ('Shooter - Partida 2', 6, true, 4, 70, '2026-03-21', 0, 'SHOOT2', 'ANF4', 'SOCK4', 6, 'usuario', 5),
+--   ('Pintura - Partida 1', 4, true, 2, 60, '2026-03-21', 0, 'PAINT1', 'ANF5', 'SOCK5', 2, 'admin', 7),
+--   ('Pintura - Partida 2', 5, true, 3, 55, '2026-03-21', 0, 'PAINT2', 'ANF6', 'SOCK6', 3, 'usuario', 8),
+--   ('Escultura - Partida 1', 3, true, 2, 40, '2026-03-21', 0, 'SCULP1', 'ANF7', 'SOCK7', 1, 'admin', 10),
+--   ('Física - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'PHYS01', 'ANF8', 'SOCK8', 2, 'usuario', 13),
+--   ('Biología - Partida 1', 5, true, 2, 50, '2026-03-21', 0, 'BIO001', 'ANF9', 'SOCK9', 3, 'admin', 16),
+--   -- ('Fútbol - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'FUTB01', 'ANF10', 'SOCK10', 2, 'usuario', 19),
+--   -- ('Baloncesto - Partida 1', 3, true, 2, 45, '2026-03-21', 0, 'BASK01', 'ANF11', 'SOCK11', 1, 'admin', 22),
+--   -- ('Edad Media - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'MEDIEV', 'ANF12', 'SOCK12', 2, 'usuario', 25),
+--   -- ('Edad Moderna - Partida 1', 5, true, 2, 55, '2026-03-21', 0, 'MODERN', 'ANF13', 'SOCK13', 3, 'admin', 28),
+--   -- ('Rock - Partida 1', 4, true, 3, 60, '2026-03-21', 0, 'ROCK01', 'ANF14', 'SOCK14', 2, 'usuario', 31),
+--   -- ('Pop - Partida 1', 3, true, 2, 45, '2026-03-21', 0, 'POP001', 'ANF15', 'SOCK15', 1, 'admin', 34),
 
-  -- Privadas
-  ('RPG - Privada', 4, false, 3, 60, '2026-03-21', 0, 'RPGPRV', 'ANF16', 'SOCK16', 2, 'usuario', 3),
-  ('Shooter - Privada', 5, false, 2, 50, '2026-03-21', 0, 'SHTPRV', 'ANF17', 'SOCK17', 3, 'admin', 6),
-  ('Pintura - Privada', 3, false, 2, 40, '2026-03-21', 0, 'PAIPRV', 'ANF18', 'SOCK18', 1, 'usuario', 9),
-  ('Física - Privada', 4, false, 3, 60, '2026-03-21', 0, 'PHYPRV', 'ANF19', 'SOCK19', 2, 'admin', 15),
-  ('Pop - Privada', 5, false, 2, 55, '2026-03-21', 0, 'POPPRV', 'ANF20', 'SOCK20', 3, 'usuario', 36);
+--   -- Privadas
+--   ('RPG - Privada', 4, false, 3, 60, '2026-03-21', 0, 'RPGPRV', 'ANF16', 'SOCK16', 2, 'usuario', 3),
+--   ('Shooter - Privada', 5, false, 2, 50, '2026-03-21', 0, 'SHTPRV', 'ANF17', 'SOCK17', 3, 'admin', 6),
+--   ('Pintura - Privada', 3, false, 2, 40, '2026-03-21', 0, 'PAIPRV', 'ANF18', 'SOCK18', 1, 'usuario', 9),
+--   ('Física - Privada', 4, false, 3, 60, '2026-03-21', 0, 'PHYPRV', 'ANF19', 'SOCK19', 2, 'admin', 15),
+--   ('Pop - Privada', 5, false, 2, 55, '2026-03-21', 0, 'POPPRV', 'ANF20', 'SOCK20', 3, 'usuario', 36);
 
 
 -- QUIZZES PREGUNTAS
@@ -825,7 +824,9 @@ INSERT INTO respuesta (pregunta_id, texto) VALUES
 
 -- Final Fantasy VII
 INSERT INTO respuesta (pregunta_id, texto) VALUES
+  (4, 'Cloud'),
   (4, 'Cloud Strife'),
+  (5, 'Aerith'),
   (5, 'Aerith Gainsborough'),
   (6, 'Sephiroth');
 
@@ -1098,7 +1099,7 @@ INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcat
   ('Quiz de Animales Extintos', '¿Cuánto sabes sobre animales extintos?', 'extintos.jpg', 2, 3, 6, 5),
   ('Quiz de Inventos Fallidos', 'Inventos que no triunfaron en la historia', 'fallidos.jpg', 2, 5, 10, 5);
 
--- RONDAS (solo para la partida 1, tantas como preguntas en el quiz 1)
-INSERT INTO ronda (numero_ronda, estado, partida_id, pregunta_id) VALUES
-  (1, 1, 1, 1),
-  (2, 2, 1, 2);
+-- -- RONDAS (solo para la partida 1, tantas como preguntas en el quiz 1)
+-- INSERT INTO ronda (numero_ronda, estado, partida_id, pregunta_id) VALUES
+--   (1, 1, 1, 1),
+--   (2, 2, 1, 2);

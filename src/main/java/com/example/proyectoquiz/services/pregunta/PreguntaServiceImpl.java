@@ -31,7 +31,7 @@ public class PreguntaServiceImpl implements PreguntaService {
 
     private final UsuarioRepository usuarioRepository;
 
-    private final FileStorageService fileStorageService;
+    // private final FileStorageService fileStorageService;
 
     public List<Pregunta> getPreguntasByQuizId(Long quizId) {
         return preguntaRepository.findByQuizId(quizId);

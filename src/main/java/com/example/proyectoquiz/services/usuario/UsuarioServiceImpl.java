@@ -140,6 +140,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuario.getRol() != Rol.ADMIN && !usuario.getId().equals(id)) {
             throw new RuntimeException("No tienes permisos para actualizar este usuario");
         }
+
         usuarioRepository.deleteById(id);
     }
 

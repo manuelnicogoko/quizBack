@@ -52,16 +52,25 @@ public class PartidaController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PutMapping("/empezar/{codigoPartida}")
+    public ResponseEntity<?> empezarPartida(@PathVariable String codigoPartida, @RequestHeader String codSocket) {
+        Partida partida = partidaService.empezarPartida(codigoPartida);
+        webSocketService.actualizarListado();
+        return ResponseEntity.status(HttpStatus.OK).body(partida);
+    }
+
     @PutMapping("/cancelar/{codigoPartida}")
     public ResponseEntity<?> cancelarPartida(@PathVariable String codigoPartida, @RequestHeader String codSocket) {
         Partida partida = partidaService.cancelarPartida(codigoPartida);
         webSocketService.cancelarPartida(codSocket);
+        webSocketService.actualizarListado();
         return ResponseEntity.status(HttpStatus.OK).body(partida);
     }
 
     @PutMapping("/finalizar/{codigo}")
     public ResponseEntity<?> finalizarPartida(@PathVariable String codigo, @RequestHeader String codSocket) {
         webSocketService.terminarPartida(codSocket, codigo);
+        webSocketService.actualizarListado();
         return ResponseEntity.status(HttpStatus.OK).body(partidaService.finalizarPartida(codigo));
     }
 }

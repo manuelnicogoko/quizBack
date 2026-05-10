@@ -1,5 +1,7 @@
 package com.example.proyectoquiz.services.ronda;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.proyectoquiz.domain.Estado;
@@ -29,7 +31,8 @@ public class RondaServiceImpl implements RondaService {
     }
 
     public Ronda saveRonda(String codPartida, RondaDTO rondaDTO) throws RuntimeException {
-        Partida partida = partidaRepository.findByCodigo(codPartida);
+        Partida partida = partidaRepository.findByCodigoAndEstadoIn(codPartida,
+                List.of(Estado.EN_CURSO, Estado.EN_PARTIDA));
 
         if (partida == null) {
             throw new RuntimeException("Partida no encontrada");
@@ -61,7 +64,8 @@ public class RondaServiceImpl implements RondaService {
     }
 
     public Ronda finalizarRonda(String codPartida, Integer numeroRonda) throws RuntimeException {
-        Partida partida = partidaRepository.findByCodigo(codPartida);
+        Partida partida = partidaRepository.findByCodigoAndEstadoIn(codPartida,
+                List.of(Estado.EN_CURSO, Estado.EN_PARTIDA));
         Ronda ronda = rondaRepository.findByPartidaIdAndNumeroRonda(partida.getId(), numeroRonda);
 
         ronda.setEstado(Estado.FINALIZADA);

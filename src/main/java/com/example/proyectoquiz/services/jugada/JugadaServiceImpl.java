@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.proyectoquiz.domain.Estado;
 import com.example.proyectoquiz.domain.Inscripcion;
 import com.example.proyectoquiz.domain.Jugada;
 import com.example.proyectoquiz.domain.Partida;
@@ -51,7 +52,8 @@ public class JugadaServiceImpl implements JugadaService {
 
     public Jugada saveJugada(String codPartida, Integer numeroRonda, JugadaDTO jugadaDTO)
             throws RuntimeException, PartidaNotFoundException {
-        Partida partida = partidaRepository.findByCodigo(codPartida);
+        Partida partida = partidaRepository.findByCodigoAndEstadoIn(codPartida,
+                List.of(Estado.EN_CURSO, Estado.EN_PARTIDA));
         if (partida == null) {
             throw new PartidaNotFoundException(codPartida);
         }
@@ -87,23 +89,25 @@ public class JugadaServiceImpl implements JugadaService {
         }
 
         String respuesta = jugadaDTO.getRespuesta();
-        boolean esCorrecta = opcionesCorrectas.contains(respuesta);
+        boolean esCorrecta = opcionesCorrectas.stream()
+                .anyMatch(opcion -> opcion.trim().equalsIgnoreCase(respuesta.trim()));
 
         Long fallosPrevios = jugadaRepository.countByInscripcionIdAndRondaIdAndCorrectaFalse(
                 inscripcion.getId(), ronda.getId());
 
         double tiempoRespuesta = jugadaDTO.getTiempoRespuesta() != null ? jugadaDTO.getTiempoRespuesta() : 0.0;
 
-        double puntuacion = PUNTUACION_MAXIMA;
-
         if (esCorrecta) {
-            puntuacion -= PUNTUACION_MAXIMA * PENALIZACION_FALLO * fallosPrevios;
+            double penalizacionFallos = PUNTUACION_MAXIMA * PENALIZACION_FALLO * fallosPrevios;
 
+            double penalizacionTiempo = 0.0;
             if (tiempoRespuesta > TIEMPO_GRACIA) {
                 double segundosExtra = tiempoRespuesta - TIEMPO_GRACIA;
                 int tramos = (int) Math.ceil(segundosExtra / 5.0);
-                puntuacion -= PUNTUACION_MAXIMA * PENALIZACION_TIEMPO * tramos;
+                penalizacionTiempo = PUNTUACION_MAXIMA * PENALIZACION_TIEMPO * tramos;
             }
+
+            double puntuacion = PUNTUACION_MAXIMA - penalizacionFallos - penalizacionTiempo;
 
             if (fallosPrevios >= maxFallos || tiempoRespuesta >= maxTiempoRespuesta) {
                 puntuacion = 0.0;

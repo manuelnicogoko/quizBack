@@ -23,10 +23,10 @@ public class WebSocketServiceImpl implements WebSocketService {
         messagingTemplate.convertAndSend("/topic/partida/" + codSocket, "AJ");
     }
 
-    // WebSocket para notificar que se creo una nueva partida y recargar páginas
+    // WebSocket para notificar que se creo una nueva partida y recargar partidas
     // para unirse a públicas
     public void actualizarListado() {
-        messagingTemplate.convertAndSend("/topic/partida/AL", "ACTUALIZAR_LISTADO");
+        messagingTemplate.convertAndSend("/topic/partida/", "AL");
     }
 
     public void cancelarPartida(String codSocket) {

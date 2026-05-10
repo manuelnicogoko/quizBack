@@ -50,7 +50,7 @@ public class PartidaServiceImpl implements PartidaService {
     }
 
     public List<PartidaListadoDTO> getPartidasPublicas() {
-        List<Partida> partidas = partidaRepository.findByPublicaTrue();
+        List<Partida> partidas = partidaRepository.findByPublicaTrueAndEstado(Estado.EN_CURSO);
         List<PartidaListadoDTO> listadoPartidas = new ArrayList<>();
 
         for (Partida partida : partidas) {
@@ -76,7 +76,7 @@ public class PartidaServiceImpl implements PartidaService {
     }
 
     public PartidaListadoDTO getPartidaByCodigo(String codigo) throws RuntimeException {
-        Partida partida = partidaRepository.findByCodigo(codigo);
+        Partida partida = partidaRepository.findByCodigoAndEstado(codigo, Estado.EN_CURSO);
         if (partida == null) {
             throw new PartidaNotFoundException(codigo);
         }
@@ -100,7 +100,7 @@ public class PartidaServiceImpl implements PartidaService {
 
     public Partida savePartida(PartidaDTO partidaDTO)
             throws RuntimeException, UserNotFoundException, AuthException, PropiedadAppException {
-        if (partidaRepository.count() >= propiedadesApp.getMaxPartidasJugando()) {
+        if (partidaRepository.countByEstado(Estado.EN_CURSO) >= propiedadesApp.getMaxPartidasJugando()) {
             throw new PropiedadAppException(
                     "No se pueden crear más partidas. Límite alcanzado: " + propiedadesApp.getMaxPartidasJugando());
         }
@@ -130,7 +130,6 @@ public class PartidaServiceImpl implements PartidaService {
 
         if (authentication == null || "anonymousUser".equals(authentication.getName())) {
             nombreUsuario = partidaDTO.getNombreAnfitrion();
-            // usuario = null; // explícito, pero no necesario
         } else {
             String email = authentication.getName();
             usuario = usuarioRepository.findByEmail(email);
@@ -185,8 +184,20 @@ public class PartidaServiceImpl implements PartidaService {
         partidaRepository.deleteById(id);
     }
 
+    public Partida empezarPartida(String codigo) throws RuntimeException, PartidaNotFoundException {
+        Partida partida = partidaRepository.findByCodigoAndEstado(codigo, Estado.EN_CURSO);
+
+        if (partida != null) {
+            partida.setEstado(Estado.EN_PARTIDA);
+            return partidaRepository.save(partida);
+        } else {
+            throw new PartidaNotFoundException(codigo);
+        }
+    }
+
     public Partida cancelarPartida(String codigo) throws RuntimeException, PartidaNotFoundException {
-        Partida partida = partidaRepository.findByCodigo(codigo);
+        Partida partida = partidaRepository.findByCodigoAndEstadoIn(codigo,
+                List.of(Estado.EN_CURSO, Estado.EN_PARTIDA));
 
         if (partida != null) {
             for (Inscripcion inscripcion : inscripcionRepository.findByPartidaCodigo(codigo)) {
@@ -204,7 +215,8 @@ public class PartidaServiceImpl implements PartidaService {
     public Partida finalizarPartida(String codigo)
             throws RuntimeException, PartidaNotFoundException {
 
-        Partida partida = partidaRepository.findByCodigo(codigo);
+        Partida partida = partidaRepository.findByCodigoAndEstadoIn(codigo,
+                List.of(Estado.EN_CURSO, Estado.EN_PARTIDA));
         if (partida == null) {
             throw new PartidaNotFoundException(codigo);
         }

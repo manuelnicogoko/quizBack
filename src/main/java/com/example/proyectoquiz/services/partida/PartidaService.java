@@ -12,20 +12,22 @@ import com.example.proyectoquiz.exceptions.UserNotFoundException;
 
 public interface PartidaService {
 
-    public List<Partida> getAllPartidas();
+        public List<Partida> getAllPartidas();
 
-    public List<PartidaListadoDTO> getPartidasPublicas();
+        public List<PartidaListadoDTO> getPartidasPublicas();
 
-    public PartidaListadoDTO getPartidaByCodigo(String codigo) throws RuntimeException;
+        public PartidaListadoDTO getPartidaByCodigo(String codigo) throws RuntimeException;
 
-    public Partida savePartida(PartidaDTO partidaDTO)
-            throws RuntimeException, UserNotFoundException, AuthException, PropiedadAppException;
+        public Partida savePartida(PartidaDTO partidaDTO)
+                        throws RuntimeException, UserNotFoundException, AuthException, PropiedadAppException;
 
-    public void deletePartida(Long id) throws RuntimeException, UserNotFoundException, AuthException;
+        public void deletePartida(Long id) throws RuntimeException, UserNotFoundException, AuthException;
 
-    public Partida cancelarPartida(String codigo) throws RuntimeException, PartidaNotFoundException;
+        public Partida empezarPartida(String codigo) throws RuntimeException, PartidaNotFoundException;
 
-    public Partida finalizarPartida(String codigo)
-            throws RuntimeException, PartidaNotFoundException;
+        public Partida cancelarPartida(String codigo) throws RuntimeException, PartidaNotFoundException;
+
+        public Partida finalizarPartida(String codigo)
+                        throws RuntimeException, PartidaNotFoundException;
 
 }
