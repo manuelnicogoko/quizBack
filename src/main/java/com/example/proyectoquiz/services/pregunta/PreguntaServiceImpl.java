@@ -18,6 +18,8 @@ import com.example.proyectoquiz.repository.PreguntaRepository;
 import com.example.proyectoquiz.repository.QuizRepository;
 import com.example.proyectoquiz.repository.UsuarioRepository;
 import com.example.proyectoquiz.services.files.FileStorageService;
+import com.example.proyectoquiz.services.pista.PistaService;
+import com.example.proyectoquiz.services.respuesta.RespuestaService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +32,10 @@ public class PreguntaServiceImpl implements PreguntaService {
     private final QuizRepository quizRepository;
 
     private final UsuarioRepository usuarioRepository;
+
+    private final PistaService pistaService;
+
+    private final RespuestaService respuestaService;
 
     // private final FileStorageService fileStorageService;
 
@@ -64,7 +70,21 @@ public class PreguntaServiceImpl implements PreguntaService {
         Pregunta pregunta = preguntaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
 
-        pregunta.setImagen(preguntaDTO.getImagen());
+        if (preguntaDTO.getEnunciado() != null || preguntaDTO.getEnunciado().trim() != "") {
+            pregunta.setEnunciado(preguntaDTO.getEnunciado());
+        }
+        if (preguntaDTO.getImagen() != null || preguntaDTO.getImagen().trim() != "") {
+            pregunta.setImagen(preguntaDTO.getImagen());
+        }
+        if (preguntaDTO.getPosicion() != null && preguntaDTO.getPosicion() > 0) {
+            pregunta.setPosicion(preguntaDTO.getPosicion());
+        }
+        if (preguntaDTO.getPistas() != null && !preguntaDTO.getPistas().isEmpty()) {
+            pistaService.actualizarPistasDePregunta(id, preguntaDTO.getPistas());
+        }
+        if (preguntaDTO.getRespuestas() != null && !preguntaDTO.getRespuestas().isEmpty()) {
+            respuestaService.actualizarRespuestasDePregunta(id, preguntaDTO.getRespuestas());
+        }
 
         return preguntaRepository.save(pregunta);
     }

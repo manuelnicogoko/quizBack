@@ -69,4 +69,20 @@ public class RespuestaServiceImpl implements RespuestaService {
 
         respuestaRepository.deleteById(id);
     }
+
+    public void actualizarRespuestasDePregunta(Long preguntaId, List<String> nuevasRespuestas) throws RuntimeException {
+        Pregunta pregunta = preguntaRepository.findById(preguntaId)
+                .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
+
+        List<Respuesta> respuestasActuales = respuestaRepository.findByPreguntaId(preguntaId);
+        respuestaRepository.deleteAll(respuestasActuales);
+
+        for (String texto : nuevasRespuestas) {
+            Respuesta respuesta = new Respuesta();
+            respuesta.setTexto(texto);
+            respuesta.setPregunta(pregunta);
+            respuestaRepository.save(respuesta);
+        }
+    }
+
 }

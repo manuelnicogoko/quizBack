@@ -16,4 +16,6 @@ public interface PistaService {
     public Pista savePista(PistaDTO pistaDTO) throws RuntimeException;
 
     public void deletePista(Long id) throws RuntimeException, UserNotFoundException, AuthException;
+
+    public void actualizarPistasDePregunta(Long preguntaId, List<String> nuevasPistas) throws RuntimeException;
 }

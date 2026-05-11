@@ -16,4 +16,6 @@ public interface RespuestaService {
     public Respuesta saveRespuesta(RespuestaDTO respuestaDTO) throws RuntimeException;
 
     public void deleteRespuesta(Long id) throws RuntimeException, UserNotFoundException, AuthException;
+
+    public void actualizarRespuestasDePregunta(Long preguntaId, List<String> nuevasRespuestas) throws RuntimeException;
 }

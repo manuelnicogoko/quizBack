@@ -70,4 +70,17 @@ public class PistaServiceImpl implements PistaService {
         pistaRepository.deleteById(id);
     }
 
+    public void actualizarPistasDePregunta(Long preguntaId, List<String> nuevasPistas) throws RuntimeException {
+        List<Pista> actuales = pistaRepository.findByPreguntaId(preguntaId);
+        pistaRepository.deleteAll(actuales);
+        Pregunta pregunta = preguntaRepository.findById(preguntaId)
+                .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
+        for (String texto : nuevasPistas) {
+            Pista pista = new Pista();
+            pista.setTexto(texto);
+            pista.setPregunta(pregunta);
+            pistaRepository.save(pista);
+        }
+    }
+
 }
