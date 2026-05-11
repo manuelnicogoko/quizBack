@@ -70,10 +70,10 @@ public class PreguntaServiceImpl implements PreguntaService {
         Pregunta pregunta = preguntaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
 
-        if (preguntaDTO.getEnunciado() != null || preguntaDTO.getEnunciado().trim() != "") {
+        if (preguntaDTO.getEnunciado() != null && !preguntaDTO.getEnunciado().trim().isEmpty()) {
             pregunta.setEnunciado(preguntaDTO.getEnunciado());
         }
-        if (preguntaDTO.getImagen() != null || preguntaDTO.getImagen().trim() != "") {
+        if (preguntaDTO.getImagen() != null && !preguntaDTO.getImagen().trim().isEmpty()) {
             pregunta.setImagen(preguntaDTO.getImagen());
         }
         if (preguntaDTO.getPosicion() != null && preguntaDTO.getPosicion() > 0) {
