@@ -2,6 +2,8 @@ package com.example.proyectoquiz.services.quiz;
 
 import java.time.LocalDateTime;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -119,8 +121,8 @@ public class QuizServiceImpl implements QuizService {
 
         Quiz quiz = new Quiz();
         quiz.setCreador(usuario);
-        quiz.setNombre(quizDTO.getNombre());
-        quiz.setDescripcion(quizDTO.getDescripcion());
+        quiz.setNombre(Jsoup.clean(quizDTO.getNombre(), Safelist.basic()));
+        quiz.setDescripcion(Jsoup.clean(quizDTO.getDescripcion(), Safelist.basic()));
         quiz.setEstado(Estado.PENDIENTE);
         quiz.setPortada(quizDTO.getPortada());
 
@@ -171,6 +173,14 @@ public class QuizServiceImpl implements QuizService {
         notificacion.setQuizId(quizDevuelto.getId());
         notificacion.setDestinatario(null);
 
+        // String enlace = frontendUrl + "/quiz/" + quiz.getId();
+
+        // String mensaje = "El usuario " + usuario.getNombre() + " ha solicitado crear
+        // el quiz " + quiz.getNombre()
+        // + "\n\nGestiona el quiz aquí: \n" + enlace;
+
+        // correoService.enviarEmail(adminEmail, "Nuevo Quiz Pendiente", mensaje);
+
         notificacionService.crearYNotificar(notificacion, null, webSocketService);
 
         return quizDevuelto;
@@ -219,8 +229,8 @@ public class QuizServiceImpl implements QuizService {
 
         Quiz quiz = quizRepository.findById(id).orElseThrow(() -> new RuntimeException("Quiz no encontrado"));
 
-        quiz.setNombre(quizDTO.getNombre());
-        quiz.setDescripcion(quizDTO.getDescripcion());
+        quiz.setNombre(Jsoup.clean(quizDTO.getNombre(), Safelist.basic()));
+        quiz.setDescripcion(Jsoup.clean(quizDTO.getDescripcion(), Safelist.basic()));
         quiz.setEstado(Estado.valueOf(quizDTO.getEstado()));
 
         Categoria categoria = categoriaRepository.findById(quizDTO.getCategoriaId())

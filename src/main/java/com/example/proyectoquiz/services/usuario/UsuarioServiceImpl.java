@@ -2,6 +2,8 @@ package com.example.proyectoquiz.services.usuario;
 
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -103,20 +105,24 @@ public class UsuarioServiceImpl implements UsuarioService {
                     "No se pueden registrar más usuarios. Límite alcanzado: " + propiedadesApp.getMaxUsuariosCreados());
         }
 
+        String nombreLimpio = Jsoup.clean(usuarioDTO.getNombre(), Safelist.basic());
+        String emailLimpio = Jsoup.clean(usuarioDTO.getEmail(), Safelist.none());
+        String passwordLimpio = Jsoup.clean(usuarioDTO.getPassword(), Safelist.none());
+
         Usuario usuario = new Usuario();
 
-        if (usuarioRepository.findByEmail(usuarioDTO.getEmail()) != null) {
+        if (usuarioRepository.findByEmail(emailLimpio) != null) {
             throw new RuntimeException("El email ya está registrado");
         }
 
-        if (usuarioRepository.findByNombreContainingIgnoreCase(usuarioDTO.getNombre()) != null
-                && !usuarioRepository.findByNombreContainingIgnoreCase(usuarioDTO.getNombre()).isEmpty()) {
+        if (usuarioRepository.findByNombreContainingIgnoreCase(nombreLimpio) != null
+                && !usuarioRepository.findByNombreContainingIgnoreCase(nombreLimpio).isEmpty()) {
             throw new RuntimeException("El nombre ya está registrado");
         }
 
-        usuario.setNombre(usuarioDTO.getNombre());
-        usuario.setEmail(usuarioDTO.getEmail());
-        usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
+        usuario.setNombre(nombreLimpio);
+        usuario.setEmail(emailLimpio);
+        usuario.setPassword(passwordEncoder.encode(passwordLimpio));
         usuario.setRol(Rol.valueOf(usuarioDTO.getRol().toUpperCase()));
 
         return usuarioRepository.save(usuario);

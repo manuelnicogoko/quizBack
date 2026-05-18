@@ -2,6 +2,8 @@ package com.example.proyectoquiz.services.pista;
 
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -42,7 +44,7 @@ public class PistaServiceImpl implements PistaService {
                 .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
 
         Pista pista = new Pista();
-        pista.setTexto(pistaDTO.getTexto());
+        pista.setTexto(Jsoup.clean(pistaDTO.getTexto(), Safelist.basic()));
         pista.setPregunta(pregunta);
 
         return pistaRepository.save(pista);
@@ -77,7 +79,7 @@ public class PistaServiceImpl implements PistaService {
                 .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
         for (String texto : nuevasPistas) {
             Pista pista = new Pista();
-            pista.setTexto(texto);
+            pista.setTexto(Jsoup.clean(texto, Safelist.basic()));
             pista.setPregunta(pregunta);
             pistaRepository.save(pista);
         }

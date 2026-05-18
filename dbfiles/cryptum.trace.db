@@ -131,3 +131,7 @@ Caused by: java.lang.AssertionError
 	at org.h2.mvstore.FileStore.executeFileStoreOperation(FileStore.java:1893)
 	at org.h2.mvstore.MVStore.executeFilestoreOperation(MVStore.java:922)
 	... 19 more
+2026-05-18 21:56:17.925677+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "PASSWORD CHARACTER VARYING(20)": "'$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO' (60)"
+Value too long for column "PASSWORD CHARACTER VARYING(20)": "'$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO' (60)"; SQL statement:
+INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VALUES ('admin', 'admin@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 0, 200.0), ('usuario', 'usuario@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379461/profile1_avfx4d.png', 1, 300.0), ('usuario1', 'usuario1@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379467/profile2_bkfr4d.png', 1, 200.0), ('usuario2', 'usuario2@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379472/profile3_y4akw5.png', 1, 100.0), ('usuario3', 'usuario3@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 50.0) [22001-232]
