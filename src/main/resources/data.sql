@@ -17,11 +17,11 @@ INSERT INTO parametro_app (nombre, tipo_dato, valor) VALUES
 
 -- USUARIOS
 INSERT INTO usuario (nombre, email, password, avatar, rol, puntuacion_total) VALUES
-  ('admin', 'admin@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 0, 200.0),
-  ('usuario', 'usuario@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379461/profile1_avfx4d.png', 1, 300.0),
-  ('usuario1', 'usuario1@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379467/profile2_bkfr4d.png', 1, 200.0),
-  ('usuario2', 'usuario2@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379472/profile3_y4akw5.png', 1, 100.0),
-  ('usuario3', 'usuario3@email.com', '$2a$10$84rAjWRqMYCQVJnB1/UVluBPQzKwOTaInlI8eAQjUvdeW7n.01XAO', '', 1, 50.0);
+  ('admin', 'admin@email.com', '$2a$10$m9UWxxZJ31soFDSJkfiIfud6GLbWHDE73wIy367KCGC34nPGADW6K', '', 0, 200.0),
+  ('usuario', 'usuario@email.com', '$2a$10$m9UWxxZJ31soFDSJkfiIfud6GLbWHDE73wIy367KCGC34nPGADW6K', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379461/profile1_avfx4d.png', 1, 300.0),
+  ('usuario1', 'usuario1@email.com', '$2a$10$m9UWxxZJ31soFDSJkfiIfud6GLbWHDE73wIy367KCGC34nPGADW6K', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379467/profile2_bkfr4d.png', 1, 200.0),
+  ('usuario2', 'usuario2@email.com', '$2a$10$m9UWxxZJ31soFDSJkfiIfud6GLbWHDE73wIy367KCGC34nPGADW6K', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778379472/profile3_y4akw5.png', 1, 100.0),
+  ('usuario3', 'usuario3@email.com', '$2a$10$m9UWxxZJ31soFDSJkfiIfud6GLbWHDE73wIy367KCGC34nPGADW6K', '', 1, 50.0);
 
 -- CATEGORIAS
 INSERT INTO categoria (nombre, logo, descripcion, estado) VALUES

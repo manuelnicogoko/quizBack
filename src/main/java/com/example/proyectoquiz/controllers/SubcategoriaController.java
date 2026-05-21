@@ -15,6 +15,7 @@ import com.example.proyectoquiz.dto.SubcategoriaAdminDTO;
 import com.example.proyectoquiz.dto.SubcategoriaDTO;
 import com.example.proyectoquiz.services.subcategoria.SubcategoriaService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -25,6 +26,7 @@ public class SubcategoriaController {
     private final SubcategoriaService subcategoriaService;
 
     @GetMapping("/all")
+    @Operation(summary = "Listar todas las subcategorías", description = "Devuelve todas las subcategorías activas visibles para el usuario")
     public ResponseEntity<?> getSubcategorias() {
         return ResponseEntity.status(HttpStatus.OK).body(subcategoriaService.getAllSubcategorias());
     }

@@ -16,6 +16,7 @@ import com.example.proyectoquiz.dto.RondaDTO;
 import com.example.proyectoquiz.services.ronda.RondaService;
 import com.example.proyectoquiz.services.websocket.WebSocketService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -28,6 +29,7 @@ public class RondaController {
     private final WebSocketService webSocketService;
 
     @GetMapping("/{id}")
+    @Operation(summary = "Listar todas las rondas por partida", description = "Devuelve todas las rondas asociadas a una partida específica")
     public ResponseEntity<?> getRondaById(@PathVariable Long id) throws RuntimeException {
         return ResponseEntity.status(HttpStatus.OK).body(rondaService.getRondaById(id));
     }

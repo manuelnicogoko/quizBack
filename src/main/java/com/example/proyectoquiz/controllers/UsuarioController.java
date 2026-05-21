@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.proyectoquiz.dto.UsuarioDTO;
 import com.example.proyectoquiz.services.usuario.UsuarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/all")
+    @Operation(summary = "Listar todos los usuarios", description = "Devuelve todos los usuarios activos visibles para el administrador")
     public ResponseEntity<?> getAllUsuarios() {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getAllUsuarios());
     }

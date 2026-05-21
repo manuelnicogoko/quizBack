@@ -8,6 +8,7 @@ import com.example.proyectoquiz.dto.QuizDTO;
 import com.example.proyectoquiz.services.quiz.QuizService;
 import com.example.proyectoquiz.services.websocket.WebSocketService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class QuizController {
     private final WebSocketService webSocketService;
 
     @GetMapping("/all/{pageNumber}")
+    @Operation(summary = "Listar todos los quizzes", description = "Devuelve todos los quizzes activos visibles para el usuario")
     public ResponseEntity<?> getAllQuizzes(@PathVariable Integer pageNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(quizService.getAllQuizzes(pageNumber));

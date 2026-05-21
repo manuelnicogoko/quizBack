@@ -7,6 +7,7 @@ import com.example.proyectoquiz.dto.PartidaDTO;
 import com.example.proyectoquiz.services.partida.PartidaService;
 import com.example.proyectoquiz.services.websocket.WebSocketService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class PartidaController {
     private final WebSocketService webSocketService;
 
     @GetMapping("/all")
+    @Operation(summary = "Listar todas las partidas", description = "Devuelve todas las partidas activas visibles para el usuario")
     public ResponseEntity<?> getPartidasPublicas() {
         return ResponseEntity.status(HttpStatus.OK).body(partidaService.getPartidasPublicas());
     }

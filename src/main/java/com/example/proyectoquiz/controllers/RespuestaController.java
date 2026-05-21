@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.proyectoquiz.dto.RespuestaDTO;
 import com.example.proyectoquiz.services.respuesta.RespuestaService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class RespuestaController {
     private final RespuestaService respuestaService;
 
     @GetMapping("/pregunta/{preguntaId}")
+    @Operation(summary = "Listar todas las respuestas por pregunta", description = "Devuelve todas las respuestas asociadas a una pregunta específica")
     public ResponseEntity<?> getRespuestasByPreguntaId(@PathVariable Long preguntaId) {
         return ResponseEntity.status(HttpStatus.OK).body(respuestaService.getRespuestasByPreguntaId(preguntaId));
     }

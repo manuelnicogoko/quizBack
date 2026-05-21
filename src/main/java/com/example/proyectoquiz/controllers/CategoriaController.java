@@ -6,6 +6,7 @@ import com.example.proyectoquiz.dto.CategoriaAdminDTO;
 import com.example.proyectoquiz.dto.CategoriaDTO;
 import com.example.proyectoquiz.services.categoria.CategoriaService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ public class CategoriaController {
 
     private final CategoriaService categoriaService;
 
+    @Operation(summary = "Listar todas las categorías", description = "Devuelve todas las categorías activas visibles para el usuario")
     @GetMapping("/all")
     public ResponseEntity<?> getCategorias() {
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.getAllCategorias());

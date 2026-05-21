@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.proyectoquiz.dto.PistaDTO;
 import com.example.proyectoquiz.services.pista.PistaService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class PistaController {
     private final PistaService pistaService;
 
     @GetMapping("/pregunta/{preguntaId}")
+    @Operation(summary = "Listar todas las pistas por pregunta", description = "Devuelve todas las pistas asociadas a una pregunta específica")
     public ResponseEntity<?> getPistasByPreguntaId(@PathVariable Long preguntaId) {
         return ResponseEntity.status(HttpStatus.OK).body(pistaService.getPistasByPreguntaId(preguntaId));
     }

@@ -34,3 +34,8 @@ build/
 
 # Ignorar archivos subidos
 uploadFiles/
+
+
+# Ignorar properties
+*.properties
+*.yml

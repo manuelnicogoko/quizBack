@@ -14,6 +14,7 @@ import com.example.proyectoquiz.dto.PreguntaActualizacionDTO;
 import com.example.proyectoquiz.dto.PreguntaDTO;
 import com.example.proyectoquiz.services.pregunta.PreguntaService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -25,6 +26,7 @@ public class PreguntaController {
     private final PreguntaService preguntaService;
 
     @GetMapping("/quiz/{quizId}")
+    @Operation(summary = "Listar todas las preguntas por quiz", description = "Devuelve todas las preguntas asociadas a un quiz específico")
     public ResponseEntity<?> getPreguntasByQuizId(@PathVariable Long quizId) {
         return ResponseEntity.status(HttpStatus.OK).body(preguntaService.getPreguntasByQuizId(quizId));
     }
