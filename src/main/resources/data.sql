@@ -59,7 +59,7 @@ INSERT INTO quiz (nombre, descripcion, portada, creador_id, categoria_id, subcat
   ('Final Fantasy VII', 'Quiz sobre personajes', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117806/quizPortada/2/ffvii.jpg', 2, 1, 1, 4),
   ('Elder Scrolls: Skyrim', 'Quiz sobre personajes de Skyrim', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117819/quizPortada/3/skyrim.jpg', 1, 1, 1, 4),
   -- Shooter
-  ('DOOM', 'Preguntas sobre personajes de DOOM', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117819/quizPortada/3/skyrim.jpg', 2, 1, 2, 4),
+  ('DOOM', 'Preguntas sobre personajes de DOOM', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117832/quizPortada/4/doom.jpg', 2, 1, 2, 4),
   ('Call of Duty', 'Quiz sobre armas de CoD', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117837/quizPortada/5/cod.jpg', 1, 1, 2, 4),
   ('Overwatch', 'Quiz sobre héroes de Overwatch', 'https://res.cloudinary.com/dcrii9pgf/image/upload/v1778117838/quizPortada/6/overwatch.jpg', 2, 1, 2, 4),
   -- Pintura
